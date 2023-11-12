@@ -1,0 +1,18 @@
+@import "../../node_modules/bootstrap/scss/functions";
+
+@import "./variables";
+@import "./reset";
+
+@import "./utilites";
+@import "./components";
+@import "./animations";
+
+@import "./navbar";
+@import "./sidebar";
+
+@import "./pages/index";
+@import "./pages/faq";
+@import "./pages/cart";
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+

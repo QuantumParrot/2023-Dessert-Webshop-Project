@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入｜Akheng's Desserts 甜點工作室</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    
+    <%- include('./layout/header'); -%>
+
+    <section class="container">
+        <div class="row justify-content-center my-9">
+            <div class="col-6 d-md-block d-none">
+                <img class="h-100 rounded-2" src="https://picsum.photos/570/418" alt="">
+            </div>
+            <div class="col-md-6">
+                <div class="px-md-10 px-6 py-9 border rounded-2">
+                    <h2 class="mb-9">登入</h2>
+                    <form id="login-form">
+                        <div class="mb-6">
+                            <label for="account" class="mb-2">帳號</label>
+                            <input id="account"
+                                   type="email"
+                                   class="form-control p-2"
+                                   aria-describedby="validationAccount">
+                            <div id="validationAccount"
+                                 class="invalid-feedback"
+                                 data-validation="account"></div>
+                        </div>
+                        <div class="mb-9">
+                            <label for="password" class="mb-2">密碼</label>
+                            <input id="password"
+                                   type="password"
+                                   class="form-control p-2"
+                                   aria-describedby="validationPassword" autocomplete>
+                            <div id="validationPassword"
+                                 class="invalid-feedback"
+                                 data-validation="password"></div>
+                        </div>
+                        <div class="d-flex flex-md-row flex-column align-items-center">
+                            <button id="submit" type="button" class="btn btn-primary">確認登入</button>
+                            <p class="mt-md-0 mt-6 ms-md-5 ms-0">還沒有帳號嗎？來<a href="register.html">註冊</a>吧！</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('./layout/footer'); -%>
+
+    <script type="module" src="../main.js"></script>
+    <script type="module" src="../js/login.js"></script>
+    <script type="module" src="../js/handleAuth.js"></script>
+</body>
+</html>

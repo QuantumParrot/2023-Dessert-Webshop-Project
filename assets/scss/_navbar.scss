@@ -1,0 +1,23 @@
+@mixin nav-link-active {
+    cursor: default;
+    pointer-events: none;
+    color: $brown-800;
+    font-weight: bold;
+}
+
+header {
+    & .dropdown-menu .nav-link.active {
+        @include nav-link-active;
+        color: white;
+    }
+    & .nav-link.active {
+        @include nav-link-active;
+    }
+}
+
+footer {
+    & .nav-link.active {
+        @include nav-link-active;
+    }
+}
+

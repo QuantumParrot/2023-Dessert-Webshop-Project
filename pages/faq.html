@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物說明｜Akheng's Desserts 甜點工作室</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body class="position-relative">
+    
+    <%- include('./layout/header'); -%>
+
+    <section class="container"
+             data-bs-spy="scroll"
+             data-bs-target="#sidebar"
+             data-bs-offset="0"
+             tabindex="0">
+        <div class="pb-md-9 pt-6 border-bottom">
+            <h2 class="mb-9">購物說明</h2>
+            <div class="row">
+                <div class="col-md-2 col-12">
+                <%- include('./layout/sidebar-faq'); -%>
+                </div>
+                <div class="col-md-10 col-12">
+                    <!-- 購物流程 -->
+                    <div id="how-to-buy" class="card border-primary p-8 mb-6">
+                        <h3 class="mb-8">購買流程</h3>
+                        <div class="row justify-content-md-between gap-5">
+                            <div class="col-lg-3">
+                                <img class="rounded-1 mb-5"
+                                     src="../assets/images/step1.png"
+                                     title="Image Designed by Freepik"
+                                     alt="Register for Membership">
+                                <h4 class="fs-6 text-center mb-4">加入會員，選購商品</h4>
+                                <p class="text-muted text-center">Register for Membership</p>
+                            </div>
+                            <div class="col-lg-1 mt-lg-11 my-5 p-0">
+                                <div class="d-flex justify-content-center">
+                                    <img class="arrow" src="../assets/images/arrow.png" alt="arrow">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <img class="w-100 rounded-1 mb-5"
+                                     src="../assets/images/step2.png"
+                                     title="Image Designed by Photoroyalty / Freepik"
+                                     alt="Complete the Order">
+                                <h4 class="fs-6 text-center mb-4">輸入資訊，完成結帳</h4>
+                                <p class="text-muted text-center">Complete the Order</p>
+                            </div>
+                            <div class="col-lg-1 mt-lg-11 my-5 p-0">
+                                <div class="d-flex justify-content-center">
+                                    <img class="arrow" src="../assets/images/arrow.png" alt="arrow">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <img class="rounded-1 mb-5"
+                                     src="../assets/images/step3.png"
+                                     title="Image Designed by Vecteezy"
+                                     alt="Wait to Enjoy your Day">
+                                <h4 class="fs-6 text-center mb-4">等候送達，準備享用</h4>
+                                <p class="text-muted text-center">Wait to Enjoy your Day</p>
+                            </div>
+                        </div>
+                        <div class="text-center d-md-none d-block mt-8">
+                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                        </div>
+                    </div>
+                    <!-- 常見問答 -->
+                    <div id="faq" class="card border-primary p-8 p-6 mb-6">
+                        <h3 class="mb-8">常見問答</h3>
+                        <ul class="ps-0 mb-0">
+                            <li class="question list-group-item border rounded-3 p-md-5 p-7 mb-2"
+                                style="cursor: pointer">
+                                <h4 class="fs-6 mb-0">
+                                <span class="expand-more material-icons align-bottom fs-5">expand_more</span>
+                                <span class="expand-less material-icons align-bottom fs-5">expand_less</span>
+                                有哪些付款方式？
+                                </h4>
+                                <p class="answer pt-2 text-justify lh-lg">
+                                我們的網站目前還很陽春，目前只提供<span class="text-orange fw-bold">貨到付款</span>哦。<br>
+                                如果您是透過臉書及 LINE 直接向我們的老闆訂購商品，也可以使用 ATM 轉帳哦。
+                                </p>
+                            </li>
+                            <li class="question list-group-item border rounded-3 p-md-5 p-7 mb-2"
+                                style="cursor: pointer">
+                                <h4 class="fs-6 mb-0">
+                                <span class="expand-more material-icons align-bottom fs-5">expand_more</span>
+                                <span class="expand-less material-icons align-bottom fs-5">expand_less</span>
+                                有哪些寄送方式？
+                                </h4>
+                                <p class="answer pt-2 text-justify lh-lg">
+                                我們的網站目前還很陽春，目前只提供<span class="text-orange fw-bold">宅配到府</span>哦。<br>
+                                </p>
+                            </li>
+                            <li class="question list-group-item border rounded-3 p-md-5 p-7 mb-2"
+                                style="cursor: pointer">
+                                <h4 class="fs-6 mb-0">
+                                <span class="expand-more material-icons align-bottom fs-5">expand_more</span>
+                                <span class="expand-less material-icons align-bottom fs-5">expand_less</span>
+                                什麼時候可以收到商品？
+                                </h4>
+                                <p class="answer pt-2 text-justify lh-lg">
+                                <span class="text-orange fw-bold">視物流情況而定</span>。<br>
+                                訂單成立後，您可以透過訂單編號自行前往<a href="#">宅配公司網站</a>查詢運送情形。<br>
+                                我們將與宅配公司隨時保持聯繫，從預計到貨日期往前推算製作時程，確保商品能在賞味期限前送到顧客的手中。<br>
+                                原則上兩至三天內就會送達，如果超過三天依然沒有收到，請立即通知我們處理。<br>
+                                </p>
+                            </li>
+                            <li class="question list-group-item border rounded-3 p-md-5 p-7 mb-2"
+                                style="cursor: pointer">
+                                <h4 class="question fs-6 mb-0">
+                                <span class="expand-more material-icons align-bottom fs-5">expand_more</span>
+                                <span class="expand-less material-icons align-bottom fs-5">expand_less</span>
+                                收到商品之後不滿意，是否能夠換貨或退貨？
+                                </h4>
+                                <p class="answer pt-2 text-justify lh-lg">
+                                非常抱歉，我們的商品屬於保存期限較短的甜點，不適用七天鑑賞期，因此<span class="text-orange fw-bold">沒有提供</span>換貨和退貨的服務。<br>
+                                下單之前請務必考慮清楚哦！
+                                </p>
+                            </li>
+                        </ul>
+                        <div class="text-center d-md-none d-block mt-8">
+                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                        </div>
+                    </div>
+                    <!-- 聯絡我們 -->
+                    <div id="contact" class="card border-primary p-8 mb-6">
+                        <h3 class="mb-8">聯絡我們</h3>
+                        <p class="mb-6 text-justify">如果您還有其他疑問，歡迎您透過以下任一方式與我們聯繫，我們將在營業時間（08:30～22:00）內盡快答覆：</p>
+                        <ul class="ps-5 mb-0">
+                            <li class="mb-2"><a href="#" alt="line">LINE</a></li>
+                            <li class="mb-2"><a href="#" alt="facebook">facebook</a></li>
+                            <li class="mb-2">電話：0912-345-678</li>
+                            <li>信箱：akhengstudio@mail.com</li>
+                        </ul>
+                        <div class="text-center d-md-none d-block mt-8">
+                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('./layout/footer'); -%>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="module" src="../main.js"></script>
+    <script type="module">
+
+        $(document).ready(function(){
+            
+            // sidebar
+            
+            $('.nav-link').click(function(){
+                $(this).addClass('active');
+                $(this).parent().siblings().children('.nav-link').removeClass('active');
+            });
+
+            // faq columns ( accordion ) - by jQuery
+            
+            $('.answer').hide();
+            $('.expand-less').hide();
+
+            $('.question').click(function(){
+                $(this).children().find('.expand-more').toggle().siblings('.expand-less').toggle();
+                $(this).children('.answer').slideToggle(300);
+            });
+
+        });
+
+    </script>
+    <script type="module" src="../js/handleAuth.js"></script>
+</body>
+</html>

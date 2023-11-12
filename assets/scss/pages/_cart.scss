@@ -1,0 +1,7 @@
+@media (max-width: 425px) {
+    #main-content {
+        & input[type="text"], input[type="tel"] {
+            width: 100% !important;
+        }
+    }
+}

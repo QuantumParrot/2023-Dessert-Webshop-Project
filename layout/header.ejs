@@ -1,0 +1,31 @@
+<header class="container">
+    <div class="bg-white d-flex justify-content-between align-items-center py-lg-6 py-5">
+        <h1><a href="index.html"><img src="../assets/images/logo.png" alt="akheng's desserts"></a></h1>
+        <!-- 電腦版 -->
+        <div class="d-md-flex d-none">
+            <ul class="navbar border-end border-subtle m-0 p-0">
+                <li class="nav me-9"><a data-route="news" class="nav-link rounded-1 p-0" href="news.html">最新消息</a></li>
+                <li class="nav me-9"><a data-route="products" class="nav-link rounded-1 p-0" href="products.html">全站商品</a></li>
+                <li class="nav me-9"><a data-route="faq" class="nav-link rounded-1 p-0" href="faq.html">購物說明</a></li>
+            </ul>
+            <div id="membership" class="d-flex align-items-center ms-9">
+                <a class="btn btn-sm btn-primary" href="login.html">登入</a>
+            </div>
+        </div>
+        <!-- 手Ｇ版 -->
+        <div class="dropdown d-md-none d-block">
+            <span class="display-1 material-icons dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">menu
+            </span>
+            <ul class="dropdown-menu border-0 shadow text-center">
+                <li><a data-route="news" href="news.html" class="dropdown-item nav-link px-1 py-2" type="button">最新消息</a></li>
+                <li><a data-route="products" href="products.html" class="dropdown-item nav-link px-1 py-2" type="button">全站商品</a></li>
+                <li><a data-route="faq" href="faq.html" class="dropdown-item nav-link px-1 py-2" type="button">購物說明</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li id="membership-mobile"><a class="btn btn-sm btn-primary" href="login.html">登入</a></li>
+            </ul>
+        </div>
+    </div>
+</header>

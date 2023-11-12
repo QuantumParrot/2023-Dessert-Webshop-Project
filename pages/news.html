@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最新消息｜Akheng's Desserts 甜點工作室</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    
+    <%- include('./layout/header'); -%>
+
+    <section class="container">
+        <div class="bg-secondary rounded-1 px-md-8 py-md-9 p-5 pt-9 mb-6">
+            <h2 class="mb-9">最新消息</h2>
+            <ul id="list" class="d-flex flex-column gap-5 ps-0">
+            <%- include('./layout/loading'); -%>
+            </ul>
+        </div>
+        <div class="text-center border-bottom">
+            <a href="index.html" class="btn btn-primary mb-6">回到首頁</a>
+        </div>
+    </section>
+
+    <%- include('./layout/footer'); -%>
+
+    <script type="module" src="../main.js"></script>
+    <script type="module" src="../js/news.js"></script>
+    <script type="module" src="../js/handleAuth.js"></script>
+</body>
+</html>

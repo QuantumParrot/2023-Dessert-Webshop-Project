@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最新消息｜Akheng's Desserts 甜點工作室</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    
+    <%- include('./layout/header'); -%>
+
+    <section class="container">
+        <div class="bg-secondary rounded-1 px-md-8 py-md-9 p-5 mb-6">
+            <div id="detail" class="bg-white rounded-1 p-md-8 px-6 pt-8 pb-12 position-relative">
+                <img class="position-absolute bottom-0 end-0"
+                     style="transform: rotate(345deg);"
+                     src="../assets/images/flower2.png" alt="deco-batik-style-flower" width="100">
+            </div>
+        </div>
+        <div class="text-center border-bottom">
+            <a class="btn btn-primary mb-6" href="news.html">回消息列表</a>
+        </div>
+    </section>
+
+    <%- include('./layout/footer'); -%>
+
+    <script type="module" src="../main.js"></script>
+    <script type="module">
+
+        import axios from "axios";
+
+        const { VITE_APP_SITE } = import.meta.env;
+
+        const id = window.location.href.split('id=').pop();
+        
+        function getData(id){
+            axios.get(`${VITE_APP_SITE}/announcements/${id}`)
+            .then((res)=>{
+                // console.log(res.data);
+                renderData(res.data);
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+        }
+
+        getData(id);
+
+        const detail = document.querySelector('#detail');
+
+        function renderData(data) {
+            detail.innerHTML += `
+            <h3 class="mb-6">${data.title}</h3>
+            <p class="text-black mb-6">${data.date}</p>
+            <hr>
+            <p class="mt-6">${data.content.replaceAll('\n','<br><br>')}</p>`;
+        }
+
+    </script>
+    <script type="module" src="../js/handleAuth.js"></script>
+</body>
+</html>

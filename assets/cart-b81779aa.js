@@ -10,22 +10,31 @@ import{g as h,t as d,a as m,e as f,w as y,S as b}from"./handleAuth-03fa9bb6.js";
         <div class="col-md-3">
             <div class="position-sticky top-0">
                 <div class="bg-secondary rounded-1 p-6 lh-lg">
-                    <h3 class="text-center mb-6">總計</h3>
+                    <h3 class="text-center mb-9">總計</h3>
                     <!-- 小計 -->
                     <div class="d-flex justify-content-between">
-                    <p class="fw-bold">小計</p>
-                    <p>-- NT$ <span id="subtotal"></span></p>
+                        <p class="fw-bold">小計</p>
+                        <p style="width: 40%" class="d-flex justify-content-between">
+                            <span>NT$</span>
+                            <span id="subtotal"></span>
+                        </p>
                     </div>
                     <!-- 運費 -->
                     <div class="d-flex justify-content-between">
-                    <p class="fw-bold">運費</p>
-                    <p>-- NT$ <span id="delivery-fee"></span></p>
+                        <p class="fw-bold">運費</p>
+                        <p style="width: 40%" class="d-flex justify-content-between">
+                            <span>NT$</span>
+                            <span id="delivery-fee"></span>
+                        </p>
                     </div>
                     <hr>
                     <!-- 總計 -->
                     <div class="d-flex justify-content-between align-items-center fw-bold">
-                    <p>總計</p>
-                    <p class="fs-5">NT$ <span id="total"></span></p>
+                        <p>總計</p>
+                        <p class="w-50 d-flex justify-content-between fs-5">
+                            <span>NT$</span>
+                            <span id="total"></span>
+                        </p>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-6">
@@ -138,4 +147,4 @@ import{g as h,t as d,a as m,e as f,w as y,S as b}from"./handleAuth-03fa9bb6.js";
                 </div>
             </div>
         </form>
-        </div>`,o.innerHTML=i,document.querySelector("#useMemberName").addEventListener("change",function(n){if(n.target.checked){const u=JSON.parse(localStorage.getItem("userData")).name;receiver.value=u}else receiver.value=""})}else if(s.target.textContent==="結　帳"){let c=function(r){if((r==null?void 0:r.id)==="delivery-confirm"&&!(r!=null&&r.checked))return d("warning","請詳閱並同意寄送說明"),!1;if(r!=null&&r.value){if((r==null?void 0:r.id)==="phone"&&!/^09(\d){8}/.test(r.value))return d("warning","手機號碼格式不正確"),!1}else return d("warning","請確實填寫所有的欄位"),!1;return!0};const e=document.querySelector('input[name="method"]:checked'),o=document.querySelector('input[name="payment"]:checked'),i=document.querySelector("#receiver"),t=document.querySelector("#phone"),n=document.querySelector("#address"),u=document.querySelector('input[name="shippingTime"]:checked'),l=document.querySelector("#delivery-confirm");c(e)&&c(o)&&c(i)&&c(t)&&c(n)&&c(u)&&c(l)&&function(){const r={receiver:i.value,phone:t.value,address:n.value,payment:o.value,method:e.value,shippingTime:u.value};T(a,r)}()}}function T(s,a){b.fire({icon:"warning",title:"確認送出訂單？",text:"提醒您，按下送出之後即視為交易成立",position:"center",allowOutsideClick:!1,showCancelButton:!0,cancelButtonColor:"#D1741F",cancelButtonText:"再想想看",confirmButtonColor:"#A37A64",confirmButtonText:"送出訂單",showLoaderOnConfirm:!0,preConfirm:async()=>{try{const e=h(),o=document.querySelector("#total").textContent,i={orderNum:new Date().getTime()+`${s[0].userId}`,products:s,total:Number(o),info:a,createdTime:new Date().toLocaleString(),userId:s[0].userId,isFinished:!1};m.post(`${p}/640/orders`,i,{headers:{authorization:`Bearer ${e}`}}).then(t=>s.forEach(n=>{m.delete(`${p}/640/carts/${n.id}`,{headers:{authorization:`Bearer ${e}`}})}))}catch(e){f(e)}}}).then(e=>{e.isConfirmed&&b.fire({icon:"success",title:"Terima kasih！謝謝您的訂購！",text:"我們將立即為您製作，請耐心等候商品送達",position:"center",confirmButtonColor:"#A37A64",timer:3e3}).then(()=>location.href="member.html")})}
+        </div>`,o.innerHTML=i,document.querySelector("#useMemberName").addEventListener("change",function(n){if(n.target.checked){const u=JSON.parse(localStorage.getItem("userData")).name;receiver.value=u}else receiver.value=""})}else if(s.target.textContent==="結　帳"){let c=function(r){if((r==null?void 0:r.id)==="delivery-confirm"&&!(r!=null&&r.checked))return d("warning","請詳閱並同意寄送說明"),!1;if(r!=null&&r.value){if((r==null?void 0:r.id)==="phone"&&!/^09(\d){8}/.test(r.value))return d("warning","手機號碼格式不正確"),!1}else return d("warning","請確實填寫所有的欄位"),!1;return!0};const e=document.querySelector('input[name="method"]:checked'),o=document.querySelector('input[name="payment"]:checked'),i=document.querySelector("#receiver"),t=document.querySelector("#phone"),n=document.querySelector("#address"),u=document.querySelector('input[name="shippingTime"]:checked'),l=document.querySelector("#delivery-confirm");c(e)&&c(o)&&c(i)&&c(t)&&c(n)&&c(u)&&c(l)&&function(){const r={receiver:i.value,phone:t.value,address:n.value,payment:o.value,method:e.value,shippingTime:u.value};T(a,r)}()}}function T(s,a){b.fire({icon:"warning",title:"確認送出訂單？",text:"提醒您，按下送出之後即視為交易成立",position:"center",allowOutsideClick:!1,showCancelButton:!0,cancelButtonColor:"#D1741F",cancelButtonText:"再想想看",confirmButtonColor:"#A37A64",confirmButtonText:"送出訂單",showLoaderOnConfirm:!0,preConfirm:async()=>{try{const e=h(),o=document.querySelector("#total").textContent,i={orderNum:new Date().getTime()+`0${s[0].userId}`,products:s,total:Number(o),info:a,createdTime:new Date().toLocaleString(),userId:s[0].userId,isFinished:!1};m.post(`${p}/640/orders`,i,{headers:{authorization:`Bearer ${e}`}}).then(t=>s.forEach(n=>{m.delete(`${p}/640/carts/${n.id}`,{headers:{authorization:`Bearer ${e}`}})}))}catch(e){f(e)}}}).then(e=>{e.isConfirmed&&b.fire({icon:"success",title:"Terima kasih！謝謝您的訂購！",text:"我們將立即為您製作，請耐心等候商品送達",position:"center",confirmButtonColor:"#A37A64",timer:3e3}).then(()=>location.href="member.html")})}

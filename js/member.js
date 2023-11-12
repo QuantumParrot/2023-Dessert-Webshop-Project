@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import Tab from "bootstrap/js/dist/tab.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
 import { toastMessage } from "./utilities/message.js";
 
@@ -35,7 +36,7 @@ function getData() {
 
     if (triggerElement) {
 
-        const trigger = new bootstrap.Tab(triggerElement);
+        const trigger = new Tab(triggerElement);
         trigger.show();
     
     }

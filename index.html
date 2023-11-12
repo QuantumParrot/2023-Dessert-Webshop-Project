@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Akheng's Desserts 甜點工作室</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/index-eefc898a.js"></script>
+  <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/handleAuth-797a471f.js">
+  <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/handleAuth-a5da8c2b.css">
+  <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/index-29b64786.css">
+</head>
+<body>
+
+    <header class="container">
+    <div class="bg-white d-flex justify-content-between align-items-center py-lg-6 py-5">
+        <h1><a href="index.html"><img src="/2023-Dessert-Webshop-Project/assets/logo-1fb0e713.png" alt="akheng's desserts"></a></h1>
+        <!-- 電腦版 -->
+        <div class="d-md-flex d-none">
+            <ul class="navbar border-end border-subtle m-0 p-0">
+                <li class="nav me-9"><a data-route="news" class="nav-link rounded-1 p-0" href="news.html">最新消息</a></li>
+                <li class="nav me-9"><a data-route="products" class="nav-link rounded-1 p-0" href="products.html">全站商品</a></li>
+                <li class="nav me-9"><a data-route="faq" class="nav-link rounded-1 p-0" href="faq.html">購物說明</a></li>
+            </ul>
+            <div id="membership" class="d-flex align-items-center ms-9">
+                <a class="btn btn-sm btn-primary" href="login.html">登入</a>
+            </div>
+        </div>
+        <!-- 手Ｇ版 -->
+        <div class="dropdown d-md-none d-block">
+            <span class="display-1 material-icons dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">menu
+            </span>
+            <ul class="dropdown-menu border-0 shadow text-center">
+                <li><a data-route="news" href="news.html" class="dropdown-item nav-link px-1 py-2" type="button">最新消息</a></li>
+                <li><a data-route="products" href="products.html" class="dropdown-item nav-link px-1 py-2" type="button">全站商品</a></li>
+                <li><a data-route="faq" href="faq.html" class="dropdown-item nav-link px-1 py-2" type="button">購物說明</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li id="membership-mobile"><a class="btn btn-sm btn-primary" href="login.html">登入</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+    <!-- section: Carousel by Swiper-->
+    <section class="swiper banner-swiper">
+      <div class="swiper-wrapper">
+          <div class="swiper-slide">
+              <img class="d-md-block d-none position-relative" src="/2023-Dessert-Webshop-Project/assets/banner1-lg-67cb5d88.png" alt="傳統風味・獨家配方">
+              <img class="d-md-none d-block position-relative" src="/2023-Dessert-Webshop-Project/assets/banner1-sm-dc3eff4f.png" alt="傳統風味・獨家配方">
+              <div class="slogan w-100 position-absolute top-25 ps-lg-11 ps-0 py-lg-0 py-4 text-lg-start text-center">
+                  <p class="fs-5 mb-5">傳統風味・獨家配方</p>
+                  <h2 class="mb-lg-9 mb-5">體驗<span class="text-orange">嶄新</span>的味蕾饗宴</h2>
+                  <a href="products.html" class="btn btn-primary">立即選購</a>
+              </div>
+          </div>
+          <div class="swiper-slide">
+              <img class="d-md-block d-none position-relative" src="/2023-Dessert-Webshop-Project/assets/banner2-lg-e581eb17.png" alt="天然食材・嚴選工法">
+              <img class="d-md-none d-block position-relative" src="/2023-Dessert-Webshop-Project/assets/banner2-sm-67ce2cf9.png" alt="天然食材・嚴選工法">
+              <div class="slogan position-absolute top-25 end-10 px-2 py-lg-0 py-4 text-lg-start text-center">
+                  <p class="fs-5 mb-5">天然食材・嚴選工法</p>
+                  <h2 class="mb-lg-9 mb-5"><span class="text-orange">安心</span>享受每一口甜蜜邂逅</h2>
+                  <a href="products.html" class="btn btn-primary">立即選購</a>
+              </div>
+          </div>
+          <div class="swiper-slide">
+              <img class="d-md-block d-none position-relative" src="/2023-Dessert-Webshop-Project/assets/banner3-lg-6c941243.png" alt="現點現做・新鮮美味">
+              <img class="d-md-none d-block position-relative" src="/2023-Dessert-Webshop-Project/assets/banner3-sm-42fb4a5f.png" alt="現點現做・新鮮美味">
+              <div class="slogan w-100 position-absolute top-25 ps-lg-11 px-5 py-lg-0 py-4 text-lg-start text-center">
+                  <p class="fs-5 mb-5">現點現做・新鮮美味</p>
+                  <h2 class="mb-lg-9 mb-5"><span class="text-orange">即時</span>品嚐甜點的完美時刻</h2>
+                  <a href="products.html" class="btn btn-primary">立即選購</a>
+              </div>
+          </div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </section>
+    <!-- section: Lateset News -->
+    <section class="news bg-white py-lg-12 py-10">
+        <div class="container">
+            <h2 class="h1 text-center mb-11">最新消息</h2>
+            <div id="announcements" class="row">
+            <div class="loading col-12">
+    <div class="alert bg-tertiary text-center m-0">
+        <div class="mb-5">
+            <svg id="loading-spinner" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                <circle cx="24"    cy="4"     r="4"   fill="#FFFFFF"/>
+                <circle cx="12.19" cy="7.86"  r="3.7" fill="#FFFBF2"/>
+                <circle cx="5.02"  cy="17.68" r="3.4" fill="#FEF7E4"/>
+                <circle cx="5.02"  cy="30.32" r="3.1" fill="#ECB88A"/>
+                <circle cx="12.19" cy="40.14" r="2.8" fill="#A37A64"/>
+                <circle cx="24"    cy="44"    r="2.5" fill="#8F5A3C"/>
+                <circle cx="35.81" cy="40.14" r="2.2" fill="#6A4028"/>
+                <circle cx="42.98" cy="30.32" r="1.9" fill="#563F2E"/>
+                <circle cx="42.98" cy="17.68" r="1.6" fill="#422D28"/>
+                <circle cx="35.81" cy="7.86"  r="1.3" fill="#261308"/>
+            </svg>
+        </div>
+        <p>與伺服器取得聯繫中，請稍候</p>
+    </div>
+</div>            </div>
+        </div>
+    </section>
+    <!-- section: Monthly Special -->
+    <section class="bg-secondary container-fluid overflow-hidden">
+    <div class="row">
+        <div class="col-lg-5 col-12 px-lg-4 px-0 text-center">
+            <img class="rounded-2 mt-lg-0 mt-5" src="/2023-Dessert-Webshop-Project/assets/karamel-cake-party-510005fe.png" alt="蜂巢蛋糕">
+        </div>
+        <div class="col-lg-7 col-12 d-flex justify-content-center align-items-center position-relative">
+            <div class="border border-4 border-white rounded-3 p-lg-9 px-6 py-9 my-5 flex-fill">
+                <div class="d-flex flex-md-row flex-column align-items-center mb-9">
+                    <h2 class="bg-primary rounded-2 p-3 me-md-7 me-0 mb-md-0 mb-9 text-white fs-3">
+                    <span class="material-icons">auto_awesome</span>
+                    <span>本月推薦</span>
+                    </h2>
+                    <h3 class="mb-0 fs-2">Karamel Cake 蜂巢蛋糕</h3>
+                </div>
+                <p class="text-black text-md-start text-center mb-9 fs-5">您知道蜂巢蛋糕的名稱由來嗎？</p>
+                <div class="text-lg-start text-center">
+                    <button class="btn btn-primary"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#columnModal">繼續閱讀
+                    </button>
+                </div>
+            </div>
+            <img class="d-md-block d-none position-absolute top-0 start-0"
+                 style="transform: rotate(30deg);"
+                 src="/2023-Dessert-Webshop-Project/assets/flower2-42335728.png" alt="deco-batik-style-flower">
+            <img class="d-md-block d-none position-absolute bottom-0 end-0"
+                 style="width: 150px; transform: rotate(30deg);"
+                 src="/2023-Dessert-Webshop-Project/assets/flower3-3d14dfd6.png" alt="deco-batik-style-flower">
+        </div>
+    </div>
+</section>
+
+<!-- Modal: Column Article -->
+
+<div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header px-md-8">
+                <h2 class="modal-title fs-3" id="columnModalLabel">
+                <span class="material-icons">auto_awesome</span>
+                <span>本月推薦：蜂巢蛋糕<span>
+                </h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-md-8">
+                <p>您知道蜂巢蛋糕的名稱由來嗎？</p>
+                <br>
+                <p>
+                臺灣人稱它為蜂巢蛋糕，印尼人則是戲稱它為 Sarang Semut <br>
+                Sarang 是「巢穴」而 Semut 是「螞蟻」，翻成中文就是「<span class="text-orange">螞蟻窩</span>」！很有趣吧！</p>
+                <br>
+                當然，它不是用蜂巢也不是用螞蟻窩做的。<br>
+                您如果品嚐過蜂巢蛋糕，並且仔細觀察過它的縱切面，就會知道它的名字其來有自：<br>
+                之所以得到這樣的命名，是因為它充滿孔洞的結構就像<span class="text-orange">蜂巢</span>一樣。<br>
+                <br>
+                我們的獨特之處，<br>
+                在於不是使用黑糖和蜂蜜，而是使用焦糖製作蜂巢蛋糕，甜而不膩，口感紮實，您一定要試試看！
+                </p>
+                <hr>
+                <p class="mb-5">如果沒有密集恐懼症的擔憂，可以點擊圖片看看它的廬山真面目！</p>
+                <div class="row position-relative">
+                    <img class="col-md-10 col-12" src="/2023-Dessert-Webshop-Project/assets/karamel-cake-slice-741b4f7b.jpeg" alt="karamel-cake-slice">
+                    <div id="blur-filter" class="backdrop-blur-sm position-absolute top-0 left-0 w-100 h-100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    <!-- Rank --->
+    <section class="bg-white py-lg-12 py-10">
+        <div class="container">
+            <h2 class="h1 text-center mb-11">熱銷排行</h2>
+            <div id="rank" class="row mb-11">
+            <div class="loading col-12">
+    <div class="alert bg-tertiary text-center m-0">
+        <div class="mb-5">
+            <svg id="loading-spinner" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                <circle cx="24"    cy="4"     r="4"   fill="#FFFFFF"/>
+                <circle cx="12.19" cy="7.86"  r="3.7" fill="#FFFBF2"/>
+                <circle cx="5.02"  cy="17.68" r="3.4" fill="#FEF7E4"/>
+                <circle cx="5.02"  cy="30.32" r="3.1" fill="#ECB88A"/>
+                <circle cx="12.19" cy="40.14" r="2.8" fill="#A37A64"/>
+                <circle cx="24"    cy="44"    r="2.5" fill="#8F5A3C"/>
+                <circle cx="35.81" cy="40.14" r="2.2" fill="#6A4028"/>
+                <circle cx="42.98" cy="30.32" r="1.9" fill="#563F2E"/>
+                <circle cx="42.98" cy="17.68" r="1.6" fill="#422D28"/>
+                <circle cx="35.81" cy="7.86"  r="1.3" fill="#261308"/>
+            </svg>
+        </div>
+        <p>與伺服器取得聯繫中，請稍候</p>
+    </div>
+</div>            </div>
+            <div class="text-center">
+                <a href="products.html" class="btn btn-primary">更多商品</a>
+            </div>
+        </div>
+    </section>
+    <!-- Benefits -->
+    <section class="bg-tertiary py-lg-12 py-10"
+             style="background-image: url('/2023-Dessert-Webshop-Project/assets/background-2ac4c91f.png')">
+        <div class="container">
+            <h2 class="h1 text-center mb-lg-11 mb-9">加入會員之後，您可以⋯⋯</h2>
+            <div class="row mb-11">
+                <div class="col-lg-4 col-12 text-center">
+                    <div>
+                        <img class="mb-7" src="/2023-Dessert-Webshop-Project/assets/benefit1-02a3ce26.png" alt="Buy Anything You Want">
+                        <h4 class="mb-9">購買您想要的商品</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12 text-center">
+                    <div>
+                        <img class="mb-7" src="/2023-Dessert-Webshop-Project/assets/benefit2-9b9dfe13.png" alt="Collect Anything You Like">
+                        <h4 class="mb-9">收藏您喜歡的商品</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12 text-center">
+                    <div>
+                        <img class="mb-7" src="/2023-Dessert-Webshop-Project/assets/benefit3-0d8d4eea.png" alt="Get Latest News Immediately">
+                        <h4 class="mb-9">優惠訊息即時通知</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="register.html" type="button" class="btn btn-primary">成為我們的一份子</a>
+        </div>
+    </section>
+
+    <footer class="container">
+    <div class="py-7">
+        <div class="d-flex flex-lg-row flex-column justify-content-between align-items-center mb-7">
+            <a class="mb-lg-0 mb-8" href="index.html"><img src="/2023-Dessert-Webshop-Project/assets/logo-1fb0e713.png" alt="akheng's desserts"></a>
+            <div class="d-flex flex-lg-row flex-column mb-lg-0">
+                <ul class="navbar m-lg-0 p-0">
+                    <li class="nav me-lg-9 me-6"><a data-route="news" class="nav-link rounded-1 p-0" href="news.html">最新消息</a></li>
+                    <li class="nav me-lg-9 me-6"><a data-route="products" class="nav-link rounded-1 p-0" href="products.html">全站商品</a></li>
+                    <li class="nav me-lg-9 me-6"><a data-route="faq" class="nav-link rounded-1 p-0" href="faq.html">購物說明</a></li>
+                    <li class="nav me-lg-9 me-0"><a data-route="admin" class="nav-link rounded-1 p-0" href="admin.html">後台管理</a></li>
+                </ul>
+                <div class="align-self-center">
+                    <a href="#" class="me-2"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJ+SURBVHgB7ZZPThsxFMa/Z1sqrVjkCMMNuAHlBIVl1YbMqLRiGTZVYNNBqpKom7Ks+NMxolWX5AZNb8ARhhtkQSsWjl2bkmQyzCSTUcim/BaZOGP7ffZ7/mLgf4dQgqjuV7AkVjm0R5p6ilEPN+oyOJQ9zEhhAVHD9wREjcj4hsjL6mOMie2M3b7uHwRtGReZd6oAt1r2lB8yohpmwMDIIkImCoga288FMxe2WwUlcDtCfexWP512MKuAb3vvaoa0xBwgw/zXraOzzHdZP56/f7MBQReYI0pjPWifdDFNgCs2Tvwn5RRaEgP8IoZQXS/bE3A4PAHne9vSzpyumZ76o1bSJ0WkJ2XEwyLBNXBQa56EKE6FP+Of7TMYi5dsuNUXqXYCxTMGH4zzXYxcAW71KEAf5gwlYeD1ZHssBbYg1lAAgo6T7X9Fi6jIcbU188I+6iNBd0ShXymS+0w4bRT1CpsGL2rsePcEiBuxikUhlIe0AOsWpdyuDFxrb/B9WAPGCqAJzmxAcqt5HGS9q7ZOfPvwB+0cHxhChoZeMNwB0izGglA8Q4BaUpdYFNejWEMBQegs0lzhgXEmlrTjlBWTtB8fsgca/3x/23ffDXSw1fwqB++m5TxFN9kYc0KhhcQDwzU/QJ6Al+0vsV1eaZudht1+eRsjT4BDPVF123Pmy2WB4HF69ZkCbouxj03MGWNoN736TAGOqr25GE0B5hUcFFRbR5n3QpY3aKt9LK3sTbd1KItLJcO6dVCZ14VNGl9tnXZs3tbLFKYrOPV7eaX68f49MInAFO7y5v9o7ISKlLuurZnc3uZKa9YRDPJV83hxzvp9/+1qFI7+4x+Zhb9RbuG7vCBdzwAAAABJRU5ErkJggg==" alt="facebook"></a>
+                    <a href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAM/SURBVHgB7VfNThsxEJ6xDQ2oh/AG4QkKT9DwBuVYiSQbNVS9NVyq0AtBohD1QnqrSlC2UKlHwhOQPkHDEzQ8ATlUFaKOp/aKTXbXu+SPS9V+UqS11zPzrT2ebwLwrwNhCjTLThpSYoWDyqDCnmTYgxvZKdbdHkyIsQk0K05GgCggkkOImbg1RNTVHtt91d8t1tzuOH5HEjBfyxZ4nSEWYAIQkDsOkXsJNCulrGB0ppelYQqYHcE+bOXeH7dgUgJftl8WCJULDwAk5mwcfPoc+y5u8vTNi2cg8AweEFLBWrHWaEfnWXTCJBtxOIQBQ+wywFUCLJpnGAGzhhC25LxY1oPBrRAMzrzbE4GwGCGvYiDLlaLLfK3R0Y/m55683XQA+sCBd27nuRdASKnXU5oUS+f2j1zf9nS7dK5J+Mmb5ovcfFgxkYD5eivbGV4Hh/lAgAC6MAb07jg6RuhmsHAsXrWsFC3BlFAI1pYzJpzQGEIM4WnUQBceF6YEU1C3/AEVwuM7NKtOWtyK68jLzsZ+YxVmgM6DC+0oG5yTv+SSX7YHOyBuxErUuK/oG8wIhXRpTT4exhoeAZJd7YzIzAzbB1cqYxGgOAKKpirBYdg+kIakBgRQsW50ob6ST2BGMLJ9SB5DQKZkx7JGWImrXuPC1JVoAnr4OYw1IFCsmqykq8jSNF8QOzAl4uqKKdXBxiWiBehaBgjl00ppIhJm1062S4cJPUQ7TCiAr5VXGcnkj7vhLnlCBDu6ucgYbSeCcwXYimu/TFAxz7OKQZYxU//jewihxPLz2seuPw7tgPeCwNftHZ1ARIo88TACxRi+1qp2kUqlLOfenJZwsyYpuN5+NxjcImAgH8myL6O6IalL/bVGXn0pjnMSIN+GBBh7rvhudN6SY5OM+szXNbULPUyzRVHOv2tU9XMdRuMq6QURbsURT2zJTiqbDjJqesamwfzNPgA3+n8DSY2mrvtuQP+HwXUzkyDj9hH4yNe0AdG62Tqj42KOvgudoJzNjX8jzFEyWEsKfi8Bg9zBcUuf21ogMScAtkRfrOb27D4wCAEjcHdujr6i1Vvol5FBJ2mt/sPSJgU9JqiV2ztqw3/8DfgDn81F7HlMF3EAAAAASUVORK5CYII=" alt="github"></a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-lg-row flex-column justify-content-between fs-7 border-top pt-5">
+            <p class="mb-lg-0 mb-6"><span class="material-icons align-bottom me-2 fs-5">copyright</span>2023 Akheng's Desserts All Rights Reserved.</p>
+            <p class="mb-lg-0 mb-6"><span class="material-icons align-bottom me-2 fs-5">location_on</span>地址：花蓮縣ＯＯ鎮ＸＸ路二段＃＃號</p>
+            <p class="mb-lg-0 mb-6"><span class="material-icons align-bottom me-2 fs-5">call</span>電話：0912-345-678</p>
+            <p class="mb-lg-0"><span class="material-icons align-bottom me-2 fs-5">schedule</span>營業時間：每日 08:30～22:00</p>
+        </div>
+    </div>
+</footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    
+    
+    
+</body>
+</html>

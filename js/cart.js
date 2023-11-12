@@ -61,7 +61,7 @@ function renderData(data) {
                     <div class="d-flex justify-content-between">
                         <p class="fw-bold">小計</p>
                         <p style="width: 40%" class="d-flex justify-content-between">
-                            <span>NT$</span>
+                            <span>NT＄</span>
                             <span id="subtotal"></span>
                         </p>
                     </div>
@@ -69,7 +69,7 @@ function renderData(data) {
                     <div class="d-flex justify-content-between">
                         <p class="fw-bold">運費</p>
                         <p style="width: 40%" class="d-flex justify-content-between">
-                            <span>NT$</span>
+                            <span>NT＄</span>
                             <span id="delivery-fee"></span>
                         </p>
                     </div>
@@ -77,9 +77,8 @@ function renderData(data) {
                     <!-- 總計 -->
                     <div class="d-flex justify-content-between align-items-center fw-bold">
                         <p>總計</p>
-                        <p class="w-50 d-flex justify-content-between fs-5">
-                            <span>NT$</span>
-                            <span id="total"></span>
+                        <p class="fs-5">
+                        <span>NT＄</span><span id="total"></span>
                         </p>
                     </div>
                 </div>
@@ -139,9 +138,9 @@ function renderCart(data) {
             <div class="col-md-4 d-md-block d-none">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center gap-3">
-                        <button class="btn p-0"><span class="material-icons fs-2">add_circle</span></button>
+                        <button class="btn p-0 mt-2"><span class="material-icons fs-2">add_circle</span></button>
                         <input class="form-control py-md-2 py-1 px-3 text-center" type="number" min="1" max="10" value=${item.qty}>
-                        <button class="btn p-0"><span class="material-icons fs-2">remove_circle</span></button>
+                        <button class="btn p-0 mt-2"><span class="material-icons fs-2">remove_circle</span></button>
                     </div>
                     <button class="changeQuantity btn btn-sm btn-primary px-2">修改數量</button>
                 </div>

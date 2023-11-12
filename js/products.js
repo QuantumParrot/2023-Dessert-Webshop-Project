@@ -262,7 +262,7 @@ sumbit.addEventListener('click',function(e){
 
         // 2.
 
-        renderData(userData.filter(item => item.name.includes(value)));
+        renderData(userData.filter(item => item.name.includes(value) || item.type.find(str => str.includes(value))));
 
     };
 }, false)

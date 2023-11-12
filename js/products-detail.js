@@ -3,8 +3,8 @@ import axios from "axios";
 import { toastMessage, warningMessage } from "./utilities/message.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
 
-// import Swiper from 'swiper/bundle';
-// import 'swiper/css/bundle';
+import Swiper from 'swiper/bundle';
+import 'swiper/css/bundle';
 
 // import { rollupVersion } from "vite"; // VSCode 不知道為何要自動載入這個，導致整個頁面跳錯，先保留起來日後研究
 

@@ -43,6 +43,8 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   > [free vector e commerce icons](https://www.freepik.com/free-vector/e-commerce-icons_957268.htm#query=cart%20icon&position=7&from_view=search&track=ais) / Image by photoroyalty on Freepik
   >
   > [free vector food set and restaurant elements](https://www.freepik.com/free-vector/food-set-restaurant-elements_1042427.htm#query=fork&position=11&from_view=search&track=sph) / Image by Freepik
+  >
+  > [hand drawn sparkling stars collection](https://www.freepik.com/free-vector/hand-drawn-sparkling-stars-collection_16139383.htm) / Image by Freepik
 
 + [vecteezy](https://www.vecteezy.com/)
 
@@ -59,6 +61,10 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   > 在購物說明頁面使用的圖片 ( Images on faq.html )
   >
   > [いろいろなカラフルな矢印のイラスト](https://www.irasutoya.com/2020/07/blog-post_94.html)
+
++ [LADY KELLY](https://www.ladykelly.com.tw/faq)
+
+  > 在商品詳情頁面與結帳流程頁面使用的寄送說明文字皆參考並改寫自 LADY KELLY 的購物說明
 
 2\. 工具
 

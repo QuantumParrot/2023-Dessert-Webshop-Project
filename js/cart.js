@@ -130,7 +130,7 @@ function renderCart(data) {
             <!-- 3 -->
             <div class="col-md-3 col-6 d-flex justify-content-between align-items-center">
                 <a href="products-detail.html?id=${item.content.id}" class="text-decoration-none">
-                    <h3 class="fs-5 mb-0">${item.content.name}<span class="d-md-inline-block d-none">／${item.content.size}</span></h3>
+                    <h3 class="fs-6 mb-0">${item.content.name}<span class="d-md-inline-block d-none">／${item.content.size}</span></h3>
                 </a>
                 <div class="d-md-none d-block fs-5">ｘ${item.qty}</div>
             </div>
@@ -147,7 +147,7 @@ function renderCart(data) {
             </div>
             <!-- 5 -->
             <div class="col-md-2 col-4">
-                <h4 id="cost" class="d-flex justify-content-between fs-5 px-md-2 px-0 mb-0">
+                <h4 id="cost" class="d-flex justify-content-between fs-6 px-md-2 px-0 mb-0">
                 <span>NT＄</span>
                 <span>${item.content.price*item.qty}</span>
                 </h4>
@@ -282,7 +282,7 @@ function nextStep(e,data) {
         const main = document.querySelector('#main-content');
         let content = '';
         content += /*html*/`<div class="border border-primary rounded-1 px-6 py-7">
-        <form class="d-flex flex-column gap-7">
+        <form id="order-form" class="d-flex flex-column gap-7">
             <div class="d-flex gap-2">
                 <!-- method -->
                 <p class="fw-bold">取貨方式：</p>

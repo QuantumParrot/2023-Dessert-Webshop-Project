@@ -73,9 +73,9 @@ submit.addEventListener('click', submitData, false);
 
 function submitData() {
 
-    console.log(checkInfo(account),checkInfo(password));
+    inputList.forEach(input => checkInfo(input));
 
-    checkInfo(account) && checkInfo(password) &&
+    [...inputList].every(input => !!checkInfo(input)) &&
     handleLogin({ email: account.value, password: password.value });
 
 }

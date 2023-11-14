@@ -13,10 +13,13 @@ init();
 
 const { VITE_APP_SITE } = import.meta.env;
 
+const form = document.querySelector('#register-form');
+
 const username = document.getElementById('username');
 const account = document.getElementById('account');
 const password = document.getElementById('password');
 const passwordConfirm = document.getElementById('password-confirm');
+
 const submit = document.getElementById('submit');
 
 // 即時驗證
@@ -87,13 +90,15 @@ function checkInfo(element) {
 
 // 提交驗證
 
-submit.addEventListener('click', submitData, false);
+form.addEventListener('submit', submitData, false);
 
-function submitData() {
+function submitData(event) {
 
-    console.log(checkInfo(username),checkInfo(account),checkInfo(password),checkInfo(passwordConfirm));
+    event.preventDefault();
 
-    checkInfo(username) && checkInfo(account) && checkInfo(password) && checkInfo(passwordConfirm) &&
+    inputList.forEach(input => checkInfo(input)); // 同時驗證每個表單元素
+
+    [...inputList].every(input => !!checkInfo(input)) &&
     handleRegister({ email: account.value, password: password.value, name: username.value, role: "member" });
 
 }

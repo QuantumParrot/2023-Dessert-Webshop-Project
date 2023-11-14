@@ -118,7 +118,7 @@ function renderOrders(element, orders) {
                     </div>
                     <div class="row fs-5 fw-bold border-bottom mb-5">
                         <div class="col-12">
-                            <p class="mb-5">總計：${order.total} 元</p>
+                            <p class="mb-5">總計：${order.total} 元<span class="text-muted fs-7">（含運費）</span></p>
                         </div>
                     </div>
                     <div class="lh-lg">
@@ -250,7 +250,9 @@ function addToCart(element, data) {
         if (!token) { toastMessage('warning','請先登入') }
         else {
 
-            const targetProduct = data.find(item => item.id == element.dataset.num);
+            const targetProduct = data.find(item => item.content.id == element.dataset.num);
+
+            console.log(data);
 
             // 注意 targetProduct 的結構是 { content: {...}, userId: xx , id: xx }
 

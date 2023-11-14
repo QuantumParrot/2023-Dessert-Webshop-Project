@@ -16,5 +16,5 @@ function jwtExpired() {
 
 export function errorHandle(error) {
     console.log(error);
-    if (error.response.data == 'jwt expired') { jwtExpired() };
+    if (error.response?.data == 'jwt expired') { jwtExpired() };
 }

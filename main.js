@@ -14,5 +14,3 @@ function navigation(){
 }
 
 navigation();
-
-console.log(document.querySelectorAll('.dropdown'));

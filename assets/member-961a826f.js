@@ -1,4 +1,4 @@
-import{c as R,b as ht,a as V,e as B,t as Q,g as ut}from"./handleAuth-80df3364.js";var dt={exports:{}},z={exports:{}},G={exports:{}};/*!
+import{c as R,b as ht,a as V,e as B,t as Q,g as ut}from"./handleAuth-9fafb369.js";var dt={exports:{}},z={exports:{}},G={exports:{}};/*!
   * Bootstrap data.js v5.3.2 (https://getbootstrap.com/)
   * Copyright 2011-2023 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
@@ -77,7 +77,7 @@ import{c as R,b as ht,a as V,e as B,t as Q,g as ut}from"./handleAuth-80df3364.js
                     </div>
                     <div class="row fs-5 fw-bold border-bottom mb-5">
                         <div class="col-12">
-                            <p class="mb-5">總計：${o.total} 元</p>
+                            <p class="mb-5">總計：${o.total} 元<span class="text-muted fs-7">（含運費）</span></p>
                         </div>
                     </div>
                     <div class="lh-lg">
@@ -139,4 +139,4 @@ import{c as R,b as ht,a as V,e as B,t as Q,g as ut}from"./handleAuth-80df3364.js
             </div>
         </a>
     </div>
-    `),E.innerHTML=s,document.querySelectorAll(".favorite").forEach(e=>{Tt(e,v)}),document.querySelectorAll(".cart").forEach(e=>{Nt(e,v)})}function Tt(E,v){E.addEventListener("click",s=>{s.preventDefault();const o=v.find(e=>e.content.id==E.dataset.num);console.log(o),JSON.parse(localStorage.getItem("userData")).id;const d=localStorage.getItem("token");V.delete(`${F}/640/collects/${o.id}`,{headers:{authorization:`Bearer ${d}`}}).then(e=>{Q("success",`已取消收藏${o.content.name}`),et()}).catch(e=>{B(e)})},!1)}function Nt(E,v){E.addEventListener("click",function(s){s.preventDefault();const o=ut();if(!o)Q("warning","請先登入");else{const d=v.find(r=>r.id==E.dataset.num),e=JSON.parse(localStorage.getItem("userData")).id;V.get(`${F}/640/users/${e}/carts`,{headers:{authorization:`Bearer ${o}`}}).then(r=>{const{data:c}=r;let f=c.find(p=>p.content.id==E.dataset.num);return f?f.qty>9?void 0:(f={...f,qty:f.qty+=1},V.patch(`${F}/640/carts/${f.id}`,f,{headers:{authorization:`Bearer ${o}`}})):(f={content:d.content,qty:1,userId:e},delete f.content.isCollected,V.post(`${F}/640/carts`,f,{headers:{authorization:`Bearer ${o}`}}))}).then(r=>{r?Q("success","成功加入購物車"):warningMessage("數量達上限","如果需要大量訂購，請直接與我們聯絡")}).catch(r=>{B(r)})}},!1)}
+    `),E.innerHTML=s,document.querySelectorAll(".favorite").forEach(e=>{Tt(e,v)}),document.querySelectorAll(".cart").forEach(e=>{Nt(e,v)})}function Tt(E,v){E.addEventListener("click",s=>{s.preventDefault();const o=v.find(e=>e.content.id==E.dataset.num);console.log(o),JSON.parse(localStorage.getItem("userData")).id;const d=localStorage.getItem("token");V.delete(`${F}/640/collects/${o.id}`,{headers:{authorization:`Bearer ${d}`}}).then(e=>{Q("success",`已取消收藏${o.content.name}`),et()}).catch(e=>{B(e)})},!1)}function Nt(E,v){E.addEventListener("click",function(s){s.preventDefault();const o=ut();if(!o)Q("warning","請先登入");else{const d=v.find(r=>r.content.id==E.dataset.num);console.log(v);const e=JSON.parse(localStorage.getItem("userData")).id;V.get(`${F}/640/users/${e}/carts`,{headers:{authorization:`Bearer ${o}`}}).then(r=>{const{data:c}=r;let f=c.find(p=>p.content.id==E.dataset.num);return f?f.qty>9?void 0:(f={...f,qty:f.qty+=1},V.patch(`${F}/640/carts/${f.id}`,f,{headers:{authorization:`Bearer ${o}`}})):(f={content:d.content,qty:1,userId:e},delete f.content.isCollected,V.post(`${F}/640/carts`,f,{headers:{authorization:`Bearer ${o}`}}))}).then(r=>{r?Q("success","成功加入購物車"):warningMessage("數量達上限","如果需要大量訂購，請直接與我們聯絡")}).catch(r=>{B(r)})}},!1)}

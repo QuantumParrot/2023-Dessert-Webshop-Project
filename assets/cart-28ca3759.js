@@ -1,4 +1,4 @@
-import{g as h,t as d,a as m,e as f,w as y,S as b}from"./handleAuth-80df3364.js";const{VITE_APP_SITE:p}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1};function v(){const s=h();if(!s)d("warning","請先登入","login.html");else{const a=JSON.parse(localStorage.getItem("userData")).id;m.get(`${p}/640/user/${a}/carts`,{headers:{authorization:`Bearer ${s}`}}).then(e=>{g(e.data)}).catch(e=>{f(e)})}}v();function g(s){const a=document.querySelector("#cart");let e="";s.length===0?(e=`
+import{g as h,t as d,a as m,e as f,w as y,S as b}from"./handleAuth-9fafb369.js";const{VITE_APP_SITE:p}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1};function v(){const s=h();if(!s)d("warning","請先登入","login.html");else{const a=JSON.parse(localStorage.getItem("userData")).id;m.get(`${p}/640/user/${a}/carts`,{headers:{authorization:`Bearer ${s}`}}).then(e=>{g(e.data)}).catch(e=>{f(e)})}}v();function g(s){const a=document.querySelector("#cart");let e="";s.length===0?(e=`
         <div class="col-12">
         <p class="alert bg-tertiary text-center m-0">
         購物車內還沒有商品哦！去<a href="products.html">逛逛</a>吧！
@@ -69,7 +69,7 @@ import{g as h,t as d,a as m,e as f,w as y,S as b}from"./handleAuth-80df3364.js";
             <!-- 3 -->
             <div class="col-md-3 col-6 d-flex justify-content-between align-items-center">
                 <a href="products-detail.html?id=${t.content.id}" class="text-decoration-none">
-                    <h3 class="fs-5 mb-0">${t.content.name}<span class="d-md-inline-block d-none">／${t.content.size}</span></h3>
+                    <h3 class="fs-6 mb-0">${t.content.name}<span class="d-md-inline-block d-none">／${t.content.size}</span></h3>
                 </a>
                 <div class="d-md-none d-block fs-5">ｘ${t.qty}</div>
             </div>
@@ -86,7 +86,7 @@ import{g as h,t as d,a as m,e as f,w as y,S as b}from"./handleAuth-80df3364.js";
             </div>
             <!-- 5 -->
             <div class="col-md-2 col-4">
-                <h4 id="cost" class="d-flex justify-content-between fs-5 px-md-2 px-0 mb-0">
+                <h4 id="cost" class="d-flex justify-content-between fs-6 px-md-2 px-0 mb-0">
                 <span>NT＄</span>
                 <span>${t.content.price*t.qty}</span>
                 </h4>
@@ -94,7 +94,7 @@ import{g as h,t as d,a as m,e as f,w as y,S as b}from"./handleAuth-80df3364.js";
         </div>
     </li>
     `),a.innerHTML=e,document.querySelector("#confirm").addEventListener("click",t=>$(t,s),!1),[...a.children].forEach(t=>{const n=document.querySelector(`[data-num="${t.dataset.num}"] input`).value;w(t,n)})}function w(s,a){s.addEventListener("click",function(e){const{target:o}=e,i=o.closest("li").dataset.num;if(o.closest(".btn")){e.preventDefault();const t=h();if(o.textContent.includes("delete"))m.delete(`${p}/640/carts/${i}`,{headers:{authorization:`Bearer ${t}`}}).then(n=>{d("success","刪除成功"),v()}).catch(n=>{f(n)});else{const n=document.querySelector(`li[data-num="${i}"] input`);if(o.textContent.includes("add"))n.value>9?n.value:n.value++;else if(o.textContent.includes("remove"))n.value<2?n.value:n.value--;else if(o.classList.contains("changeQuantity")){let u=function(l){return isNaN(l)?(d("warning","請輸入阿拉伯數字"),n.value=a,!1):!Number.isInteger(l)||l<=0?(d("warning","請輸入大於零的正整數"),n.value=a,!1):!0};a==n.value?d("question","數量沒變哦 (ㆆᴗㆆ)"):n.value>10?y("數量達上限","如果需要大量訂購，請直接與我們聯絡"):u(+n.value)&&m.get(`${p}/640/carts/${i}`,{headers:{authorization:`Bearer ${t}`}}).then(l=>{let c=l.data;return c={...c,qty:+n.value},m.patch(`${p}/640/carts/${i}`,c,{headers:{authorization:`Bearer ${t}`}})}).then(l=>{d("success","數量修改成功！"),v()}).catch(l=>{f(l)})}}}else return})}function S(s){const a=document.querySelector("#subtotal"),e=document.querySelector("#delivery-fee"),o=document.querySelector("#total");a.textContent=s.reduce((i,t)=>i+Number(t.content.price)*t.qty,0),e.textContent=150,o.textContent=+a.textContent+ +e.textContent}function $(s,a){if(s.target.textContent==="下一步"){const e=document.querySelector("#process-title");s.target.textContent="結　帳",e.textContent="填寫寄送資訊";const o=document.querySelector("#main-content");let i="";i+=`<div class="border border-primary rounded-1 px-6 py-7">
-        <form class="d-flex flex-column gap-7">
+        <form id="order-form" class="d-flex flex-column gap-7">
             <div class="d-flex gap-2">
                 <!-- method -->
                 <p class="fw-bold">取貨方式：</p>

@@ -2,9 +2,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Tab from "bootstrap/js/dist/tab.js";
 
-import { getToken, decodeToken } from "../utilities/authorization";
+import { decodeToken, errorHandle } from "../utilities/authorization";
 import { toastMessage } from "../utilities/message";
-import { errorHandle } from "../utilities/authorization";
 
 const { VITE_APP_SITE, VITE_APP_ADMIN_IDENTITY } = import.meta.env;
 
@@ -17,15 +16,15 @@ let data = [];
 
     if (role !== 'admin') { 
 
-        toastMessage('warning','請先登入管理員帳號','admin-login.html') 
+        toastMessage('warning','請先登入管理員帳號','admin-login.html')
 
     } else {
 
-        const token = getToken();
+        const token = localStorage.getItem('token');
 
         if (token.indexOf(VITE_APP_ADMIN_IDENTITY.split('').map(n=>n.charCodeAt()).join('')) === -1) {
 
-            toastMessage('error','身份驗證失敗','index.html')
+            toastMessage('error','身份驗證失敗','admin-login.html');
 
         } else { getData() }
     

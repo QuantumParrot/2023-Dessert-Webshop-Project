@@ -6,9 +6,10 @@
     <title>會員專區｜Akheng's Desserts 甜點工作室</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/member-961a826f.js"></script>
-    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/handleAuth-9fafb369.js">
-    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/handleAuth-a5da8c2b.css">
+    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/member-be1f6c81.js"></script>
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-10bf84ab.js">
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/tab-7e1302fb.js">
+    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-73b32d78.css">
 </head>
 <body>
 
@@ -170,12 +171,26 @@
                              role="tabpanel"
                              aria-labelledby="v-pills-profile-tab"
                              tabindex="0">
-                        <h3 class="d-md-block d-none mb-8">個人資料</h3>
-                        <div class="col-12">
-                        <p class="alert bg-tertiary text-center m-0">
-                        開發中 ┏( .-. ┏ ) ┓
-                        </p>
-                        </div>
+                        <div id="profile-content" class="row p-0 gap-8">
+                        <div class="loading col-12">
+    <div class="alert bg-tertiary text-center m-0">
+        <div class="mb-5">
+            <svg id="loading-spinner" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                <circle cx="24"    cy="4"     r="4"   fill="#FFFFFF"/>
+                <circle cx="12.19" cy="7.86"  r="3.7" fill="#FFFBF2"/>
+                <circle cx="5.02"  cy="17.68" r="3.4" fill="#FEF7E4"/>
+                <circle cx="5.02"  cy="30.32" r="3.1" fill="#ECB88A"/>
+                <circle cx="12.19" cy="40.14" r="2.8" fill="#A37A64"/>
+                <circle cx="24"    cy="44"    r="2.5" fill="#8F5A3C"/>
+                <circle cx="35.81" cy="40.14" r="2.2" fill="#6A4028"/>
+                <circle cx="42.98" cy="30.32" r="1.9" fill="#563F2E"/>
+                <circle cx="42.98" cy="17.68" r="1.6" fill="#422D28"/>
+                <circle cx="35.81" cy="7.86"  r="1.3" fill="#261308"/>
+            </svg>
+        </div>
+        <p>與伺服器取得聯繫中，請稍候</p>
+    </div>
+</div>                        </div>
                         <div class="text-center d-md-none d-block my-8">
                             <a class="btn btn-sm btn-primary" href="#">回到上方</a>
                         </div>
@@ -185,6 +200,50 @@
             </div>
         </div>
     </section>
+
+    <!-- modal -->
+    <div class="modal fade"
+         id="changePasswordModal"
+         tabindex="-1"
+         aria-labelledby="changePasswordModalLabel"
+         aria-hidden="ture">
+         <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title" id="changePasswordModalLabel">
+                        <h3 class="modal-title fs-3">修改密碼</h3>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="change-password-form">
+                    <div class="modal-body">
+                        <div class="mb-5">
+                        <label for="current-password" class="form-label">當前密碼：</label>
+                        <input id="current-password"
+                               type="password"
+                               class="form-control p-2" autocomplete required>
+                        </div>
+                        <div class="mb-5">
+                        <label for="new-password" class="form-label">新密碼：</label>
+                        <input id="new-password"
+                               type="password"
+                               class="form-control p-2" autocomplete required>
+                        </div>
+                        <div>
+                        <label for="new-password-confirm" class="form-label">再次確認新密碼：</label>
+                        <input id="new-password-confirm"
+                               type="password"
+                               class="form-control p-2" autocomplete required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary">確認</button>
+                        <button type="button" class="btn btn-sm btn-secondary text-primary" data-bs-dismiss="modal">取消</button>
+                    </div>
+                </form>
+            </div>
+         </div>
+    </div>
     
     <footer class="container">
     <div class="py-7">
@@ -195,7 +254,7 @@
                     <li class="nav me-lg-9 me-6"><a data-route="news" class="nav-link rounded-1 p-0" href="news.html">最新消息</a></li>
                     <li class="nav me-lg-9 me-6"><a data-route="products" class="nav-link rounded-1 p-0" href="products.html">全站商品</a></li>
                     <li class="nav me-lg-9 me-6"><a data-route="faq" class="nav-link rounded-1 p-0" href="faq.html">購物說明</a></li>
-                    <li class="nav me-lg-9 me-0"><a data-route="admin" class="nav-link rounded-1 p-0" href="admin.html">後台管理</a></li>
+                    <li class="nav me-lg-9 me-0"><a data-route="admin" class="nav-link rounded-1 p-0" href="admin-login.html">後台管理</a></li>
                 </ul>
                 <div class="align-self-center">
                     <a target="_blank" href="#" class="me-2"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJ+SURBVHgB7ZZPThsxFMa/Z1sqrVjkCMMNuAHlBIVl1YbMqLRiGTZVYNNBqpKom7Ks+NMxolWX5AZNb8ARhhtkQSsWjl2bkmQyzCSTUcim/BaZOGP7ffZ7/mLgf4dQgqjuV7AkVjm0R5p6ilEPN+oyOJQ9zEhhAVHD9wREjcj4hsjL6mOMie2M3b7uHwRtGReZd6oAt1r2lB8yohpmwMDIIkImCoga288FMxe2WwUlcDtCfexWP512MKuAb3vvaoa0xBwgw/zXraOzzHdZP56/f7MBQReYI0pjPWifdDFNgCs2Tvwn5RRaEgP8IoZQXS/bE3A4PAHne9vSzpyumZ76o1bSJ0WkJ2XEwyLBNXBQa56EKE6FP+Of7TMYi5dsuNUXqXYCxTMGH4zzXYxcAW71KEAf5gwlYeD1ZHssBbYg1lAAgo6T7X9Fi6jIcbU188I+6iNBd0ShXymS+0w4bRT1CpsGL2rsePcEiBuxikUhlIe0AOsWpdyuDFxrb/B9WAPGCqAJzmxAcqt5HGS9q7ZOfPvwB+0cHxhChoZeMNwB0izGglA8Q4BaUpdYFNejWEMBQegs0lzhgXEmlrTjlBWTtB8fsgca/3x/23ffDXSw1fwqB++m5TxFN9kYc0KhhcQDwzU/QJ6Al+0vsV1eaZudht1+eRsjT4BDPVF123Pmy2WB4HF69ZkCbouxj03MGWNoN736TAGOqr25GE0B5hUcFFRbR5n3QpY3aKt9LK3sTbd1KItLJcO6dVCZ14VNGl9tnXZs3tbLFKYrOPV7eaX68f49MInAFO7y5v9o7ISKlLuurZnc3uZKa9YRDPJV83hxzvp9/+1qFI7+4x+Zhb9RbuG7vCBdzwAAAABJRU5ErkJggg==" alt="facebook"></a>
@@ -212,7 +271,6 @@
     </div>
 </footer>    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    
     
     
 </body>

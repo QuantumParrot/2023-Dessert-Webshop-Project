@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>後台管理｜Akheng's Desserts 甜點工作室</title>
+    <title>後台登入｜Akheng's Desserts 甜點工作室</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/handleAuth-9fafb369.js"></script>
-    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/handleAuth-a5da8c2b.css">
+    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/admin-login-b11971c7.js"></script>
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-10bf84ab.js">
+    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-73b32d78.css">
 </head>
 <body>
     
@@ -49,8 +50,8 @@
             </div>
             <div class="col-md-6">
                 <div class="px-md-10 px-6 py-9 border rounded-2">
-                    <h2 class="mb-9">後台管理</h2>
-                    <form id="login-form">
+                    <h2 class="mb-9">後台登入</h2>
+                    <form id="admin-login-form">
                         <div class="mb-6">
                             <label for="account" class="mb-2">帳號</label>
                             <input id="account"
@@ -61,7 +62,7 @@
                                  class="invalid-feedback"
                                  data-validation="account"></div>
                         </div>
-                        <div class="mb-9">
+                        <div class="mb-6">
                             <label for="password" class="mb-2">密碼</label>
                             <input id="password"
                                    type="password"
@@ -71,8 +72,18 @@
                                  class="invalid-feedback"
                                  data-validation="password"></div>
                         </div>
+                        <div class="mb-9">
+                            <label for="identity" class="mb-2">管理員金鑰</label>
+                            <input id="identity"
+                                   type="password"
+                                   class="form-control p-2"
+                                   aria-describedby="validationIdentity" autocomplete>
+                            <div id="validationIdentity"
+                                 class="invalid-feedback"
+                                 data-validation="identity"></div>
+                        </div>
                         <div class="d-flex flex-md-row flex-column align-items-center">
-                            <button id="submit" type="button" class="btn btn-primary">確認登入</button>
+                            <button id="submit" type="submit" class="btn btn-primary">確認登入</button>
                         </div>
                     </form>
                 </div>
@@ -89,7 +100,7 @@
                     <li class="nav me-lg-9 me-6"><a data-route="news" class="nav-link rounded-1 p-0" href="news.html">最新消息</a></li>
                     <li class="nav me-lg-9 me-6"><a data-route="products" class="nav-link rounded-1 p-0" href="products.html">全站商品</a></li>
                     <li class="nav me-lg-9 me-6"><a data-route="faq" class="nav-link rounded-1 p-0" href="faq.html">購物說明</a></li>
-                    <li class="nav me-lg-9 me-0"><a data-route="admin" class="nav-link rounded-1 p-0" href="admin.html">後台管理</a></li>
+                    <li class="nav me-lg-9 me-0"><a data-route="admin" class="nav-link rounded-1 p-0" href="admin-login.html">後台管理</a></li>
                 </ul>
                 <div class="align-self-center">
                     <a target="_blank" href="#" class="me-2"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJ+SURBVHgB7ZZPThsxFMa/Z1sqrVjkCMMNuAHlBIVl1YbMqLRiGTZVYNNBqpKom7Ks+NMxolWX5AZNb8ARhhtkQSsWjl2bkmQyzCSTUcim/BaZOGP7ffZ7/mLgf4dQgqjuV7AkVjm0R5p6ilEPN+oyOJQ9zEhhAVHD9wREjcj4hsjL6mOMie2M3b7uHwRtGReZd6oAt1r2lB8yohpmwMDIIkImCoga288FMxe2WwUlcDtCfexWP512MKuAb3vvaoa0xBwgw/zXraOzzHdZP56/f7MBQReYI0pjPWifdDFNgCs2Tvwn5RRaEgP8IoZQXS/bE3A4PAHne9vSzpyumZ76o1bSJ0WkJ2XEwyLBNXBQa56EKE6FP+Of7TMYi5dsuNUXqXYCxTMGH4zzXYxcAW71KEAf5gwlYeD1ZHssBbYg1lAAgo6T7X9Fi6jIcbU188I+6iNBd0ShXymS+0w4bRT1CpsGL2rsePcEiBuxikUhlIe0AOsWpdyuDFxrb/B9WAPGCqAJzmxAcqt5HGS9q7ZOfPvwB+0cHxhChoZeMNwB0izGglA8Q4BaUpdYFNejWEMBQegs0lzhgXEmlrTjlBWTtB8fsgca/3x/23ffDXSw1fwqB++m5TxFN9kYc0KhhcQDwzU/QJ6Al+0vsV1eaZudht1+eRsjT4BDPVF123Pmy2WB4HF69ZkCbouxj03MGWNoN736TAGOqr25GE0B5hUcFFRbR5n3QpY3aKt9LK3sTbd1KItLJcO6dVCZ14VNGl9tnXZs3tbLFKYrOPV7eaX68f49MInAFO7y5v9o7ISKlLuurZnc3uZKa9YRDPJV83hxzvp9/+1qFI7+4x+Zhb9RbuG7vCBdzwAAAABJRU5ErkJggg==" alt="facebook"></a>

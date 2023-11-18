@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>後台管理｜Akheng's Desserts 甜點工作室</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/admin-dashboard-768c756b.js"></script>
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-10bf84ab.js">
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/tab-7e1302fb.js">
+    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-73b32d78.css">
+</head>
+<body>
+
+    <header class="container">
+    <div class="bg-white d-flex justify-content-between align-items-center py-lg-6 py-5">
+        <h1><a href="index.html"><img src="/2023-Dessert-Webshop-Project/assets/logo-1fb0e713.png" alt="akheng's desserts"></a></h1>
+        <!-- 電腦版 -->
+        <div class="d-md-flex d-none">
+            <ul class="navbar border-end border-subtle m-0 p-0">
+                <li class="nav me-9"><a data-route="news" class="nav-link rounded-1 p-0" href="news.html">最新消息</a></li>
+                <li class="nav me-9"><a data-route="products" class="nav-link rounded-1 p-0" href="products.html">全站商品</a></li>
+                <li class="nav me-9"><a data-route="faq" class="nav-link rounded-1 p-0" href="faq.html">購物說明</a></li>
+            </ul>
+            <div id="membership" class="d-flex align-items-center ms-9">
+                <a class="btn btn-sm btn-primary" href="login.html">登入</a>
+            </div>
+        </div>
+        <!-- 手Ｇ版 -->
+        <div class="dropdown d-md-none d-block">
+            <span class="display-1 material-icons dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">menu
+            </span>
+            <ul class="dropdown-menu border-0 shadow text-center">
+                <li><a data-route="news" href="news.html" class="dropdown-item nav-link px-1 py-2" type="button">最新消息</a></li>
+                <li><a data-route="products" href="products.html" class="dropdown-item nav-link px-1 py-2" type="button">全站商品</a></li>
+                <li><a data-route="faq" href="faq.html" class="dropdown-item nav-link px-1 py-2" type="button">購物說明</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li id="membership-mobile"><a class="btn btn-sm btn-primary" href="login.html">登入</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+    <section class="container">
+        <div class="pb-md-13 pt-9 border-bottom">
+            <div class="row">
+                <div class="col-md-2">
+                <ul class="sidebar nav nav-fill position-sticky top-0 fw-bold mb-9"
+    id="v-pills-tab"
+    role="tablist"
+    aria-orientation="vertical">
+    <li class="nav-item bg-secondary">
+        <a href="#orders" class="text-decoration-none">
+        <button class="nav-link"
+                id="v-pills-orders-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-orders"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-orders"
+                aria-selected="false">訂單管理</button>
+        </a>
+    </li>
+    <li class="nav-item bg-secondary">
+        <a href="#announcements" class="text-decoration-none">
+        <button class="nav-link"
+                id="v-pills-announcements-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-announcements"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-announcements"
+                aria-selected="false">消息管理</button>
+        </a>
+    </li>
+    <li class="nav-item bg-secondary">
+        <a href="#products" class="text-decoration-none">
+        <button class="nav-link"
+                id="v-pills-products-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-products"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-products"
+                aria-selected="false">商品管理</button>
+        </a>
+    </li>
+    <li class="nav-item bg-secondary">
+        <a href="#charts" class="text-decoration-none">
+        <button class="nav-link"
+                id="v-pills-charts-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-charts"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-charts"
+                aria-selected="false">銷售數據</button>
+        </a>
+    </li>
+</ul>                </div>
+                <div class="col-md-10">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade"
+                             id="v-pills-orders"
+                             role="tabpanel"
+                             aria-labelledby="v-pills-orders-tab"
+                             tabindex="0">
+                        <h3 class="d-md-block d-none mb-8">訂單管理</h3>
+                        <div id="orders-manage"
+                             class="d-flex flex-md-row flex-column justify-content-md-between align-items-md-center mb-8">
+                            <div class="d-flex align-items-center gap-3 mb-md-0 mb-8">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
+                                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <style>svg{fill:#a37a64}</style>
+                                        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+                                    </svg>
+                                </div>
+                                <input id="order-search"
+                                       type="text"
+                                       class="form-control p-2"
+                                       placeholder="搜尋訂單編號或收件資訊">
+                            </div>
+                            <div class="flex-md-grow-0 flex-grow-1 d-flex justify-content-between gap-5">
+                                <select id="sort-by-time"
+                                        class="form-select py-2">
+                                    <option value="由舊到新" selected>由舊到新</option>
+                                    <option value="由新到舊">由新到舊</option>
+                                </select>
+                                <select id="filter-by-status"
+                                        class="form-select py-2">
+                                    <option value="全部訂單" selected>全部訂單</option>  
+                                    <option value="未完成">未完成</option>
+                                    <option value="已完成">已完成</option>                                  
+                                </select>
+                            </div>
+                        </div>
+                        <div id="orders-content" class="row p-0">
+                        <div class="loading col-12">
+    <div class="alert bg-tertiary text-center m-0">
+        <div class="mb-5">
+            <svg id="loading-spinner" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                <circle cx="24"    cy="4"     r="4"   fill="#FFFFFF"/>
+                <circle cx="12.19" cy="7.86"  r="3.7" fill="#FFFBF2"/>
+                <circle cx="5.02"  cy="17.68" r="3.4" fill="#FEF7E4"/>
+                <circle cx="5.02"  cy="30.32" r="3.1" fill="#ECB88A"/>
+                <circle cx="12.19" cy="40.14" r="2.8" fill="#A37A64"/>
+                <circle cx="24"    cy="44"    r="2.5" fill="#8F5A3C"/>
+                <circle cx="35.81" cy="40.14" r="2.2" fill="#6A4028"/>
+                <circle cx="42.98" cy="30.32" r="1.9" fill="#563F2E"/>
+                <circle cx="42.98" cy="17.68" r="1.6" fill="#422D28"/>
+                <circle cx="35.81" cy="7.86"  r="1.3" fill="#261308"/>
+            </svg>
+        </div>
+        <p>與伺服器取得聯繫中，請稍候</p>
+    </div>
+</div>                        </div>
+                        <div class="text-center d-md-none d-block mt-4">
+                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                        </div>
+                        </div>
+                        <div class="tab-pane fade"
+                             id="v-pills-announcements"
+                             role="tabpanel"
+                             aria-labelledby="v-pills-announcements-tab"
+                             tabindex="0">
+                        <h3 class="d-md-block d-none mb-8">消息管理</h3>
+                        <div id="announcements-content" class="row p-0">
+                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                        </div>
+                        </div>
+                        <div class="tab-pane fade"
+                             id="v-pills-products"
+                             role="tabpanel"
+                             aria-labelledby="v-pills-products-tab"
+                             tabindex="0">
+                        <h3 class="d-md-block d-none mb-8">商品管理</h3>
+                        <div id="products-content" class="row p-0">
+                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                        </div>
+                        </div>
+                        <div class="tab-pane fade"
+                             id="v-pills-charts"
+                             role="tabpanel"
+                             aria-labelledby="v-pills-charts-tab"
+                             tabindex="0">
+                        <h3 class="d-md-block d-none mb-8">銷售數據</h3>
+                        <div id="charts-content" class="row p-0">
+                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    
+</body>
+</html>

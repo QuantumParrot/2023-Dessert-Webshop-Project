@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>後台管理｜Akheng's Desserts 甜點工作室</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+
+    <%- include('./layout/header'); -%>
+
+    <section class="container">
+        <div class="pb-md-13 pt-9 border-bottom">
+            <div class="row">
+                <div class="col-md-2">
+                <%- include('./layout/sidebar-admin'); -%>
+                </div>
+                <div class="col-md-10">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade"
+                             id="v-pills-orders"
+                             role="tabpanel"
+                             aria-labelledby="v-pills-orders-tab"
+                             tabindex="0">
+                        <h3 class="d-md-block d-none mb-8">訂單管理</h3>
+                        <div id="orders-manage"
+                             class="d-flex flex-md-row flex-column justify-content-md-between align-items-md-center mb-8">
+                            <div class="d-flex align-items-center gap-3 mb-md-0 mb-8">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
+                                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <style>svg{fill:#a37a64}</style>
+                                        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+                                    </svg>
+                                </div>
+                                <input id="order-search"
+                                       type="text"
+                                       class="form-control p-2"
+                                       placeholder="搜尋訂單編號或收件資訊">
+                            </div>
+                            <div class="flex-md-grow-0 flex-grow-1 d-flex justify-content-between gap-5">
+                                <select id="sort-by-time"
+                                        class="form-select py-2">
+                                    <option value="由舊到新" selected>由舊到新</option>
+                                    <option value="由新到舊">由新到舊</option>
+                                </select>
+                                <select id="filter-by-status"
+                                        class="form-select py-2">
+                                    <option value="全部訂單" selected>全部訂單</option>  
+                                    <option value="未完成">未完成</option>
+                                    <option value="已完成">已完成</option>                                  
+                                </select>
+                            </div>
+                        </div>
+                        <div id="orders-content" class="row p-0">
+                        <%- include('./layout/loading'); -%>
+                        </div>
+                        <div class="text-center d-md-none d-block mt-4">
+                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                        </div>
+                        </div>
+                        <div class="tab-pane fade"
+                             id="v-pills-announcements"
+                             role="tabpanel"
+                             aria-labelledby="v-pills-announcements-tab"
+                             tabindex="0">
+                        <h3 class="d-md-block d-none mb-8">消息管理</h3>
+                        <div id="announcements-content" class="row p-0">
+                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                        </div>
+                        </div>
+                        <div class="tab-pane fade"
+                             id="v-pills-products"
+                             role="tabpanel"
+                             aria-labelledby="v-pills-products-tab"
+                             tabindex="0">
+                        <h3 class="d-md-block d-none mb-8">商品管理</h3>
+                        <div id="products-content" class="row p-0">
+                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                        </div>
+                        </div>
+                        <div class="tab-pane fade"
+                             id="v-pills-charts"
+                             role="tabpanel"
+                             aria-labelledby="v-pills-charts-tab"
+                             tabindex="0">
+                        <h3 class="d-md-block d-none mb-8">銷售數據</h3>
+                        <div id="charts-content" class="row p-0">
+                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="module" src="../main.js"></script>
+    <script type="module" src="../js/admin/adminDashboard.js"></script>
+</body>
+</html>

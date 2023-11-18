@@ -53,11 +53,8 @@
                              role="tabpanel"
                              aria-labelledby="v-pills-profile-tab"
                              tabindex="0">
-                        <h3 class="d-md-block d-none mb-8">個人資料</h3>
-                        <div class="col-12">
-                        <p class="alert bg-tertiary text-center m-0">
-                        開發中 ┏( .-. ┏ ) ┓
-                        </p>
+                        <div id="profile-content" class="row p-0 gap-8">
+                        <%- include('./layout/loading'); -%>
                         </div>
                         <div class="text-center d-md-none d-block my-8">
                             <a class="btn btn-sm btn-primary" href="#">回到上方</a>
@@ -68,12 +65,55 @@
             </div>
         </div>
     </section>
+
+    <!-- modal -->
+    <div class="modal fade"
+         id="changePasswordModal"
+         tabindex="-1"
+         aria-labelledby="changePasswordModalLabel"
+         aria-hidden="ture">
+         <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title" id="changePasswordModalLabel">
+                        <h3 class="modal-title fs-3">修改密碼</h3>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="change-password-form">
+                    <div class="modal-body">
+                        <div class="mb-5">
+                        <label for="current-password" class="form-label">當前密碼：</label>
+                        <input id="current-password"
+                               type="password"
+                               class="form-control p-2" autocomplete required>
+                        </div>
+                        <div class="mb-5">
+                        <label for="new-password" class="form-label">新密碼：</label>
+                        <input id="new-password"
+                               type="password"
+                               class="form-control p-2" autocomplete required>
+                        </div>
+                        <div>
+                        <label for="new-password-confirm" class="form-label">再次確認新密碼：</label>
+                        <input id="new-password-confirm"
+                               type="password"
+                               class="form-control p-2" autocomplete required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary">確認</button>
+                        <button type="button" class="btn btn-sm btn-secondary text-primary" data-bs-dismiss="modal">取消</button>
+                    </div>
+                </form>
+            </div>
+         </div>
+    </div>
     
     <%- include('./layout/footer'); -%>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="module" src="../main.js"></script>
     <script type="module" src="../js/member.js"></script>
-    <script type="module" src="../js/handleAuth.js"></script>
 </body>
 </html>

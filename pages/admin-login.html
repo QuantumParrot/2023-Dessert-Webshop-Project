@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>後台管理｜Akheng's Desserts 甜點工作室</title>
+    <title>後台登入｜Akheng's Desserts 甜點工作室</title>
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
@@ -18,8 +18,8 @@
             </div>
             <div class="col-md-6">
                 <div class="px-md-10 px-6 py-9 border rounded-2">
-                    <h2 class="mb-9">後台管理</h2>
-                    <form id="login-form">
+                    <h2 class="mb-9">後台登入</h2>
+                    <form id="admin-login-form">
                         <div class="mb-6">
                             <label for="account" class="mb-2">帳號</label>
                             <input id="account"
@@ -30,7 +30,7 @@
                                  class="invalid-feedback"
                                  data-validation="account"></div>
                         </div>
-                        <div class="mb-9">
+                        <div class="mb-6">
                             <label for="password" class="mb-2">密碼</label>
                             <input id="password"
                                    type="password"
@@ -40,8 +40,18 @@
                                  class="invalid-feedback"
                                  data-validation="password"></div>
                         </div>
+                        <div class="mb-9">
+                            <label for="identity" class="mb-2">管理員金鑰</label>
+                            <input id="identity"
+                                   type="password"
+                                   class="form-control p-2"
+                                   aria-describedby="validationIdentity" autocomplete>
+                            <div id="validationIdentity"
+                                 class="invalid-feedback"
+                                 data-validation="identity"></div>
+                        </div>
                         <div class="d-flex flex-md-row flex-column align-items-center">
-                            <button id="submit" type="button" class="btn btn-primary">確認登入</button>
+                            <button id="submit" type="submit" class="btn btn-primary">確認登入</button>
                         </div>
                     </form>
                 </div>
@@ -52,6 +62,6 @@
     <%- include('./layout/footer'); -%>
 
     <script type="module" src="../main.js"></script>
-    <script type="module" src="../js/handleAuth.js"></script>
+    <script type="module" src="../js/admin/adminLogin.js"></script>
 </body>
 </html>

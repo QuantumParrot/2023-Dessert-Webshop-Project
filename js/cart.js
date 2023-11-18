@@ -407,7 +407,7 @@ function nextStep(e,data) {
 function completeOrder(data, info) {
     Swal.fire({
         icon: 'warning',
-        title: '確認送出訂單？',
+        title: '確定送出訂單？',
         text: '提醒您，按下送出之後即視為交易成立',
         position: 'center',
         allowOutsideClick: false,

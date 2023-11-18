@@ -1,6 +1,8 @@
 import './assets/scss/main.scss';
 import './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
+import './js/handleHeaderChange.js';
+
 // 半放棄的手刻 isActive :P
 
 function navigation(){

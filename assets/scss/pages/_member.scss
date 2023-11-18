@@ -1,0 +1,7 @@
+@media (max-width: 425px) {
+    #profile-form, #delivery-form {
+        & input:not([type="checkbox"]) {
+            width: 100% !important;
+        }
+    }
+}

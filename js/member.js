@@ -1,20 +1,24 @@
 import axios from "axios";
-
+import Swal from "sweetalert2";
 import Tab from "bootstrap/js/dist/tab.js";
+
 import { getToken, errorHandle } from "./utilities/authorization.js";
-import { toastMessage } from "./utilities/message.js";
+import { toastMessage, warningMessage } from "./utilities/message.js";
 
 const { VITE_APP_SITE } = import.meta.env;
+
+let currentElement = '';
+let currentData = [];
 
 // init
 
 function init() {
     
     if (!getToken()) {
+
         toastMessage('warning','請先登入','login.html');
-    } else {
-        getData();
-    }
+
+    } else { getData() }
 
 }
 
@@ -43,30 +47,52 @@ function getData() {
 
     // 渲染資料的主要區塊
 
-    const element = document.querySelector(`#v-pills-${hash} #${hash}-content`);
+    currentElement = document.querySelector(`#v-pills-${hash} #${hash}-content`);
 
     // 取得使用者個人資料
 
     const userId = JSON.parse(localStorage.getItem("userData"))?.id;
 
+    const headers = {
+        headers: {
+            "authorization": `Bearer ${getToken()}`
+        }
+    }
+
     if (hash === 'orders') {
-        axios.get(`${VITE_APP_SITE}/users/${userId}/orders`)
+
+        axios.get(`${VITE_APP_SITE}/600/users/${userId}/orders?_sort=id&_order=desc`, headers) // 由新到舊
         .then((res) => {
-            renderOrders(element, res.data);
+            currentData = res.data;
+            renderOrders(currentData);
         })
         .catch((error)=>{ errorHandle(error) })
+
     } else if (hash === 'collection') {
-        axios.get(`${VITE_APP_SITE}/users/${userId}/collects`)
-        .then(res => {
-            renderCollection(element, res.data);
+
+        axios.get(`${VITE_APP_SITE}/600/users/${userId}/collects`, headers)
+        .then((res) => {
+            currentData = res.data;
+            renderCollection(currentData);
         })
         .catch((error)=>{ errorHandle(error) })
-    } else if (hash === 'profile') {
+
+    } else if (hash === 'profile') { 
+
+        axios.get(`${VITE_APP_SITE}/600/users/${userId}`, headers)
+        .then((res) => {
+            currentData = res.data;
+            renderProfile();
+        })
+        .catch((error)=>{ errorHandle(error) })
 
     }
+
 }
 
-function renderOrders(element, orders) {
+// 我的訂單
+
+function renderOrders(orders) {
     let str = '';
     orders.length === 0 ? (str += /*html*/`
     <div class="col-12">
@@ -102,7 +128,7 @@ function renderOrders(element, orders) {
                 <div class="accordion-content rounded-2 shadow">
                     <div class="px-md-8 px-6 pt-5 pb-7">
                     <div class="mb-5">
-                        ${order.products.map(product => `
+                        ${order.products.map(product => /*html*/`
                         <div class="row gap-md-5 py-2 border-bottom lh-lg">
                             <div class="col-lg-3 col-12">
                                 <p class="text-orange fw-bold">${product.content.name}</p>
@@ -150,7 +176,7 @@ function renderOrders(element, orders) {
         </div>
         `
     })
-    element.innerHTML = str;
+    currentElement.innerHTML = str;
 
     $('.accordion-content').hide();
     
@@ -159,17 +185,19 @@ function renderOrders(element, orders) {
     })
 }
 
-function renderCollection(element, productList) {
+// 我的收藏
+
+function renderCollection(collects) {
 
     let str = '';
-    productList.length === 0 ? (str += /*html*/`
+    collects.length === 0 ? (str += /*html*/`
     <div class="col-12">
         <p class="alert bg-tertiary text-center m-0">
         還沒有收藏任何商品哦！去<a href="products.html">逛逛</a>吧！
         </p>
     </div>
     `) :
-    productList.forEach(({content}) => 
+    collects.forEach(({content}) => 
     str += /*html*/`
     <div class="col-md-4 col-12 mb-9">
         <a class="text-decoration-none" href="products-detail.html?id=${content.id}">
@@ -197,15 +225,15 @@ function renderCollection(element, productList) {
         </a>
     </div>
     `);
-    element.innerHTML = str;
+    currentElement.innerHTML = str;
 
     // 待優化的程式碼 //
 
     const favorites = document.querySelectorAll('.favorite');
-    favorites.forEach(favorite => { toggleStatus(favorite, productList) });
+    favorites.forEach(favorite => { toggleStatus(favorite, collects) });
 
     const cartButtons = document.querySelectorAll('.cart');
-    cartButtons.forEach(cartButton => { addToCart(cartButton, productList) });
+    cartButtons.forEach(cartButton => { addToCart(cartButton, collects) });
 
 }
 
@@ -217,12 +245,10 @@ function toggleStatus(element, data) {
 
         const targetProduct = data.find(product => product.content.id == element.dataset.num);
 
-        console.log(targetProduct);
-
         // 取得使用者個人資料
 
         const userId = JSON.parse(localStorage.getItem("userData")).id;
-        const token = localStorage.getItem("token");
+        const token = getToken();
 
         axios.delete(`${VITE_APP_SITE}/640/collects/${targetProduct.id}`, {
             headers: {
@@ -251,8 +277,6 @@ function addToCart(element, data) {
         else {
 
             const targetProduct = data.find(item => item.content.id == element.dataset.num);
-
-            console.log(data);
 
             // 注意 targetProduct 的結構是 { content: {...}, userId: xx , id: xx }
 
@@ -295,5 +319,314 @@ function addToCart(element, data) {
         }
 
     }, false)
+
+}
+
+// 會員資料
+
+function renderProfile() {
+
+    const userData = currentData;
+
+    let str = '';
+
+    str += /*html*/`
+    <div class="col-12">
+        <h4 class="mb-8">修改會員資料</h4>
+        <form id="profile-form" class="bg-secondary rounded-1 px-6 py-7">
+            <div class="d-flex flex-column gap-7">
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-md-6 gap-4">
+                    <div class="d-flex align-items-center gap-6">
+                        <label for="userName" class="fw-bold mb-0">名字</label>
+                        <div class="flex-grow-1">
+                        <input id="userName"
+                               type="text"
+                               class="form-control p-2 border-secondary"
+                               name="name"
+                               value="${userData.name}"
+                               disabled>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-primary py-1"
+                                data-target="userName">修改</button>
+                    </div>
+                </div>
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-md-6 gap-4">
+                    <div class="d-flex align-items-center gap-6">
+                        <label for="userEmail" class="fw-bold">帳號</label>
+                        <div class="flex-grow-1">
+                        <input id="userEmail"
+                               type="email"
+                               class="form-control p-2 border-secondary"
+                               name="email"
+                               value="${userData.email}"
+                               disabled>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-primary py-1"
+                                data-target="userEmail">修改</button>
+                    </div>
+                </div>
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-md-6 gap-4">
+                    <div class="d-flex align-items-center gap-6">
+                        <label for="userPassword" class="fw-bold mb-0">密碼</label>
+                        <div class="flex-grow-1">
+                        <input id="userPassword"
+                               type="password"
+                               class="form-control p-2 border-secondary"
+                               name="password"
+                               value="${"*".repeat(10)}"
+                               autocomplete disabled>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button"
+                                class="btn btn-sm btn-primary py-1"
+                                data-target="userPassword"
+                                data-bs-toggle="modal"
+                                data-bs-target="#changePasswordModal">修改</button>
+                    </div>
+                    <p class="form-text mt-0">密碼長度僅為示意，非真實長度</p>
+                </div>
+            </div>
+        </form>
+    </div>
+    `;
+
+    str += /*html*/`
+    <div class="col-12">
+        <h4 class="d-flex align-items-center gap-5 mb-8">常用寄送資訊（功能開發中）</h4>
+        <form id="delivery-form" class="bg-secondary rounded-1 px-6 py-7">
+            <div class="d-flex flex-column gap-7">
+                <!-- 會員姓名 -->
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
+                    <label for="receiver" class="fw-bold">收件人姓名</label>
+                    <input id="receiver"
+                           type="text"
+                           class="form-control w-25 p-2 border-secondary"
+                           required>
+                    <div><input type="checkbox" id="useMemberName" class="me-4">同會員資料</div>
+                </div>
+                <!-- 會員電話 -->
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
+                    <label for="phone" class="fw-bold">收件人電話</label>
+                    <input id="phone"
+                           type="tel"
+                           class="form-control w-25 p-2 border-secondary"
+                           required>
+                </div>
+                <!-- 會員住址 -->
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
+                    <label for="address" class="fw-bold">收件人地址</label>
+                    <input id="address"
+                           type="text"
+                           class="form-control w-50 p-2 border-secondary"
+                           required>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-sm btn-primary">儲存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    `;
+
+    currentElement.innerHTML = str;
+
+    changeProfile(userData);
+    saveDeliveryInfo(userData);
+
+}
+
+function changeProfile(userData) {
+
+    const profileForm = document.querySelector('#profile-form');
+
+    profileForm.addEventListener('click', function(e){
+
+        e.preventDefault();
+        
+        if (e.target.nodeName === 'BUTTON') {
+
+            const target = e.target.dataset.target;
+            const targetInput = profileForm.querySelector(`#${target}`);
+
+            if (target !== 'userPassword' && e.target.textContent === '修改') {
+
+                targetInput.removeAttribute('disabled');
+                e.target.textContent = '送出';
+
+            } else if (e.target.textContent === '送出') {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: '確定修改資料？',
+                    text: `您的${targetInput.name === 'name' ? '名字' : '帳號'}將改為：${targetInput.value}`,
+                    /* cancel */
+                    showCancelButton: true,
+                    cancelButtonColor: '#D1741F',
+                    cancelButtonText: '取消',
+                    /* deal with AJAX */
+                    confirmButtonColor: '#A37A64',
+                    confirmButtonText: '確定',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        try {
+
+                            if (targetInput.value === userData[targetInput.name]) {
+                    
+                                toastMessage('question', '資料沒變哦 (ㆆᴗㆆ)');
+                                return;
+            
+                            }
+
+                            const token = getToken();
+                            const userInfo = { [targetInput.name]: targetInput.value };
+    
+                            e.target.setAttribute('disabled', true);
+                            const res = await axios.patch(`${VITE_APP_SITE}/660/users/${userData.id}`, userInfo, {
+                                headers: {
+                                    "authorization": `Bearer ${token}`
+                                }
+                            });
+
+                            e.target.removeAttribute('disabled');
+                            toastMessage('success','修改完成！');
+                            localStorage.setItem('userData', JSON.stringify(res.data));
+                            getData();
+
+                        } catch (error) { errorHandle(error) }
+                    }
+                })
+                .then((result)=>{
+                    targetInput.setAttribute('disabled', true);
+                    targetInput.value = userData[targetInput.name];
+                    e.target.textContent = '修改';
+                })
+
+            } else if (target === 'userPassword') { changePassword(userData) }
+
+        }
+
+    })
+
+}
+
+function changePassword(userData) {
+
+    const form = document.querySelector('#change-password-form');
+    const inputList = form.querySelectorAll('input');
+    const submit = form.querySelector('button[type="submit"]');
+    
+    submit.addEventListener('click', function(e){
+
+        e.preventDefault();
+
+        const currentPassword = inputList[0].value;
+        const newPassword = inputList[1].value;
+        const newPasswordConfirm = inputList[2].value;
+
+        function checkValue(value) {
+
+            const regex = /\w{6,}/;
+    
+            if (!value) {
+    
+                toastMessage("warning", "欄位不可空白");
+                return;
+            
+            } else if (!regex.test(value)) { 
+                
+                toastMessage("warning", "長度需在六個字以上");
+                return;
+    
+            } else if (currentPassword === newPassword) {
+
+                toastMessage("warning", "新密碼不可與舊密碼相同");
+                return;
+
+            } else if (newPassword !== newPasswordConfirm) {
+    
+                toastMessage("warning", "兩次密碼不一致");
+                return;
+    
+            }
+    
+            return true;
+    
+        }
+
+        [...inputList].every(input => checkValue(input.value)) &&
+        (function(){
+
+            const userInfo = { email: userData.email, password: currentPassword };
+
+            axios.post(`${VITE_APP_SITE}/login/${userData.id}`, userInfo)
+            .then((res)=>{
+                const headers = {
+                    headers: {
+                        "authorization": `Bearer ${getToken()}`
+                    }
+                }
+                return axios.patch(`${VITE_APP_SITE}/660/users/${userData.id}`, {
+                    password: newPassword
+                }, headers)
+            })
+            .then((res)=>{
+                form.reset();
+                localStorage.removeItem('token');
+                localStorage.removeItem('userData');
+                toastMessage("success", "修改成功！請重新登入！", "login.html");
+            })
+            .catch((error)=>{ errorHandle(error) })
+
+        })();
+
+    })
+
+
+}
+
+function saveDeliveryInfo(userData) {
+
+    const deliveryForm = document.querySelector('#delivery-form');
+
+    const useMemberName = deliveryForm.querySelector('#useMemberName');
+    const receiver = deliveryForm.querySelector('#receiver');
+    const phone = deliveryForm.querySelector('#phone');
+    const address = deliveryForm.querySelector('#address');
+
+    useMemberName.addEventListener('change', function(e){
+        if (e.target.checked) {
+            receiver.value = userData.name;
+        } else {
+            receiver.value = '';
+        }
+    });
+
+    deliveryForm.addEventListener('submit', function(e){
+
+        e.preventDefault();
+
+        if (phone) {
+            const regex = /^09(\d){8}/;
+            if (!regex.test(phone.value)) {
+                toastMessage('warning','手機號碼格式不正確');
+                return;
+            }
+        }
+        
+        const receiverInfo = {
+            receiver: receiver.value,
+            phone: phone.value,
+            address: address.value,
+            userId: JSON.parse(localStorage.getItem('userData')).id,
+        }
+
+        deliveryForm.reset();
+
+    })
 
 }

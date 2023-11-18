@@ -1,13 +1,11 @@
 import axios from "axios";
 
-import { getToken } from "./utilities/authorization.js";
+import { getToken, validation } from "./utilities/authorization.js";
 import { toastMessage } from "./utilities/message.js";
 
 // 轉址 ( 如果用戶處於登入狀態，不要讓他們訪問這個頁面 )
 
-function init() {
-    if (getToken()) { location.href="index.html" }
-}
+function init() { if (getToken()) { location.href="index.html" } }
 
 init();
 
@@ -24,69 +22,14 @@ const submit = document.getElementById('submit');
 
 // 即時驗證
 
-const inputList = document.querySelectorAll('input');
+const inputList = form.querySelectorAll('input');
 
 inputList.forEach((input) => {
-    input.addEventListener('input', (e)=>{checkInfo(e.target)}, false)
+    input.addEventListener('input', (e)=>{
+        validation(e.target);
+        e.target.id === 'password-confirm' ? checkPasswordConfirm(e.target) : null;
+    }, false)
 });
-
-// 驗證函式
-
-function checkInfo(element) {
-
-    const { id, value, classList } = element;
-    const feedback = document.querySelector(`div[data-validation="${id}"]`);
-
-    function success() {
-        classList.remove('is-invalid');
-        classList.add('is-valid');
-        return true;
-    }
-
-    if (!value) {
-
-        classList.add('is-invalid');
-        feedback.textContent = "欄位不可空白";
-
-    } else if (id==="account") {
-
-        // Email Regular Expression from JSON-server-auth 
-
-        const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
-        if (!regex.test(value)) {
-
-            classList.remove('is-valid');
-            classList.add('is-invalid');
-            feedback.textContent = "信箱格式不正確";
-            
-        } else { return success() }
-
-    } else if (id==="password") {
-
-        const regex = /\w{6,}/;
-
-        if (!regex.test(value)) {
-
-            classList.remove('is-valid');
-            classList.add('is-invalid');
-            feedback.textContent = "長度需在六個字以上";
-
-        } else { return success() }
-
-    } else if (id==="password-confirm") {
-
-        if (value !== password.value) {
-
-            classList.remove('is-valid');
-            classList.add('is-invalid');
-            feedback.textContent = "兩次密碼不一致";
-
-        } else { return success() }
-
-    } else { return success() }
-
-}
 
 // 提交驗證
 
@@ -96,11 +39,28 @@ function submitData(event) {
 
     event.preventDefault();
 
-    inputList.forEach(input => checkInfo(input)); // 同時驗證每個表單元素
+    inputList.forEach(input => validation(input)); // 同時驗證每個表單元素
 
-    [...inputList].every(input => !!checkInfo(input)) &&
+    [...inputList].every(input => validation(input)) &&
+    checkPasswordConfirm(passwordConfirm) &&
     handleRegister({ email: account.value, password: password.value, name: username.value, role: "member" });
 
+}
+
+function checkPasswordConfirm(input) {
+
+    const { id, value, classList } = input;
+    const feedback = document.querySelector(`[data-validation="${id}"]`);
+
+    if (value !== password.value) {
+        classList.remove('is-valid');
+        classList.add('is-invalid');
+        feedback.textContent = "兩次密碼不一致";
+        return false;
+    }
+
+    return true;
+    
 }
 
 function handleRegister(info) {

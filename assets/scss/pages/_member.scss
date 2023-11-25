@@ -1,3 +1,9 @@
+#profile-form {
+    & input:not([type="checkbox"]) {
+        width: 250px !important;
+    }
+}
+
 @media (max-width: 425px) {
     #profile-form, #delivery-form {
         & input:not([type="checkbox"]) {

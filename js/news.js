@@ -22,7 +22,7 @@ function renderData(data) {
         str += /*html*/`
         <li class="nav bg-white rounded-2 shadow p-md-5 p-2 fw-bold">
             <a class="nav-link flex-grow-1 d-flex flex-md-row flex-column" href="news-detail.html?id=${news.id}">
-            <p class="text-black me-6 mb-md-0 mb-2">${news.date}</p>
+            <p class="text-black me-6 mb-md-0 mb-2">${news.date.replace(/\s[AM|PM].+/,"")}</p>
             <p>${news.title}</p>
             </a>
         </li>

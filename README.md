@@ -28,13 +28,15 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + [Swiper](https://swiperjs.com/)
 
++ [Moment.js](https://momentjs.com/)
+
 ***
 
 ### 使用素材及工具
 
-1\. 素材（符合規範即可免費商用）
+1\. 素材
 
-+ [freepik](https://freepik.com/)
++ [freepik](https://freepik.com/)（符合規範即可免費商用）
 
   > 在購物說明頁面使用的圖片 ( Images on faq.html )
   > 
@@ -46,7 +48,7 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   >
   > [hand drawn sparkling stars collection](https://www.freepik.com/free-vector/hand-drawn-sparkling-stars-collection_16139383.htm) / Image by Freepik
 
-+ [vecteezy](https://www.vecteezy.com/)
++ [vecteezy](https://www.vecteezy.com/)（符合規範即可免費商用）
 
   > 在購物說明頁面使用的圖片 ( Images on faq.html )
   >
@@ -56,11 +58,15 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + [unsplash](https://unsplash.com/)
 
-+ [かわいいフリー素材集：いらすと屋](https://www.irasutoya.com/p/terms.html)
++ [かわいいフリー素材集：いらすと屋](https://www.irasutoya.com/p/terms.html)（符合規範即可免費商用）
 
   > 在購物說明頁面使用的圖片 ( Images on faq.html )
   >
   > [いろいろなカラフルな矢印のイラスト](https://www.irasutoya.com/2020/07/blog-post_94.html)
+
++ [CSS Loaders](https://cssloaders.github.io/)
+
+  > 在首頁的每月推薦專欄裡使用了以它的 loading 動畫為基礎修改而成的 click 動畫 ( CSS Animation on index.html )
 
 + [LADY KELLY](https://www.ladykelly.com.tw/faq)
 

@@ -48,8 +48,8 @@
                                 </select>
                                 <select id="filter-by-status"
                                         class="form-select py-2">
-                                    <option value="全部訂單" selected>全部訂單</option>  
-                                    <option value="未完成">未完成</option>
+                                    <option value="全部訂單">全部訂單</option>  
+                                    <option value="未完成" selected>未完成</option>
                                     <option value="已完成">已完成</option>                                  
                                 </select>
                             </div>
@@ -67,8 +67,46 @@
                              aria-labelledby="v-pills-announcements-tab"
                              tabindex="0">
                         <h3 class="d-md-block d-none mb-8">消息管理</h3>
+                        <div id="announcement-add">
+                            <div class="bg-secondary rounded-2 p-8 mb-5">
+                                <h4 class="mb-8">新增消息</h4>
+                                <form id="add-news-form">
+                                    <div class="d-flex align-items-center mb-6">
+                                        <label for="type"
+                                               class="form-label me-6 mb-0">消息類型</label>
+                                        <select name="type"
+                                                id="type"
+                                                class="select form-select p-2">
+                                            <option value="網站公告">網站公告</option>
+                                            <option value="開放預購">開放預購</option>
+                                            <option value="出貨通知">出貨通知</option>
+                                            <option value="價格調整">價格調整</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-6">
+                                        <label for="title"
+                                               class="form-label mb-6">消息標題</label>
+                                        <input id="title" type="text" class="form-control p-2">
+                                    </div>
+                                    <div class="mb-8">
+                                        <label for="content"
+                                               class="form-label mb-6">消息內容</label>
+                                        <textarea name="content"
+                                                  id="content"
+                                                  rows="5"
+                                                  class="form-control px-2"></textarea>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">送出</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                         <div id="announcements-content" class="row p-0">
-                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                        <%- include('./layout/loading'); -%>
+                        </div>
+                        <div class="text-center d-md-none d-block mt-5">
+                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
                         </div>
                         </div>
                         <div class="tab-pane fade"

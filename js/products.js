@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { toastMessage, warningMessage } from "./utilities/message.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
+import { modifyProductData } from "./utilities/modification.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 
@@ -91,6 +92,7 @@ function toggleStatus(element, data) {
     element.addEventListener('click', (e) => {
 
         e.preventDefault();
+
         const token = getToken();
         
         if (!token) { toastMessage('warning','請先登入') }
@@ -105,7 +107,7 @@ function toggleStatus(element, data) {
             if (!targetProduct.isCollected) {
 
                 const product = { 
-                    content: targetProduct, 
+                    content: modifyProductData(targetProduct), 
                     userId 
                 };
                 delete product.content.isCollected;
@@ -182,7 +184,7 @@ function addToCart(element, data) {
                         })
                     }
                 } else {
-                    product = { content: targetProduct, qty: 1, userId };
+                    product = { content: modifyProductData(targetProduct), qty: 1, userId };
                     delete product.content.isCollected;
                     return axios.post(`${VITE_APP_SITE}/640/carts`, product, {
                         headers: {
@@ -195,6 +197,7 @@ function addToCart(element, data) {
                 res ? toastMessage('success','成功加入購物車') : warningMessage('數量達上限','如果需要大量訂購，請直接與我們聯絡');
             })
             .catch((error)=>{ errorHandle(error) })
+            
         }
 
     }, false)

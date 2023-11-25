@@ -131,6 +131,7 @@
       $(document).ready(function(){
         $('#blur-filter').click(function(){
             $(this).toggleClass('backdrop-blur-sm');
+            $(this).siblings().find('.click').toggleClass('d-none');
         })
       })
       

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 import { toastMessage, warningMessage } from "./utilities/message.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
@@ -115,7 +116,7 @@ function renderCart(data) {
         <div class="row align-items-center">
             <!-- 1 -->
             <div class="col-md-1 col-2 text-center">
-                <button class="delete btn p-0 ms-md-3 mt-2">
+                <button class="delete btn d-flex align-items-center p-0 ms-md-3">
                     <span class="material-icons fs-3">delete</span>
                 </button>
             </div>
@@ -132,7 +133,7 @@ function renderCart(data) {
                 <a href="products-detail.html?id=${item.content.id}" class="text-decoration-none">
                     <h3 class="fs-6 mb-0">${item.content.name}<span class="d-md-inline-block d-none">／${item.content.size}</span></h3>
                 </a>
-                <div class="d-md-none d-block fs-5">ｘ${item.qty}</div>
+                <div class="d-md-none d-block">ｘ${item.qty}</div>
             </div>
             <!-- 4 -->
             <div class="col-md-4 d-md-block d-none">
@@ -250,6 +251,7 @@ function cartListener(element, currentQuantity) {
                 }
 
             }
+        
         }
     })
 
@@ -428,7 +430,7 @@ function completeOrder(data, info) {
                     products: data,
                     total: Number(total),
                     info,
-                    createdTime: new Date().toLocaleString(),
+                    createdTime: moment().format('YYYY-MM-D A hh:mm:ss'),
                     userId: data[0].userId,
                     isFinished: false,
                 };

@@ -1,12 +1,14 @@
 import axios from "axios";
 
+import { ImageDisplay } from "./components/ImageDisplay.js";
 import { toastMessage, warningMessage } from "./utilities/message.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
+import { modifyProductData } from "./utilities/modification.js";
 
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 
-// import { rollupVersion } from "vite"; // VSCode 不知道為何要自動載入這個，導致整個頁面跳錯，先保留起來日後研究
+// import { rollupVersion } from "vite"; // 不知道為何載入這個會跳錯，先保留起來日後研究
 
 const { VITE_APP_SITE } = import.meta.env;
 
@@ -31,21 +33,17 @@ const product = document.querySelector('#product');
 
 function renderData(data, isCollected) {
 
-    // 渲染圖片
-
-    let { image } = data;
-    image = image.map((img) => /*html*/`
-    <div class="swiper-slide">
-        <img class="rounded w-100" src="${img || `https://fakeimg.pl/451x451/?text=🍰&font=noto`}" alt="${data.name}">
-    </div>`).join('');
-
     product.innerHTML = /*html*/`
     <div class="d-flex flex-column gap-6">
         <div class="row">
             <div class="col-md-5 mb-md-0 mb-6">
+                <div class="mb-6">
+                    <img id="current-image" class="rounded w-100" src="${data.image[0] || `https://fakeimg.pl/451x451/?text=🍰&font=noto`}" alt="${data.name}">
+                </div>
                 <div class="swiper product-swiper">
-                    <div class="swiper-wrapper">${image}</div>
-                    <div class="swiper-pagination"></div>
+                    <div class="swiper-wrapper"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
             </div>
             <div class="col-md-7">
@@ -139,6 +137,20 @@ function renderData(data, isCollected) {
     </div>
     `;
 
+    const swiper = new Swiper('.product-swiper', {
+        slidesPerView: 3,
+        spaceBetween: 8,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
+    // 渲染圖片
+
+    const images = new ImageDisplay('.swiper-wrapper');
+    images.render(data);
+
     const favoriteButton = document.querySelector('#favorite');
     toggleStatus(favoriteButton, data);
 
@@ -166,7 +178,7 @@ function toggleStatus(element, data) {
             if (icon.textContent == 'favorite_outline') {
 
                 const product = { 
-                    content: data, 
+                    content: modifyProductData(data), 
                     userId 
                 };
                 axios.post(`${VITE_APP_SITE}/640/collects`, product, {
@@ -240,8 +252,8 @@ function addToCart(data, value) {
 
     // 取得使用者個人資料
 
-    const token = localStorage.getItem('token');
     const userId = JSON.parse(localStorage.getItem('userData')).id;
+    const token = getToken();
 
     // 取得使用者當前的購物車資料
 
@@ -262,9 +274,10 @@ function addToCart(data, value) {
         //          回傳空值，讓下一個階段可以判斷跳出哪一種提示訊息
 
         if (!product) {
+            if (value > 10) { return }
             const product = {
-                content: data,
-                qty: 1,
+                content: modifyProductData(data),
+                qty: value,
                 userId,
             }
             return axios.post(`${VITE_APP_SITE}/640/carts`, product, {

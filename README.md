@@ -47,6 +47,10 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   > [free vector food set and restaurant elements](https://www.freepik.com/free-vector/food-set-restaurant-elements_1042427.htm#query=fork&position=11&from_view=search&track=sph) / Image by Freepik
   >
   > [hand drawn sparkling stars collection](https://www.freepik.com/free-vector/hand-drawn-sparkling-stars-collection_16139383.htm) / Image by Freepik
+  >
+  > 在全站商品頁面使用的圖片 ( Images on products.html )
+  >
+  > [Free photo chocolate brownies on sackcloth and coffee beans on a wooden table](https://www.freepik.com/free-photo/chocolate-brownies-sackcloth-coffee-beans-wooden-table_7675249.htm#&position=3&from_view=user&uuid=aaee96ee-d386-41cf-8151-8acf4f2f3296) / Image by jcomp on Freepik
 
 + [vecteezy](https://www.vecteezy.com/)（符合規範即可免費商用）
 
@@ -64,9 +68,23 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   >
   > [いろいろなカラフルな矢印のイラスト](https://www.irasutoya.com/2020/07/blog-post_94.html)
 
++ [iStock](https://www.istockphoto.com/hk)（付費圖庫）
+
+  > 在全站商品頁面使用的圖片 ( Images on products.html )
+  >
+  > [Indonesian Food Lapis Legit](https://www.istockphoto.com/photo/indonesian-food-lapis-legit-gm480491265-36330904) / rikirisnandar
+  >
+  > [Dadar Gulung](https://www.istockphoto.com/photo/dadar-gulung-or-dadar-unti-is-indonesian-traditional-finger-food-is-grated-coconut-gm1312053769-400967581) / sri widyowati
+  >
+  > [Pineapple Tart or Nanas Tart or Nastar Cookies](https://www.istockphoto.com/photo/pineapple-tart-or-nanas-tart-or-nastar-cookies-gm1452623415-488914755) / Edy Gunawan
+  >
+  > [Martabak Lipat, Martabak Manis (Sweet Martabak) is Indonesia Pancake](https://www.istockphoto.com/photo/martabak-lipat-martabak-manis-is-indonesia-pancake-gm1519485007-524498249) / ary pranggawan
+  >
+  > [Chiffon Cake](https://www.istockphoto.com/photo/chiffon-cake-gm1279445505-378055233) / Sulyono Haryono
+
 + [CSS Loaders](https://cssloaders.github.io/)
 
-  > 在首頁的每月推薦專欄裡使用了以它的 loading 動畫為基礎修改而成的 click 動畫 ( CSS Animation on index.html )
+  > 在首頁的每月推薦專欄裡使用了以它的 loading 動畫為基礎修改而成的 click 動畫 ( index.html )
 
 + [LADY KELLY](https://www.ladykelly.com.tw/faq)
 

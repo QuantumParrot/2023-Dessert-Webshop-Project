@@ -1,4 +1,4 @@
-import{a as i}from"./main-24575d4b.js";import{S as d}from"./swiper-bundle-856ac9ac.js";const{VITE_APP_SITE:l}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",VITE_APP_ADMIN_IDENTITY:"528491",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1};var c;const r=(c=JSON.parse(localStorage.getItem("userData")))==null?void 0:c.id;function p(){i.get(`${l}/664/announcements?_sort=id&_order=desc&_limit=3`).then(e=>(m(e.data),i.get(`${l}/products`))).then(e=>{h(e.data).map(n=>b(n))}).catch(e=>{console.log(e)})}p();const u=document.querySelector("#announcements");function m(e){const n={網站公告:"https://i.imgur.com/ZdVvBk0.jpg",開放預購:"https://i.imgur.com/uAiFLTz.jpg",出貨通知:"https://fakeimg.pl/416x320/?text=出貨通知&font=noto",價格調整:"https://i.imgur.com/0v5peZM.jpg"};let t="";for(let s=0;s<e.length;s++)t+=`
+import{a as l}from"./main-78beb421.js";import{S as d}from"./swiper-bundle-856ac9ac.js";const{VITE_APP_SITE:r}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",VITE_APP_ADMIN_IDENTITY:"528491",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1};var a;const c=(a=JSON.parse(localStorage.getItem("userData")))==null?void 0:a.id;function p(){l.get(`${r}/664/announcements?_sort=id&_order=desc&_limit=3`).then(e=>(m(e.data),l.get(`${r}/products`))).then(e=>{h(e.data)(3)}).catch(e=>{console.log(e)})}p();const u=document.querySelector("#announcements");function m(e){const n={網站公告:"https://i.imgur.com/ZdVvBk0.jpg",開放預購:"https://i.imgur.com/uAiFLTz.jpg",出貨通知:"https://fakeimg.pl/416x320/?text=出貨通知&font=noto",價格調整:"https://i.imgur.com/0v5peZM.jpg"};let t="";for(let s=0;s<e.length;s++)t+=`
         <div class="col-lg-4 col-12">
             <div class="mb-6">
                 <div class="card hover-scale h-100 shadow px-6 py-7">
@@ -6,7 +6,7 @@ import{a as i}from"./main-24575d4b.js";import{S as d}from"./swiper-bundle-856ac9
                          style="height: 314px;"
                          src="${e[s].image||n[e[s].type]}"
                          alt="${e[s].type}">
-                    <h3 class="w-75 position-absolute top-30 start-11 bg-white opacity-75 shadow-lg py-4 text-center">
+                    <h3 class="custom-tooltip w-75 position-absolute top-30 start-11 shadow-lg py-4 text-center">
                     ${e[s].type}
                     </h3>
                     <div class="card-body d-flex flex-column p-0">
@@ -19,7 +19,7 @@ import{a as i}from"./main-24575d4b.js";import{S as d}from"./swiper-bundle-856ac9
                 </div>
             </div>
         </div>
-        `;u.innerHTML=t}const g=document.querySelector("#rank");async function f(e){if(r){const t=await i.get(`${l}/664/user/${r}/collects`);e=e.map(s=>({...s,isCollected:!!t.data.find(o=>o.content.id===s.id)}))}document.querySelector("#rank .loading").classList.add("d-none");let n="";for(let t=0;t<e.length;t++)n+=`
+        `;u.innerHTML=t}const f=document.querySelector("#rank");async function g(e){if(c){const t=await l.get(`${r}/664/user/${c}/collects`);e=e.map(s=>({...s,isCollected:!!t.data.find(o=>o.content.id===s.id)}))}document.querySelector("#rank .loading").classList.add("d-none");let n="";for(let t=0;t<e.length;t++)n+=`
         <div class="col-lg-4 col-12">
             <a class="text-decoration-none" href="products-detail.html?id=${e[t].id}">
                 <div class="card h-100 overflow-hidden border-0">
@@ -47,4 +47,4 @@ import{a as i}from"./main-24575d4b.js";import{S as d}from"./swiper-bundle-856ac9
                 </div>
             </a>
         </div>
-        `;g.innerHTML+=n}function h(e){const{length:n}=e,t=Array.from({length:n},(o,a)=>a+1);function s(){const o=Math.floor(Math.random()*t.length);return+t.splice(o,1).join("")}return[s(),s(),s()]}function b(e){i.get(`${l}/664/products/${e}`).then(n=>{f([n.data])}).catch(n=>{console.log(n)})}new d(".banner-swiper",{slidesPerGroup:1,slidesPerView:1,navigation:{prevEl:".swiper-button-prev",nextEl:".swiper-button-next"},autoplay:{delay:2e3,disableOnInteraction:!1},loop:!0});$(document).ready(function(){$("#blur-filter").click(function(){$(this).toggleClass("backdrop-blur-sm"),$(this).siblings().find(".click").toggleClass("d-none")})});
+        `;f.innerHTML+=n}function h(e){const n=e.filter(o=>o.forSale);function t(){const o=Math.floor(Math.random()*n.length),i=n[o];return n.splice(o,1),i}const s=[];return function(o){for(let i=1;i<=o;i++)s.push(t());g(s)}}new d(".banner-swiper",{slidesPerGroup:1,slidesPerView:1,navigation:{prevEl:".swiper-button-prev",nextEl:".swiper-button-next"},autoplay:{delay:2e3,disableOnInteraction:!1},loop:!0});$(document).ready(function(){$("#blur-filter").click(function(){$(this).toggleClass("backdrop-blur-sm"),$(this).siblings().find(".click").toggleClass("d-none")})});

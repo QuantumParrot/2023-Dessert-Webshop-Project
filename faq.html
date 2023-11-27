@@ -6,13 +6,14 @@
     <title>購物說明｜Akheng's Desserts 甜點工作室</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/faq-f33ab057.js"></script>
-    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-24575d4b.js">
-    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-a955d15d.css">
+    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/faq-dfa2b0ab.js"></script>
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-78beb421.js">
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/ScrollEvent-2d368248.js">
+    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-e07f34ec.css">
 </head>
 <body class="position-relative">
     
-    <header class="container">
+    <header id="common-header" class="container">
     <div class="bg-white d-flex justify-content-between align-items-center py-lg-6 py-5">
         <h1><a href="index.html"><img src="/2023-Dessert-Webshop-Project/assets/logo-1fb0e713.png" alt="akheng's desserts"></a></h1>
         <!-- 電腦版 -->
@@ -104,7 +105,7 @@
                             </div>
                         </div>
                         <div class="text-center d-md-none d-block mt-8">
-                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                     </div>
                     <!-- 常見問答 -->
@@ -162,7 +163,7 @@
                             </li>
                         </ul>
                         <div class="text-center d-md-none d-block mt-8">
-                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                     </div>
                     <!-- 聯絡我們 -->
@@ -176,7 +177,7 @@
                             <li>信箱：akhengstudio@mail.com</li>
                         </ul>
                         <div class="text-center d-md-none d-block mt-8">
-                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                     </div>
                 </div>
@@ -193,10 +194,10 @@
                     <li class="nav me-lg-9 me-6"><a data-route="news" class="nav-link rounded-1 p-0" href="news.html">最新消息</a></li>
                     <li class="nav me-lg-9 me-6"><a data-route="products" class="nav-link rounded-1 p-0" href="products.html">全站商品</a></li>
                     <li class="nav me-lg-9 me-6"><a data-route="faq" class="nav-link rounded-1 p-0" href="faq.html">購物說明</a></li>
-                    <li class="nav me-lg-9 me-0"><a data-route="admin-login" class="nav-link rounded-1 p-0" href="admin-login.html">後台登入</a></li>
+                    <li class="nav me-lg-9 me-0"><a data-route="admin-login" class="nav-link rounded-1 p-0" href="admin-login.html">後台管理</a></li>
                 </ul>
                 <div class="align-self-center">
-                    <a target="_blank" href="#" class="me-2"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJ+SURBVHgB7ZZPThsxFMa/Z1sqrVjkCMMNuAHlBIVl1YbMqLRiGTZVYNNBqpKom7Ks+NMxolWX5AZNb8ARhhtkQSsWjl2bkmQyzCSTUcim/BaZOGP7ffZ7/mLgf4dQgqjuV7AkVjm0R5p6ilEPN+oyOJQ9zEhhAVHD9wREjcj4hsjL6mOMie2M3b7uHwRtGReZd6oAt1r2lB8yohpmwMDIIkImCoga288FMxe2WwUlcDtCfexWP512MKuAb3vvaoa0xBwgw/zXraOzzHdZP56/f7MBQReYI0pjPWifdDFNgCs2Tvwn5RRaEgP8IoZQXS/bE3A4PAHne9vSzpyumZ76o1bSJ0WkJ2XEwyLBNXBQa56EKE6FP+Of7TMYi5dsuNUXqXYCxTMGH4zzXYxcAW71KEAf5gwlYeD1ZHssBbYg1lAAgo6T7X9Fi6jIcbU188I+6iNBd0ShXymS+0w4bRT1CpsGL2rsePcEiBuxikUhlIe0AOsWpdyuDFxrb/B9WAPGCqAJzmxAcqt5HGS9q7ZOfPvwB+0cHxhChoZeMNwB0izGglA8Q4BaUpdYFNejWEMBQegs0lzhgXEmlrTjlBWTtB8fsgca/3x/23ffDXSw1fwqB++m5TxFN9kYc0KhhcQDwzU/QJ6Al+0vsV1eaZudht1+eRsjT4BDPVF123Pmy2WB4HF69ZkCbouxj03MGWNoN736TAGOqr25GE0B5hUcFFRbR5n3QpY3aKt9LK3sTbd1KItLJcO6dVCZ14VNGl9tnXZs3tbLFKYrOPV7eaX68f49MInAFO7y5v9o7ISKlLuurZnc3uZKa9YRDPJV83hxzvp9/+1qFI7+4x+Zhb9RbuG7vCBdzwAAAABJRU5ErkJggg==" alt="facebook"></a>
+                    <a href="#" class="me-2"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJ+SURBVHgB7ZZPThsxFMa/Z1sqrVjkCMMNuAHlBIVl1YbMqLRiGTZVYNNBqpKom7Ks+NMxolWX5AZNb8ARhhtkQSsWjl2bkmQyzCSTUcim/BaZOGP7ffZ7/mLgf4dQgqjuV7AkVjm0R5p6ilEPN+oyOJQ9zEhhAVHD9wREjcj4hsjL6mOMie2M3b7uHwRtGReZd6oAt1r2lB8yohpmwMDIIkImCoga288FMxe2WwUlcDtCfexWP512MKuAb3vvaoa0xBwgw/zXraOzzHdZP56/f7MBQReYI0pjPWifdDFNgCs2Tvwn5RRaEgP8IoZQXS/bE3A4PAHne9vSzpyumZ76o1bSJ0WkJ2XEwyLBNXBQa56EKE6FP+Of7TMYi5dsuNUXqXYCxTMGH4zzXYxcAW71KEAf5gwlYeD1ZHssBbYg1lAAgo6T7X9Fi6jIcbU188I+6iNBd0ShXymS+0w4bRT1CpsGL2rsePcEiBuxikUhlIe0AOsWpdyuDFxrb/B9WAPGCqAJzmxAcqt5HGS9q7ZOfPvwB+0cHxhChoZeMNwB0izGglA8Q4BaUpdYFNejWEMBQegs0lzhgXEmlrTjlBWTtB8fsgca/3x/23ffDXSw1fwqB++m5TxFN9kYc0KhhcQDwzU/QJ6Al+0vsV1eaZudht1+eRsjT4BDPVF123Pmy2WB4HF69ZkCbouxj03MGWNoN736TAGOqr25GE0B5hUcFFRbR5n3QpY3aKt9LK3sTbd1KItLJcO6dVCZ14VNGl9tnXZs3tbLFKYrOPV7eaX68f49MInAFO7y5v9o7ISKlLuurZnc3uZKa9YRDPJV83hxzvp9/+1qFI7+4x+Zhb9RbuG7vCBdzwAAAABJRU5ErkJggg==" alt="facebook"></a>
                     <a target="_blank" href="https://github.com/QuantumParrot/2023-Dessert-Webshop-Project"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAM/SURBVHgB7VfNThsxEJ6xDQ2oh/AG4QkKT9DwBuVYiSQbNVS9NVyq0AtBohD1QnqrSlC2UKlHwhOQPkHDEzQ8ATlUFaKOp/aKTXbXu+SPS9V+UqS11zPzrT2ebwLwrwNhCjTLThpSYoWDyqDCnmTYgxvZKdbdHkyIsQk0K05GgCggkkOImbg1RNTVHtt91d8t1tzuOH5HEjBfyxZ4nSEWYAIQkDsOkXsJNCulrGB0ppelYQqYHcE+bOXeH7dgUgJftl8WCJULDwAk5mwcfPoc+y5u8vTNi2cg8AweEFLBWrHWaEfnWXTCJBtxOIQBQ+wywFUCLJpnGAGzhhC25LxY1oPBrRAMzrzbE4GwGCGvYiDLlaLLfK3R0Y/m55683XQA+sCBd27nuRdASKnXU5oUS+f2j1zf9nS7dK5J+Mmb5ovcfFgxkYD5eivbGV4Hh/lAgAC6MAb07jg6RuhmsHAsXrWsFC3BlFAI1pYzJpzQGEIM4WnUQBceF6YEU1C3/AEVwuM7NKtOWtyK68jLzsZ+YxVmgM6DC+0oG5yTv+SSX7YHOyBuxErUuK/oG8wIhXRpTT4exhoeAZJd7YzIzAzbB1cqYxGgOAKKpirBYdg+kIakBgRQsW50ob6ST2BGMLJ9SB5DQKZkx7JGWImrXuPC1JVoAnr4OYw1IFCsmqykq8jSNF8QOzAl4uqKKdXBxiWiBehaBgjl00ppIhJm1062S4cJPUQ7TCiAr5VXGcnkj7vhLnlCBDu6ucgYbSeCcwXYimu/TFAxz7OKQZYxU//jewihxPLz2seuPw7tgPeCwNftHZ1ARIo88TACxRi+1qp2kUqlLOfenJZwsyYpuN5+NxjcImAgH8myL6O6IalL/bVGXn0pjnMSIN+GBBh7rvhudN6SY5OM+szXNbULPUyzRVHOv2tU9XMdRuMq6QURbsURT2zJTiqbDjJqesamwfzNPgA3+n8DSY2mrvtuQP+HwXUzkyDj9hH4yNe0AdG62Tqj42KOvgudoJzNjX8jzFEyWEsKfi8Bg9zBcUuf21ogMScAtkRfrOb27D4wCAEjcHdujr6i1Vvol5FBJ2mt/sPSJgU9JqiV2ztqw3/8DfgDn81F7HlMF3EAAAAASUVORK5CYII=" alt="github"></a>
                 </div>
             </div>

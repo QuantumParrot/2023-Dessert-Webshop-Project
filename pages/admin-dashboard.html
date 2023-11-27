@@ -9,9 +9,9 @@
 </head>
 <body>
 
-    <%- include('./layout/header'); -%>
+    <%- include('./layout/header-admin'); -%>
 
-    <section class="container">
+    <section class="container-fluid">
         <div class="pb-md-13 pt-9 border-bottom">
             <div class="row">
                 <div class="col-md-2">
@@ -58,7 +58,7 @@
                         <%- include('./layout/loading'); -%>
                         </div>
                         <div class="text-center d-md-none d-block mt-4">
-                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                         </div>
                         <div class="tab-pane fade"
@@ -68,7 +68,7 @@
                              tabindex="0">
                         <h3 class="d-md-block d-none mb-8">消息管理</h3>
                         <div id="announcement-add">
-                            <div class="bg-secondary rounded-2 p-8 mb-5">
+                            <div class="bg-secondary rounded-2 p-md-8 p-6 mb-5">
                                 <h4 class="mb-8">新增消息</h4>
                                 <form id="add-news-form">
                                     <div class="d-flex align-items-center mb-6">
@@ -106,7 +106,7 @@
                         <%- include('./layout/loading'); -%>
                         </div>
                         <div class="text-center d-md-none d-block mt-5">
-                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                         </div>
                         <div class="tab-pane fade"
@@ -116,7 +116,10 @@
                              tabindex="0">
                         <h3 class="d-md-block d-none mb-8">商品管理</h3>
                         <div id="products-content" class="row p-0">
-                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                        <%- include('./layout/loading'); -%>
+                        </div>
+                        <div class="text-center d-md-none d-block mt-5">
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                         </div>
                         <div class="tab-pane fade"
@@ -126,7 +129,12 @@
                              tabindex="0">
                         <h3 class="d-md-block d-none mb-8">銷售數據</h3>
                         <div id="charts-content" class="row p-0">
-                        <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                            <div class="col-12">
+                                <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                            </div>
+                        </div>
+                        <div class="text-center d-md-none d-block mt-5">
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                         </div>
                     </div>
@@ -138,5 +146,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="module" src="../main.js"></script>
     <script type="module" src="../js/admin/adminDashboard.js"></script>
+    <script type="module">
+
+        import { ScrollTop } from '../js/components/ScrollEvent.js';
+
+        // Scroll To Top
+
+        const backToTop = document.querySelectorAll('.back-to-top');
+
+        backToTop.forEach(button => {
+            const trigger = new ScrollTop(button);
+            button.addEventListener('click', (event) => {
+                trigger.backToTop();
+            })
+        });
+
+    </script>
 </body>
 </html>

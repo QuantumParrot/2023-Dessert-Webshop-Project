@@ -52,12 +52,13 @@ function getData() {
 
     if (hash === 'orders') { getOrders() }
     else if (hash === 'announcements') { getAnnouncements() }
+    else if (hash === 'products') { getProducts() }
 
 }
 
 function getOrders() {
 
-    const token = decodeToken(localStorage.getItem('token'));
+    const token = decodeToken(getToken());
 
     axios.get(`${VITE_APP_SITE}/660/orders`, {
         headers: {
@@ -67,7 +68,7 @@ function getOrders() {
     .then((res)=>{
         data = res.data;
         renderOrders(data.filter(order => !order.isFinished)); // 預設值為顯示未完成訂單
-        manageOrders();
+        manageOrders(data.filter(order => !order.isFinished));
     })
     .catch((error)=>{ errorHandle(error) })
 
@@ -117,16 +118,16 @@ function renderOrders(data) {
                 <div class="accordion-content rounded-2 shadow">
                     <div class="px-md-8 px-6 pt-5 pb-7">
                     <div class="mb-5">
-                        ${order.products.map(product => `
+                        ${order.content.map(item => `
                         <div class="row gap-md-5 py-2 border-bottom lh-lg">
                             <div class="col-lg-3 col-12">
-                                <p class="text-orange fw-bold">${product.content.name}</p>
+                                <p class="text-orange fw-bold">${item.product.name}</p>
                             </div>
                             <div class="col-lg-3 col-12">
-                                <p><span class="fw-bold">數量：</span>${product.qty}</p>
+                                <p><span class="fw-bold">數量：</span>${item.qty}</p>
                             </div>
                             <div class="col-lg-3 col-12">
-                                <p><span class="fw-bold">金額：</span>${product.content.price*product.qty}</p>
+                                <p><span class="fw-bold">金額：</span>${item.product.price*item.qty}</p>
                             </div>
                         </div>`
                         ).join('')}
@@ -160,7 +161,7 @@ function renderOrders(data) {
                         <span class="text-orange fw-bold">指定收貨時段：</span>${order.info.shippingTime}
                         </p>
                     </div>
-                    ${order.isFinished ? `` : `
+                    ${order.isFinished ? `` : /*html*/`
                     <div class="mt-5 text-center">
                         <button data-num=${order.id} class="btn btn-primary">完成訂單</button>
                     </div>`}
@@ -214,27 +215,22 @@ function finishOrder(e) {
 
 }
 
-function manageOrders() {
-
-    let initialData = [...data];
-    
-    // 為了進行複數篩選，必須拷貝一份資料，暫定除了搜尋之外，所有篩選功能皆是基於拷貝資料進行
+function manageOrders(initialData) {
 
     const status = document.querySelector('#filter-by-status');
     const time = document.querySelector('#sort-by-time');
     const search = document.querySelector('#order-search');
 
+    function sortOrder(value) {
+
+        if (value === '由新到舊') { initialData.sort((a,b)=>b.id-a.id) } 
+        else if (value === '由舊到新') { initialData.sort((a,b)=>a.id-b.id) }
+
+    }
+
     time.addEventListener('change', function(e){
 
-        if (e.target.value === '由新到舊') {
-
-            initialData.sort((a,b)=>b.id-a.id);
-            
-        } else if (e.target.value === '由舊到新') {
-
-            initialData.sort((a,b)=>a.id-b.id);
-        }
-
+        sortOrder(e.target.value);
         renderOrders(initialData);
 
     });
@@ -246,19 +242,21 @@ function manageOrders() {
         if (value === '全部訂單') {
 
             initialData = data;
-            renderOrders(initialData);
+            sortOrder(time.value);
 
         } else if (value === '已完成') {
 
             initialData = data.filter(order => order.isFinished);
-            renderOrders(initialData);
+            sortOrder(time.value);
 
         } else if (value === '未完成') {
 
             initialData = data.filter(order => !order.isFinished);
-            renderOrders(initialData);
+            sortOrder(time.value);
 
         }
+
+        renderOrders(initialData);
 
     })
 
@@ -304,7 +302,7 @@ function renderAnnouncements() {
     data.forEach(item => {
         content += /*html*/`
         <li class="list-group-item bg-white rounded-2 shadow p-0 fw-bold">
-            <div class="d-flex flex-md-row flex-column align-items-md-center align-items-start gap-8 p-8">
+            <div class="d-flex flex-md-row flex-column align-items-md-center align-items-start gap-md-8 gap-6 p-md-8 p-6">
                 <button data-id="${item.id}" class="btn btn-sm btn-primary px-4">刪除消息</button>
                 <p class="text-black">${item.date.replace(/\s[AM|PM].+/,"")}</p>
                 <p>${item.title}</p>
@@ -398,4 +396,97 @@ function deleteAnnouncement(id) {
         }
     })
 
+}
+
+function getProducts() {
+
+    const token = decodeToken(getToken());
+
+    axios.get(`${VITE_APP_SITE}/660/products`, {
+        headers: {
+            "authorization": `Bearer ${token}`
+        }
+    })
+    .then((res)=>{
+        data = res.data;
+        renderProductList();
+    })
+    .catch((error)=>{ errorHandle(error) })
+
+}
+
+function renderProductList() {
+
+    let str = '';
+    data.forEach(product => str += /*html*/`
+    <div class="col-md-3 col-12 mb-md-9 mb-6">
+        <div class="card hover-shadow overflow-hidden" data-num="${product.id}">
+            <div class="position-relative d-md-block d-none">
+                <img class="w-100"
+                     src="${product.image[0] || `https://fakeimg.pl/291x291/?text=🍰&font=noto`}"
+                     alt="${product.name}">
+                ${product.forSale ? '' : /*html*/`
+                <div class="position-absolute top-0 w-100 h-100 d-flex align-items-center" style="backdrop-filter: brightness(70%)">
+                    <h3 class="custom-tooltip w-100 text-center py-5">已售完</h3>
+                </div>`}
+            </div>
+            <div class="px-5">
+                <div class="d-flex flex-md-column justify-content-between align-items-center">
+                    <h4 class="fs-6 my-6">${product.name}</h4>
+                    <div class="d-flex justify-content-center gap-3 mb-md-6 mb-0">
+                        <button type="button" class="edit btn btn-primary btn-sm p-2">編輯</button>
+                        <button type="button" 
+                                class="status btn btn-orange btn-sm p-2">${product.forSale ? '下架' : '上架'}</button>
+                        <button type="button"
+                                class="delete btn btn-danger btn-sm p-2">
+                        刪除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `);
+    element.innerHTML = str;
+    element.addEventListener('click', handleProducts);
+
+}
+
+function handleProducts({target}) {
+    if (target.nodeName !== 'BUTTON') { return }
+    else {
+        const parent = target.closest('.card');
+        const id = parent.dataset.num;
+        const product = data.find(item => item.id == id);
+        if (target.classList.contains('status')) {
+            Swal.fire({
+                icon: 'warning',
+                title: `確定${target.textContent}？`,
+                text: `商品名稱：${product.name}`,
+                /* cancel */
+                showCancelButton: true,
+                cancelButtonColor: '#D1741F',
+                cancelButtonText: '取消',
+                /* deal with AJAX */
+                confirmButtonColor: '#A37A64',
+                confirmButtonText: '確定',
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    try { 
+                        const res = await axios.patch(`${VITE_APP_SITE}/660/products/${id}`, {
+                            forSale: !product.forSale,
+                        },
+                        {
+                            headers: {
+                                "authorization": `Bearer ${getToken()}`
+                            }
+                        });
+                        getProducts();
+                        toastMessage('success', `${target.textContent}成功！`);
+                    } catch(error) { errorHandle(error) };
+                }
+
+            })
+        }
+        else if (target.classList.contains('delete')) {}
+    }
 }

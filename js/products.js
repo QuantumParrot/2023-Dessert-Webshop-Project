@@ -2,7 +2,6 @@ import axios from "axios";
 
 import { toastMessage, warningMessage } from "./utilities/message.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
-import { modifyProductData } from "./utilities/modification.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 
@@ -23,7 +22,7 @@ let userData = [];
             const res = await axios.get(`${VITE_APP_SITE}/664/user/${userId}/collects`);
             data = data.map(product => {
                 return { ...product, 
-                isCollected: !!(res.data.find(item => item.content.id == product.id)) };
+                isCollected: !!(res.data.find(item => item.productId == product.id)) };
             });
         }
         userData=data;
@@ -49,9 +48,15 @@ function renderData(productList) {
         <div class="col-md-4 col-12 mb-9">
             <a class="text-decoration-none" href="products-detail.html?id=${product.id}">
                 <div class="card hover-shadow h-100 overflow-hidden mb-6">
-                    <img class="mb-6"
-                         src="${product.image[0] || `https://fakeimg.pl/291x291/?text=🍰&font=noto`}"
-                         alt="${product.name}">
+                    <div class="position-relative mb-6">
+                        <img class="w-100"
+                             src="${product.image[0] || `https://fakeimg.pl/291x291/?text=🍰&font=noto`}"
+                             alt="${product.name}">
+                        ${product.forSale ? '' : /*html*/`
+                        <div class="position-absolute top-0 w-100 h-100 d-flex align-items-center" style="backdrop-filter: brightness(70%)">
+                            <h3 class="custom-tooltip w-100 text-center py-5">已售完</h3>
+                        </div>`}
+                    </div>
                     <div class="px-5">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -62,7 +67,7 @@ function renderData(productList) {
                                 <button data-num="${product.id}" class="favorite btn btn-sm btn-outline-orange p-1">
                                     <span class="material-icons d-flex">${product.isCollected ? "favorite" : "favorite_outline"}</span>
                                 </button>
-                                <button data-num="${product.id}" class="cart btn btn-sm btn-primary p-1">
+                                <button data-num="${product.id}" class="cart btn btn-sm btn-primary p-1 ${product.forSale ? '' : 'disabled'}">
                                     <span class="material-icons d-flex">shopping_bag</span>
                                 </button>
                             </div>
@@ -106,11 +111,8 @@ function toggleStatus(element, data) {
 
             if (!targetProduct.isCollected) {
 
-                const product = { 
-                    content: modifyProductData(targetProduct), 
-                    userId 
-                };
-                delete product.content.isCollected;
+                const product = { productId: targetProduct.id, userId };
+
                 axios.post(`${VITE_APP_SITE}/640/collects`, product, {
                     headers: {
                         "authorization": `Bearer ${token}`
@@ -128,7 +130,7 @@ function toggleStatus(element, data) {
 
                 axios.get(`${VITE_APP_SITE}/users/${userId}/collects`)
                 .then((res)=>{
-                    const targetId = res.data.find(collect => collect.content.id == targetProduct.id).id;
+                    const targetId = res.data.find(collect => collect.productId == targetProduct.id).id;
                     return axios.delete(`${VITE_APP_SITE}/640/collects/${targetId}`, {
                         headers: {
                             "authorization": `Bearer ${token}`
@@ -161,31 +163,29 @@ function addToCart(element, data) {
         if (!token) { toastMessage('warning','請先登入') }
         else {
 
-            const targetProduct = data.find(item => item.id == element.dataset.num);
-            
+            const productId = +element.dataset.num;
             const userId = +JSON.parse(localStorage.getItem("userData")).id;
 
-            axios.get(`${VITE_APP_SITE}/640/users/${userId}/carts`, {
+            axios.get(`${VITE_APP_SITE}/640/users/${userId}/carts?_expand=product`, {
                 headers: {
                     "authorization": `Bearer ${token}`
                 }
             })
             .then((res)=>{
                 const { data } = res;
-                let product = data.find(item => item.content.id == element.dataset.num);
+                let product = data.find(item => item.productId == element.dataset.num);
                 if (product) {
                     if (product.qty > 9) { return }
                     else {
-                        product = { ...product, qty: product.qty += 1 };
-                        return axios.patch(`${VITE_APP_SITE}/640/carts/${product.id}`, product, {
+                        return axios.patch(`${VITE_APP_SITE}/640/carts/${product.id}`, { qty: product.qty += 1 }, 
+                        {
                             headers: {
                                 "authorization": `Bearer ${token}`
                             }
                         })
                     }
                 } else {
-                    product = { content: modifyProductData(targetProduct), qty: 1, userId };
-                    delete product.content.isCollected;
+                    product = { productId, qty: 1, userId };
                     return axios.post(`${VITE_APP_SITE}/640/carts`, product, {
                         headers: {
                             "authorization": `Bearer ${token}`

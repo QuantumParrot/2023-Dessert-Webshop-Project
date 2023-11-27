@@ -30,7 +30,7 @@
                         <%- include('./layout/loading'); -%>
                         </div>
                         <div class="text-center d-md-none d-block my-8">
-                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                         </div>
                         <!-- collection -->
@@ -44,7 +44,7 @@
                         <%- include('./layout/loading'); -%>
                         </div>
                         <div class="text-center d-md-none d-block my-8">
-                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                         </div>
                         <!-- profile -->
@@ -57,7 +57,7 @@
                         <%- include('./layout/loading'); -%>
                         </div>
                         <div class="text-center d-md-none d-block my-8">
-                            <a class="btn btn-sm btn-primary" href="#">回到上方</a>
+                            <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                         </div>
                     </div>
@@ -115,5 +115,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="module" src="../main.js"></script>
     <script type="module" src="../js/member.js"></script>
+    <script type="module">
+
+        import { ScrollTop } from '../js/components/ScrollEvent.js';
+
+        // Scroll To Top
+
+        const backToTop = document.querySelectorAll('.back-to-top');
+
+        backToTop.forEach(button => {
+            const trigger = new ScrollTop(button);
+            button.addEventListener('click', (event) => {
+                trigger.backToTop();
+            })
+        });
+
+    </script>
 </body>
 </html>

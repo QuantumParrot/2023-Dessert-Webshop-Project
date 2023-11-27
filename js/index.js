@@ -13,7 +13,8 @@ function init() {
         return axios.get(`${VITE_APP_SITE}/products`);
     })
     .then((res)=>{
-        let data = getRandomId(res.data).map(id=>getData(id));
+        const getRandomProducts = randomRender(res.data);
+        getRandomProducts(3);
     })
     .catch((error)=>{
         console.log(error);
@@ -43,7 +44,7 @@ function renderAnnouncements(data){
                          style="height: 314px;"
                          src="${data[i].image || img[data[i].type]}"
                          alt="${data[i].type}">
-                    <h3 class="w-75 position-absolute top-30 start-11 bg-white opacity-75 shadow-lg py-4 text-center">
+                    <h3 class="custom-tooltip w-75 position-absolute top-30 start-11 shadow-lg py-4 text-center">
                     ${data[i].type}
                     </h3>
                     <div class="card-body d-flex flex-column p-0">
@@ -118,30 +119,22 @@ async function renderProducts(data) {
 
 // 2. 隨機取得商品資料
 
-function getRandomId(data) {
+function randomRender(data) {
         
-    // 取得商品總數
-    const { length } = data;
-
-    // 組一個新的陣列，長度為商品總數 ( 在不刪除商品的情況下，元素也代表了商品的 id )
-    const arr = Array.from({length}, (i,idx)=>{ return idx+1 });
+    const products = data.filter(item => item.forSale);
     
-    // 隨機取得 id 的函式，取得的 id 不能重複
-    function pick() {
-        const index = Math.floor(Math.random()*arr.length);
-        return +arr.splice(index,1).join('');
+    function getRandomItem() {
+        const index = Math.floor(Math.random()*products.length);
+        const target = products[index];
+        products.splice(index,1);
+        return target;
     }
 
-    return [pick(),pick(),pick()];
+    const randomData = [];
 
-}
+    return function(times) {
+        for (let i=1; i<=times; i++) { randomData.push(getRandomItem()) };
+        renderProducts(randomData);
+    }
 
-function getData(id) {
-    axios.get(`${VITE_APP_SITE}/664/products/${id}`)
-    .then((res)=>{
-        renderProducts([res.data]); // 因為 renderProducts 會用到迴圈，所以參數一定要轉成陣列
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
 }

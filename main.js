@@ -1,6 +1,7 @@
 import './assets/scss/main.scss';
 import './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
+import { toastMessage } from './js/utilities/message.js';
 import './js/handleHeaderChange.js';
 
 // 半放棄的手刻 isActive :P
@@ -15,4 +16,25 @@ function navigation(){
 
 }
 
-navigation();
+(function () {
+
+    // 登出功能
+
+    const logoutButtons = document.querySelectorAll('.logout');
+
+    if (logoutButtons) {
+
+        logoutButtons.forEach(button => button.addEventListener('click', function(e){
+            e.preventDefault();
+            localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            toastMessage('success', '登出成功！期待您的下次造訪！', 'index.html');
+        }))
+
+    }
+    
+    navigation();
+
+})();
+
+

@@ -39,6 +39,9 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center d-md-none d-block mb-9">
+                <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
+            </div>
         </div>
     </section>
 
@@ -50,6 +53,8 @@
     <script type="module" src="../js/products.js"></script>
     <script type="module">
 
+        import { ScrollTop } from '../js/components/ScrollEvent.js';
+
         $(document).ready(function(){
             
             // sidebar
@@ -59,6 +64,17 @@
                 $(this).parent().siblings().children('.nav-link').removeClass('active disabled');
             });
 
+        });
+
+        // Scroll To Top
+
+        const backToTop = document.querySelectorAll('.back-to-top');
+
+        backToTop.forEach(button => {
+            const trigger = new ScrollTop(button);
+            button.addEventListener('click', (event) => {
+                trigger.backToTop();
+            })
         });
 
     </script>

@@ -1,9 +1,8 @@
 import axios from "axios";
 
-import { ImageDisplay } from "./components/ImageDisplay.js";
 import { toastMessage, warningMessage } from "./utilities/message.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
-import { modifyProductData } from "./utilities/modification.js";
+import { ImageDisplay } from "./components/ImageDisplay.js";
 
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
@@ -23,7 +22,7 @@ const product = document.querySelector('#product');
         let isCollected;
         if (userId) {
             const response = await axios.get(`${VITE_APP_SITE}/users/${userId}/collects`);
-            isCollected = !!(response.data.find(collect => collect.content.id == id));
+            isCollected = !!(response.data.find(collect => collect.productId == id));
         };
         renderData(res.data, isCollected);
     } catch(error) {
@@ -37,8 +36,17 @@ function renderData(data, isCollected) {
     <div class="d-flex flex-column gap-6">
         <div class="row">
             <div class="col-md-5 mb-md-0 mb-6">
-                <div class="mb-6">
-                    <img id="current-image" class="rounded w-100" src="${data.image[0] || `https://fakeimg.pl/451x451/?text=🍰&font=noto`}" alt="${data.name}">
+                <div class="position-relative mb-6">
+                    <img id="current-image"
+                         class="rounded w-100"
+                         src="${data.image[0] || `https://fakeimg.pl/451x451/?text=🍰&font=noto`}" alt="${data.name}">
+                    ${data.forSale ? "" : /*html*/`
+                    <div class="custom-tooltip w-100 h-100 position-absolute top-0 d-flex justify-content-center align-items-center">
+                        <div class="text-center">
+                            <h3 class="display-4 fw-bold mb-9">已售完</h3>
+                            <p>原料不足或非供應期間，本商品目前尚無法購買<br>敬請見諒</p>
+                        </div>
+                    </div>`}
                 </div>
                 <div class="swiper product-swiper">
                     <div class="swiper-wrapper"></div>
@@ -64,13 +72,14 @@ function renderData(data, isCollected) {
                             下單前務必詳閱<a class="link-orange" href="#nav-delivery-tab">寄送說明</a>
                         </p>
                     </div>
-                    <div id="quantity" class="d-flex justify-content-between">
+                    <div id="quantity" class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-3">
                             <button class="btn p-0"><span class="material-icons fs-2 mt-1">add_circle</span></button>
                             <input class="form-control p-2 text-center" type="number" min="1" max="10" value="1">
                             <button class="btn p-0"><span class="material-icons fs-2 mt-1">remove_circle</span></button>
                         </div>
-                        <button class="btn btn-sm btn-primary">加入購物車</button>
+                        <button class="btn btn-sm btn-primary"
+                                ${data.forSale ? "" : "disabled"}>加入購物車</button>
                     </div>
                 </div>
             </div>
@@ -177,10 +186,8 @@ function toggleStatus(element, data) {
 
             if (icon.textContent == 'favorite_outline') {
 
-                const product = { 
-                    content: modifyProductData(data), 
-                    userId 
-                };
+                const product = { productId: Number(id), userId };
+
                 axios.post(`${VITE_APP_SITE}/640/collects`, product, {
                     headers: {
                         "authorization": `Bearer ${token}`
@@ -197,7 +204,7 @@ function toggleStatus(element, data) {
                 axios.get(`${VITE_APP_SITE}/users/${userId}/collects`)
                 .then((res)=>{
                     const { data } = res;
-                    const targetId = data.find(collect => collect.content.id == id).id;
+                    const targetId = data.find(collect => collect.productId == id).id;
                     return axios.delete(`${VITE_APP_SITE}/640/collects/${targetId}`, {
                         headers: {
                             "authorization": `Bearer ${token}`
@@ -264,7 +271,7 @@ function addToCart(data, value) {
     })
     .then((res)=>{
 
-        let product = res.data.find(item => item.content.id == id);
+        let product = res.data.find(item => item.productId == id);
 
         // 確認購物車有無同樣的商品 => 有的話下一個階段 patch 沒有的話下一個階段 post
 
@@ -275,11 +282,7 @@ function addToCart(data, value) {
 
         if (!product) {
             if (value > 10) { return }
-            const product = {
-                content: modifyProductData(data),
-                qty: value,
-                userId,
-            }
+            const product = { productId: id, qty: value, userId };
             return axios.post(`${VITE_APP_SITE}/640/carts`, product, {
                 headers : {
                     "authorization": `Bearer ${token}`

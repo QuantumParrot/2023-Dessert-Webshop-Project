@@ -4,6 +4,7 @@ import moment from "moment";
 
 import { toastMessage, warningMessage } from "./utilities/message.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
+import { modifyProductData } from "./utilities/modification.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 
@@ -17,7 +18,7 @@ function init() {
         toastMessage('warning','請先登入','login.html');
     } else {
         const userId = JSON.parse(localStorage.getItem('userData')).id;
-        axios.get(`${VITE_APP_SITE}/640/user/${userId}/carts`, {
+        axios.get(`${VITE_APP_SITE}/640/user/${userId}/carts?_expand=product`, {
             headers : {
                 "authorization": `Bearer ${token}`
             }
@@ -122,16 +123,16 @@ function renderCart(data) {
             </div>
             <!-- 2 -->
             <div class="d-md-block d-none col-md-2">
-                <a href="products-detail.html?id=${item.content.id}" class="text-decoration-none">
-                <img src="${item.content.image[0] || "https://fakeimg.pl/291x291/?text=🍰&font=noto"}"
-                     alt="${item.content.name}"
+                <a href="products-detail.html?id=${item.product.id}" class="text-decoration-none">
+                <img src="${item.product.image[0] || "https://fakeimg.pl/291x291/?text=🍰&font=noto"}"
+                     alt="${item.product.name}"
                      class="rounded-2">
                 </a>
             </div>
             <!-- 3 -->
             <div class="col-md-3 col-6 d-flex justify-content-between align-items-center">
-                <a href="products-detail.html?id=${item.content.id}" class="text-decoration-none">
-                    <h3 class="fs-6 mb-0">${item.content.name}<span class="d-md-inline-block d-none">／${item.content.size}</span></h3>
+                <a href="products-detail.html?id=${item.product.id}" class="text-decoration-none">
+                    <h3 class="fs-6 mb-0">${item.product.name}<span class="d-md-inline-block d-none">／${item.product.size}</span></h3>
                 </a>
                 <div class="d-md-none d-block">ｘ${item.qty}</div>
             </div>
@@ -150,7 +151,7 @@ function renderCart(data) {
             <div class="col-md-2 col-4">
                 <h4 id="cost" class="d-flex justify-content-between fs-6 px-md-2 px-0 mb-0">
                 <span>NT＄</span>
-                <span>${item.content.price*item.qty}</span>
+                <span>${item.product.price*item.qty}</span>
                 </h4>
             </div>
         </div>
@@ -161,7 +162,13 @@ function renderCart(data) {
     main.innerHTML = content;
 
     const confirm = document.querySelector('#confirm');
-    confirm.addEventListener('click', (event)=>nextStep(event,data), false);
+    confirm.addEventListener('click', (event) => {
+        if (data.some(item => !item.product.forSale)) {
+            warningMessage('OOPS', '購物車內有完售的商品，請刪除後再重新結帳')
+        } else {
+            nextStep(event,data);
+        }
+    }, false);
     
     const listItems = [...main.children];
     listItems.forEach(item => {
@@ -231,10 +238,7 @@ function cartListener(element, currentQuantity) {
                         })
                         .then((res)=>{
                             let targetProduct = res.data;
-                            targetProduct = {
-                                ...targetProduct,
-                                qty: +qty.value
-                            }
+                            targetProduct = { ...targetProduct, qty: +qty.value };
                             return axios.patch(`${VITE_APP_SITE}/640/carts/${id}`, targetProduct, {
                                 headers: {
                                     "authorization": `Bearer ${token}`
@@ -264,7 +268,7 @@ function showTotalCost(data) {
     const total = document.querySelector('#total');
 
     subtotal.textContent = data.reduce((acc,curr) => { 
-       return acc + (Number(curr.content.price) * curr.qty)
+       return acc + (Number(curr.product.price) * curr.qty)
     }, 0);
 
     deliveryFee.textContent = 150;
@@ -425,9 +429,10 @@ function completeOrder(data, info) {
             try {
                 const token = getToken();
                 const total = document.querySelector('#total').textContent;
+                data = data.map(item => { return { ...item, product: modifyProductData(item.product) } });
                 const orderInfo = {
                     orderNum: new Date().getTime()+`0${data[0].userId}`,
-                    products: data,
+                    content: data,
                     total: Number(total),
                     info,
                     createdTime: moment().format('YYYY-MM-D A hh:mm:ss'),

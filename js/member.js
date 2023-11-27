@@ -70,7 +70,7 @@ function getData() {
 
     } else if (hash === 'collection') {
 
-        axios.get(`${VITE_APP_SITE}/600/users/${userId}/collects`, headers)
+        axios.get(`${VITE_APP_SITE}/600/users/${userId}/collects?_expand=product`, headers)
         .then((res) => {
             currentData = res.data;
             renderCollection(currentData);
@@ -128,16 +128,16 @@ function renderOrders(orders) {
                 <div class="accordion-content rounded-2 shadow">
                     <div class="px-md-8 px-6 pt-5 pb-7">
                     <div class="mb-5">
-                        ${order.products.map(product => /*html*/`
+                        ${order.content.map(item => /*html*/`
                         <div class="row gap-md-5 py-2 border-bottom lh-lg">
                             <div class="col-lg-3 col-12">
-                                <p class="text-orange fw-bold">${product.content.name}</p>
+                                <p class="text-orange fw-bold">${item.product.name}</p>
                             </div>
                             <div class="col-lg-3 col-12">
-                                <p><span class="fw-bold">數量：</span>${product.qty}</p>
+                                <p><span class="fw-bold">數量：</span>${item.qty}</p>
                             </div>
                             <div class="col-lg-3 col-12">
-                                <p><span class="fw-bold">金額：</span>${product.content.price*product.qty}</p>
+                                <p><span class="fw-bold">金額：</span>${item.product.price*item.qty}</p>
                             </div>
                         </div>`
                         ).join('')}
@@ -197,25 +197,31 @@ function renderCollection(collects) {
         </p>
     </div>
     `) :
-    collects.forEach(({content}) => 
+    collects.forEach(({product}) => 
     str += /*html*/`
     <div class="col-md-4 col-12 mb-9">
-        <a class="text-decoration-none" href="products-detail.html?id=${content.id}">
+        <a class="text-decoration-none" href="products-detail.html?id=${product.id}">
             <div class="card hover-shadow h-100 overflow-hidden mb-6">
-                <img class="mb-6"
-                     src="${content.image[0] || `https://fakeimg.pl/291x291/?text=🍰&font=noto`}"
-                     alt="${content.name}">
+                <div class="position-relative mb-6">
+                    <img class="w-100"
+                         src="${product.image[0] || `https://fakeimg.pl/291x291/?text=🍰&font=noto`}"
+                         alt="${product.name}">
+                    ${product.forSale ? '' : /*html*/`
+                    <div class="position-absolute top-0 w-100 h-100 d-flex align-items-center" style="backdrop-filter: brightness(70%)">
+                        <h3 class="custom-tooltip w-100 text-center py-5">已售完</h3>
+                    </div>`}
+                </div>
                 <div class="px-5">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="fs-6">${content.name}・<span class="text-muted">${content.size}</span></h4>
-                            <p class="fs-7 text-orange fw-bold">NT＄${content.price}</p>
+                            <h4 class="fs-6">${product.name}・<span class="text-muted">${product.size}</span></h4>
+                            <p class="fs-7 text-orange fw-bold">NT＄${product.price}</p>
                         </div>
                         <div class="d-flex gap-3">
-                            <button data-num="${content.id}" class="favorite btn btn-sm btn-outline-orange p-1">
+                            <button data-num="${product.id}" class="favorite btn btn-sm btn-outline-orange p-1">
                                 <span class="material-icons d-flex">favorite</span>
                             </button>
-                            <button data-num="${content.id}" class="cart btn btn-sm btn-primary p-1">
+                            <button data-num="${product.id}" class="cart btn btn-sm btn-primary p-1 ${product.forSale ? '' : 'disabled'}">
                                 <span class="material-icons d-flex">shopping_bag</span>
                             </button>
                         </div>
@@ -243,7 +249,7 @@ function toggleStatus(element, data) {
 
         e.preventDefault();
 
-        const targetProduct = data.find(product => product.content.id == element.dataset.num);
+        const targetProduct = data.find(item => item.product.id == element.dataset.num);
 
         // 取得使用者個人資料
 
@@ -256,7 +262,7 @@ function toggleStatus(element, data) {
             }
         })
         .then((res)=>{
-            toastMessage('success',`已取消收藏${targetProduct.content.name}`);
+            toastMessage('success',`已取消收藏${targetProduct.product.name}`);
             getData();
         })
         .catch((error)=>{ errorHandle(error) })

@@ -20,9 +20,11 @@ export function decodeToken(token) {
 // 用戶的驗證過期時自動登出
 
 function jwtExpired() {
+    const role = JSON.parse(localStorage.getItem('userData'))?.role;
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
-    toastMessage('error','連線已逾時，請重新登入','login.html');
+    role === 'member' ? toastMessage('error','連線已逾時，請重新登入','login.html') :
+    toastMessage('error','連線已逾時，請重新登入','admin-login.html');
 }
 
 export function errorHandle(error) {

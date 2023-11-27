@@ -73,10 +73,10 @@ async function renderProducts(data) {
     // 如果處在登入狀態 ( 取得到 userId ) 時，渲染至頁面上的每一筆商品資料都需要新增屬性，判斷是否被使用者收藏
 
     if (userId) {
-        const res = await axios.get(`${VITE_APP_SITE}/664/user/${userId}/collects`); // res.data 是特定使用者的收藏清單
+        const res = await axios.get(`${VITE_APP_SITE}/664/user/${userId}/collects?_expand=product`); // res.data 是特定使用者的收藏清單
         data = data.map(product => {
             return { ...product,
-            isCollected: res.data.find(item => item.content.id === product.id) ? true : false }
+            isCollected: res.data.find(item => item.product.id == product.id) ? true : false }
         })
     }
 

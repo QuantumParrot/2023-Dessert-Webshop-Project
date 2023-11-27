@@ -180,7 +180,6 @@ function toggleStatus(element, data) {
             // 取得使用者個人資料
 
             const userId = JSON.parse(localStorage.getItem("userData")).id;
-            const token = localStorage.getItem("token");
 
             // 從 icon 樣式判斷該商品是否已被收藏，沒有則加入，有則取消
 
@@ -190,7 +189,7 @@ function toggleStatus(element, data) {
 
                 axios.post(`${VITE_APP_SITE}/640/collects`, product, {
                     headers: {
-                        "authorization": `Bearer ${token}`
+                        "authorization": `Bearer ${getToken()}`
                     }
                 })
                 .then((res)=>{
@@ -207,7 +206,7 @@ function toggleStatus(element, data) {
                     const targetId = data.find(collect => collect.productId == id).id;
                     return axios.delete(`${VITE_APP_SITE}/640/collects/${targetId}`, {
                         headers: {
-                            "authorization": `Bearer ${token}`
+                            "authorization": `Bearer ${getToken()}`
                         }
                     })
                 })

@@ -282,12 +282,6 @@ function addToCart(element, data) {
         if (!token) { toastMessage('warning','請先登入') }
         else {
 
-            const targetProduct = data.find(item => item.content.id == element.dataset.num);
-
-            // 注意 targetProduct 的結構是 { content: {...}, userId: xx , id: xx }
-
-            // 因為是直接從收藏清單渲染過來的，所以如果從這裡丟購物車的話，取值的邏輯和其他頁面不一樣 ( 我的資料沒設計好的關係 ... )
-
             const userId = JSON.parse(localStorage.getItem("userData")).id;
 
             axios.get(`${VITE_APP_SITE}/640/users/${userId}/carts`, {
@@ -297,7 +291,7 @@ function addToCart(element, data) {
             })
             .then((res)=>{
                 const { data } = res;
-                let product = data.find(item => item.content.id == element.dataset.num); // 確認購物車有沒有重複品項
+                let product = data.find(item => item.productId == element.dataset.num); // 確認購物車有沒有重複品項
                 if (product) {
                     if (product.qty > 9) { return } // 如果已有重複品項，確認數量是否超過
                     else {
@@ -309,8 +303,7 @@ function addToCart(element, data) {
                         })
                     }
                 } else {
-                    product = { content: targetProduct.content, qty: 1, userId }; // 如果沒有重複品項，加入它並補上數量屬性
-                    delete product.content.isCollected;
+                    product = { productId: Number(element.dataset.num), qty: 1, userId }; // 如果沒有重複品項，加入它並補上數量屬性
                     return axios.post(`${VITE_APP_SITE}/640/carts`, product, {
                         headers: {
                             "authorization": `Bearer ${token}`

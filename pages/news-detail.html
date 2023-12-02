@@ -30,6 +30,7 @@
     <script type="module">
 
         import axios from "axios";
+        import moment from "moment";
 
         const { VITE_APP_SITE } = import.meta.env;
 
@@ -53,7 +54,7 @@
         function renderData(data) {
             detail.innerHTML += `
             <h3 class="mb-6">${data.title}</h3>
-            <p class="text-black mb-6">${data.date}</p>
+            <p class="text-black mb-6">${moment(+data.date).format('YYYY-MM-DD A hh:mm')}</p>
             <hr>
             <p class="mt-6">${data.content.replaceAll('\n','<br><br>')}</p>`;
         }

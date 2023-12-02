@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 
 const { VITE_APP_SITE } = import.meta.env;
 
@@ -6,7 +7,7 @@ const userId = JSON.parse(localStorage.getItem("userData"))?.id;
 
 // init
 
-function init() {
+function init() { 'use strict';
     axios.get(`${VITE_APP_SITE}/664/announcements?_sort=id&_order=desc&_limit=3`)
     .then((res)=>{
         renderAnnouncements(res.data);
@@ -48,7 +49,7 @@ function renderAnnouncements(data){
                     ${data[i].type}
                     </h3>
                     <div class="card-body d-flex flex-column p-0">
-                        <p class="fs-6 text-black mb-2">${data[i].date}</p>
+                        <p class="fs-6 text-black mb-2">${moment(data[i].date).format('YYYY-MM-DD')}</p>
                         <h4 class="flex-grow-1 fs-5 mb-9">${data[i].title}</h4>
                         <div class="text-center">
                             <a class="btn btn-sm btn-outline-primary" href="news-detail.html?id=${data[i].id}">繼續閱讀</a>

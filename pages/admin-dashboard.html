@@ -114,10 +114,18 @@
                              role="tabpanel"
                              aria-labelledby="v-pills-products-tab"
                              tabindex="0">
-                        <h3 class="d-md-block d-none mb-8">商品管理</h3>
+                        <div class="mb-8">
+                            <button type="button"
+                                    id="create-new-product"
+                                    class="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#productDetailModal">新增商品
+                            </button>
+                        </div>
                         <div id="products-content" class="row p-0">
                         <%- include('./layout/loading'); -%>
                         </div>
+                        <%- include('./layout/product-info'); -%>
                         <div class="text-center d-md-none d-block mt-5">
                             <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>

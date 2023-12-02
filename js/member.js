@@ -1,5 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import moment from "moment";
+
 import Tab from "bootstrap/js/dist/tab.js";
 
 import { getToken, errorHandle } from "./utilities/authorization.js";
@@ -113,7 +115,7 @@ function renderOrders(orders) {
                     </p>
                     <p class="d-md-inline-block d-none pe-5 border-end">
                         <span class="fw-bold">成立日期：</span>
-                        <span class="fw-normal">${order.createdTime.replace(/\s(.)+/,"")}</span>
+                        <span class="fw-normal">${moment(order.createdTime).format('YYYY-MM-DD')}</span>
                     </p>
                     <p class="d-md-inline-block d-none pe-5 border-end">
                         <span class="fw-bold">訂購金額：</span>
@@ -150,7 +152,7 @@ function renderOrders(orders) {
                     <div class="lh-lg">
                         <div class="d-flex justify-content-between align-items-center mb-5">
                             <p class="d-md-block d-none fw-bold fs-5">寄送資訊</p>
-                            <p class="text-black">${order.createdTime}</p>
+                            <p class="text-black">${moment(order.createdTime).format('YYYY-MM-DD A hh:mm:ss')}</p>
                         </div>
                         <p>
                         <span class="text-orange fw-bold">收件人姓名：</span>${order.info.receiver}
@@ -235,21 +237,21 @@ function renderCollection(collects) {
 
     // 待優化的程式碼 //
 
-    const favorites = document.querySelectorAll('.favorite');
-    favorites.forEach(favorite => { toggleStatus(favorite, collects) });
+    const favoriteButtons = document.querySelectorAll('.favorite');
+    favoriteButtons.forEach(favoriteButton => { toggleStatus(favoriteButton) });
 
     const cartButtons = document.querySelectorAll('.cart');
-    cartButtons.forEach(cartButton => { addToCart(cartButton, collects) });
+    cartButtons.forEach(cartButton => { addToCart(cartButton) });
 
 }
 
-function toggleStatus(element, data) {
+function toggleStatus(trigger) {
 
-    element.addEventListener('click', (e) => {
+    trigger.addEventListener('click', (e) => {
 
         e.preventDefault();
 
-        const targetProduct = data.find(item => item.product.id == element.dataset.num);
+        const targetProduct = currentData.find(item => item.product.id == trigger.dataset.num);
 
         // 取得使用者個人資料
 
@@ -271,9 +273,9 @@ function toggleStatus(element, data) {
 
 }
 
-function addToCart(element, data) {
+function addToCart(trigger) {
     
-    element.addEventListener('click', function(e){
+    trigger.addEventListener('click', function(e){
 
         e.preventDefault();
 
@@ -291,7 +293,7 @@ function addToCart(element, data) {
             })
             .then((res)=>{
                 const { data } = res;
-                let product = data.find(item => item.productId == element.dataset.num); // 確認購物車有沒有重複品項
+                let product = data.find(item => item.productId == trigger.dataset.num); // 確認購物車有沒有重複品項
                 if (product) {
                     if (product.qty > 9) { return } // 如果已有重複品項，確認數量是否超過
                     else {
@@ -303,7 +305,7 @@ function addToCart(element, data) {
                         })
                     }
                 } else {
-                    product = { productId: Number(element.dataset.num), qty: 1, userId }; // 如果沒有重複品項，加入它並補上數量屬性
+                    product = { productId: Number(trigger.dataset.num), qty: 1, userId }; // 如果沒有重複品項，加入它並補上數量屬性
                     return axios.post(`${VITE_APP_SITE}/640/carts`, product, {
                         headers: {
                             "authorization": `Bearer ${token}`

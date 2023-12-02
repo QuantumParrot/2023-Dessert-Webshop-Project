@@ -2,7 +2,7 @@ import './assets/scss/main.scss';
 import './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import { toastMessage } from './js/utilities/message.js';
-import './js/handleHeaderChange.js';
+import './js/nav.js';
 
 // 半放棄的手刻 isActive :P
 

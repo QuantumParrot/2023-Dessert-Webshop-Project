@@ -1,7 +1,8 @@
 import axios from "axios";
-import Swal from "sweetalert2";
-import Tab from "bootstrap/js/dist/tab.js";
 import moment from "moment";
+import Swal from "sweetalert2";
+
+import Tab from "bootstrap/js/dist/tab.js";
 
 import { decodeToken, errorHandle, getToken } from "../utilities/authorization";
 import { toastMessage } from "../utilities/message";
@@ -56,6 +57,8 @@ function getData() {
 
 }
 
+// 取得訂單列表
+
 function getOrders() {
 
     const token = decodeToken(getToken());
@@ -73,6 +76,8 @@ function getOrders() {
     .catch((error)=>{ errorHandle(error) })
 
 }
+
+// 渲染訂單列表
 
 function renderOrders(data) {
 
@@ -97,7 +102,7 @@ function renderOrders(data) {
                         <div class="col-3 d-md-block d-none">
                             <div>
                                 <span class="fw-bold">成立日期：</span>
-                                <span class="fw-normal">${order.createdTime.replace(/\s(.)+/,"")}</span>
+                                <span class="fw-normal">${moment(order.createdTime).format('YYYY-MM-DD')}</span>
                             </div>
                         </div>
                         <div class="col-3 d-md-block d-none border-start border-end">
@@ -140,7 +145,7 @@ function renderOrders(data) {
                     <div class="lh-lg">
                         <div class="d-flex justify-content-between align-items-center mb-5">
                             <p class="d-md-block d-none fw-bold fs-5">寄送資訊</p>
-                            <p class="text-black">${order.createdTime}</p>
+                            <p class="text-black">${moment(order.createdTime).format('YYYY-MM-DD A hh:mm:ss')}</p>
                         </div>
                         <p>
                         <span class="text-orange fw-bold">收件人姓名：</span>${order.info.receiver}
@@ -182,6 +187,8 @@ function renderOrders(data) {
 
 }
 
+// 完成訂單
+
 function finishOrder(e) {
 
     const token = decodeToken(localStorage.getItem('token'));
@@ -214,6 +221,8 @@ function finishOrder(e) {
     });
 
 }
+
+// 篩選訂單
 
 function manageOrders(initialData) {
 
@@ -279,6 +288,8 @@ function manageOrders(initialData) {
 
 };
 
+// 取得消息列表
+
 function getAnnouncements() {
 
     const token = decodeToken(getToken());
@@ -289,12 +300,22 @@ function getAnnouncements() {
         }
     })
     .then((res)=>{
+        
         data = res.data;
         renderAnnouncements();
+
+        const form = document.querySelector('#add-news-form');
+        form.addEventListener('submit', createAnnouncement);
+        
+        const deleteButtons = document.querySelectorAll('button[data-id]');
+        deleteButtons.forEach(button => button.addEventListener('click', (e)=>{ deleteAnnouncement(e.target.dataset.id) }))
+
     })
     .catch((error)=>{ errorHandle(error) })
 
 }
+
+// 渲染消息列表
 
 function renderAnnouncements() {
 
@@ -304,7 +325,7 @@ function renderAnnouncements() {
         <li class="list-group-item bg-white rounded-2 shadow p-0 fw-bold">
             <div class="d-flex flex-md-row flex-column align-items-md-center align-items-start gap-md-8 gap-6 p-md-8 p-6">
                 <button data-id="${item.id}" class="btn btn-sm btn-primary px-4">刪除消息</button>
-                <p class="text-black">${item.date.replace(/\s[AM|PM].+/,"")}</p>
+                <p class="text-black">${moment(+item.date).format('YYYY-MM-DD')}</p>
                 <p>${item.title}</p>
             </div>
         </li>
@@ -313,15 +334,11 @@ function renderAnnouncements() {
     content += `</ul></div>`;
     element.innerHTML = content;
 
-    const form = document.querySelector('#add-news-form');
-    form.addEventListener('submit', addAnnouncement);
-
-    const deleteButtons = document.querySelectorAll('button[data-id]');
-    deleteButtons.forEach(button => button.addEventListener('click', (e)=>{ deleteAnnouncement(e.target.dataset.id) }))
-
 }
 
-function addAnnouncement(e) {
+// 新增消息
+
+function createAnnouncement(e) {
     
     e.preventDefault();
 
@@ -350,7 +367,7 @@ function addAnnouncement(e) {
                         title: title.value,
                         type: type.value,
                         content: content.value,
-                        date: moment().format('YYYY-MM-D A hh:mm:ss'),
+                        date: new Date().getTime(),
                         image: "",
                     };
                     const res = await axios.post(`${VITE_APP_SITE}/660/announcements`, data, {
@@ -358,7 +375,6 @@ function addAnnouncement(e) {
                             "authorization": `Bearer ${getToken()}`
                         }
                     });
-                    console.log(res);
                     toastMessage('success', '新增成功！');
                     e.target.reset();
                     getAnnouncements();
@@ -368,6 +384,8 @@ function addAnnouncement(e) {
     }
     
 }
+
+// 刪除消息
 
 function deleteAnnouncement(id) {
 
@@ -398,6 +416,8 @@ function deleteAnnouncement(id) {
 
 }
 
+// 取得商品列表
+
 function getProducts() {
 
     const token = decodeToken(getToken());
@@ -410,10 +430,18 @@ function getProducts() {
     .then((res)=>{
         data = res.data;
         renderProductList();
+        //
+        const createNewProductTrigger = document.querySelector('#create-new-product');
+        createNewProductTrigger.addEventListener('click', modalInit);
+        //
+        const form = document.querySelector('#product-form');
+        form.addEventListener('submit', handleProductDetail);
     })
     .catch((error)=>{ errorHandle(error) })
 
 }
+
+// 渲染商品列表
 
 function renderProductList() {
 
@@ -434,12 +462,16 @@ function renderProductList() {
                 <div class="d-flex flex-md-column justify-content-between align-items-center">
                     <h4 class="fs-6 my-6">${product.name}</h4>
                     <div class="d-flex justify-content-center gap-3 mb-md-6 mb-0">
-                        <button type="button" class="edit btn btn-primary btn-sm p-2">編輯</button>
+                        <button type="button"
+                                class="edit btn btn-primary btn-sm p-2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#productDetailModal"
+                                >編輯</button>
                         <button type="button" 
                                 class="status btn btn-orange btn-sm p-2">${product.forSale ? '下架' : '上架'}</button>
                         <button type="button"
-                                class="delete btn btn-danger btn-sm p-2">
-                        刪除</button>
+                                class="delete btn btn-danger btn-sm p-2"
+                                >刪除</button>
                     </div>
                 </div>
             </div>
@@ -451,13 +483,133 @@ function renderProductList() {
 
 }
 
+function modalInit() {
+
+    const title = document.querySelector('.modal-title');
+    const form = document.querySelector('#product-form');
+    const images = form.querySelector('.images');
+
+    title.textContent = '新增商品';
+    images.innerHTML = /*html*/`
+    <input type="text" name="image"
+           class="form-control p-2 text-black">`;
+    form.reset();
+
+}
+
+function handleProductDetail(e) {
+
+    e.preventDefault();
+
+    const name = e.target.name.value;
+    const otherName = e.target.otherName.value;
+    const info = e.target.info.value;
+    const type = [...e.target.querySelectorAll(`[name="type"]:checked`)].map(i => i.value);
+    const size = e.target.size.value;
+    const ingredients = e.target.ingredients.value.split(',');
+    const price = e.target.price.value;
+    const image = [...e.target.querySelectorAll(`[name="image"]`)].map(i => i.value).filter(i => i);
+    const shelfLife = e.target.shelfLife.value;
+
+    if (!name || !type.length || !price || !size || !shelfLife) {
+
+        toastMessage('warning','必填欄位不可空白！');
+        return;
+
+    } else if (isNaN(price) || !Number.isInteger(+price) || price < 1) {
+        
+        toastMessage('warning','價格請填寫大於零的整數');
+        return;
+
+    } else {
+
+        const title = document.querySelector('.modal-title').textContent;
+
+        if (title === '新增商品') {
+
+            createNewProduct({
+                name,
+                otherName,
+                info,
+                type,
+                ingredients,
+                price: +price,
+                image,
+                size,
+                shelfLife,
+                forSale: false,
+            });
+
+        } else {
+
+            const id = title.replace(/\D/g,'');
+            const originData = data.find(item => item.id == id);
+
+            const newData = { ...originData,
+                name,
+                otherName,
+                info,
+                type,
+                ingredients,
+                price: +price,
+                image,
+                size,
+                shelfLife,
+            }
+
+            // 回傳 true 代表資料有被編輯過，此時才需要發送修改的網路請求
+
+            function checkContent(prop) {
+
+                if (prop === 'type' || prop === 'image' || prop === 'ingredients') {
+                    
+                    // 因為 type, image, ingredients 的值為陣列
+                    
+                    // 判斷是否有無編輯的方式：1. 陣列長度是否不同 2. 新陣列的元素是否有其中一個不包含在舊陣列裡
+
+                    return newData[prop].length !== originData[prop].length || newData[prop].some(item => !originData[prop].includes(item))
+
+                } else { return newData[prop] !== originData[prop] }
+            
+            }
+
+            // console.log(Object.keys(newData).forEach(key => console.log(key, checkContent(key))))
+
+            Object.keys(newData).some(key => checkContent(key)) ? editProduct(id, newData) : toastMessage('question','資料沒變哦 (ㆆᴗㆆ)')
+
+        }
+
+    }
+
+};
+
+function createNewProduct(info) {
+
+    const token = getToken();
+
+    axios.post(`${VITE_APP_SITE}/660/products`, info, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    })
+    .then((res)=>{
+        toastMessage('success','成功！記得上架商品哦！');
+        getProducts();
+    })
+    .catch((error)=>{ errorHandle(error) });
+
+}
+
 function handleProducts({target}) {
     if (target.nodeName !== 'BUTTON') { return }
     else {
+        
         const parent = target.closest('.card');
         const id = parent.dataset.num;
         const product = data.find(item => item.id == id);
+
         if (target.classList.contains('status')) {
+
             Swal.fire({
                 icon: 'warning',
                 title: `確定${target.textContent}？`,
@@ -481,12 +633,99 @@ function handleProducts({target}) {
                             }
                         });
                         getProducts();
-                        toastMessage('success', `${target.textContent}成功！`);
+                        toastMessage('success', `成功${target.textContent}！`);
                     } catch(error) { errorHandle(error) };
                 }
-
             })
-        }
-        else if (target.classList.contains('delete')) {}
+
+        } else if (target.classList.contains('delete')) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: `確定刪除${product.name}？！`,
+                text: `此操作不可復原，你要確定欸！`,
+                /* cancel */
+                showCancelButton: true,
+                cancelButtonColor: '#D1741F',
+                cancelButtonText: '取消',
+                /* deal with AJAX */
+                confirmButtonColor: '#A37A64',
+                confirmButtonText: '確定',
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    try { 
+                        const res = await axios.delete(`${VITE_APP_SITE}/660/products/${id}`, {
+                            headers: {
+                                "authorization": `Bearer ${getToken()}`
+                            }
+                        });
+                        getProducts();
+                        toastMessage('success', `再見，${product.name}！\n我們懷念它 ${"｡ﾟ(ﾟ´ω`ﾟ)ﾟ｡"}`);
+                    } catch(error) { errorHandle(error) };
+                }
+            })
+            
+        } else if (target.classList.contains('edit')) { renderModal(product) }
+    
     }
 }
+
+function renderModal(product) {
+
+    const modal = document.querySelector('#productDetailModal');
+    const title = modal.querySelector('.modal-title');
+
+    title.textContent = `＃${product.id}：${product.name}`;
+
+    Object.keys(product).filter(key => key !== 'forSale' && key !== 'id')
+    .forEach(key => {
+        if (key === 'type') {
+            const types = modal.querySelectorAll(`input[name="${key}"]`);
+            types.forEach(type => type.checked = product[key].includes(type.value) ? true : false)
+        } else if (key === 'image') {
+            const parent = modal.querySelector('.images');
+            let str = ''
+            product[key].forEach((img) => {
+                str += `
+                <input type="text" name="image"
+                       class="form-control p-2 text-black"
+                       value="${img}">`
+            });
+            parent.innerHTML = str;
+        } else {
+            const element = modal.querySelector(`[name="${key}"]`);
+            element.value = product[key];
+        }
+    });
+
+}
+
+function editProduct(id, info) {
+    
+    axios.patch(`${VITE_APP_SITE}/660/products/${id}`, info, {
+        headers: {
+            authorization: `Bearer ${getToken()}`
+        }
+    })
+    .then((res) => {
+        toastMessage('success','修改成功！');
+        getProducts();
+    })
+    .catch((error)=> { errorHandle(error) })
+
+}
+
+// 新增圖片欄位
+
+const createNewImage = document.querySelector('#createNewImage');
+
+createNewImage.addEventListener('click', (e) => {
+
+    const input = document.createElement('input');
+    input.name = 'image';
+    input.classList.add('form-control','p-2','text-black');
+
+    const images = document.querySelector('.images');
+    images.appendChild(input);
+
+})

@@ -1,6 +1,7 @@
 export class ImageDisplay {
     constructor(element) {
         this.element = document.querySelector(element);
+        this.clickEventListener();
     }
     render(data) {
         let content = '';
@@ -11,9 +12,8 @@ export class ImageDisplay {
             </div>`
         });
         this.element.innerHTML = content;
-        this.clickEvent();
     }
-    clickEvent() {
+    clickEventListener() {
         this.element.addEventListener('click', ({target}) => {
             if (target.nodeName === 'IMG') { this.show(target.src) }
         });

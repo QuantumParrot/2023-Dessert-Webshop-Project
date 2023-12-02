@@ -1,6 +1,5 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import moment from "moment";
 
 import { toastMessage, warningMessage } from "./utilities/message.js";
 import { getToken, errorHandle } from "./utilities/authorization.js";
@@ -287,59 +286,60 @@ function nextStep(e,data) {
 
         const main = document.querySelector('#main-content');
         let content = '';
-        content += /*html*/`<div class="border border-primary rounded-1 px-6 py-7">
-        <form id="order-form" class="d-flex flex-column gap-7">
-            <div class="d-flex gap-2">
-                <!-- method -->
-                <p class="fw-bold">取貨方式：</p>
-                <input type="radio" name="method" id="宅配到府" value="宅配到府">
-                <label name="method" for="宅配到府">宅配到府</label>
-                <input type="radio" name="method" id="來店取貨" value="來店取貨">
-                <label name="method" for="來店取貨">來店取貨</label>
-            </div>
-            <div class="d-flex gap-2">
-                <!-- payment -->
-                <p class="fw-bold">付款方式：</p>
-                <input type="radio" name="payment" id="貨到付款" value="貨到付款">
-                <label for="貨到付款">貨到付款</label>
-            </div>
-            <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
-                <!-- receiver -->
-                <label for="receiver" class="fw-bold mb-md-0 mb-3">收件人姓名：</label>
-                <input type="text" id="receiver" class="form-control w-25 px-2 py-1">
-                <div><input type="checkbox" id="useMemberName" class="me-2">同會員資料</div>
-            </div>
-            <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
-                <!-- phone -->
-                <label for="phone" class="fw-bold mb-md-0 mb-3">收件人電話：</label>
-                <input type="tel"
-                       id="phone"
-                       class="form-control w-25 px-2 py-1"
-                       placeholder="請填寫國內的手機號碼"
-                       value="0912987654">
-            </div>
-            <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
-                <!-- address -->
-                <label for="address" class="fw-bold mb-md-0 mb-3">收件人地址：</label>
-                <input type="text"
-                       id="address"
-                       class="form-control w-50 px-2 py-1"
-                       placeholder="請填寫國內的地址"
-                       value="台南市東區大學路一號">
-            </div>
-            <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
-                <!-- shippingTime -->
-                <p class="fw-bold mb-md-0 mb-3">指定收貨時段：</p>
-                <div>
-                    <input type="radio" name="shippingTime" id="不指定" value="不指定">
-                    <label name="shippingTime" for="不指定">不指定</label>
-                    <input type="radio" name="shippingTime" id="ante-meridiem" value="中午前">
-                    <label name="shippingTime" for="ante-meridiem">中午前</label>
-                    <input type="radio" name="shippingTime" id="post-meridiem" value="下午兩點～六點">
-                    <label name="shippingTime" for="post-meridiem">下午兩點～六點</label>
+        content += /*html*/`
+        <div class="border border-primary rounded-1 px-6 py-7">
+            <form id="order-form" class="d-flex flex-column gap-7">
+                <div class="d-flex gap-2">
+                    <!-- method -->
+                    <p class="fw-bold">取貨方式：</p>
+                    <input type="radio" name="method" id="宅配到府" value="宅配到府">
+                    <label name="method" for="宅配到府">宅配到府</label>
+                    <input type="radio" name="method" id="來店取貨" value="來店取貨">
+                    <label name="method" for="來店取貨">來店取貨</label>
                 </div>
-            </div>
-        </form>
+                <div class="d-flex gap-2">
+                    <!-- payment -->
+                    <p class="fw-bold">付款方式：</p>
+                    <input type="radio" name="payment" id="貨到付款" value="貨到付款">
+                    <label for="貨到付款">貨到付款</label>
+                </div>
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
+                    <!-- receiver -->
+                    <label for="receiver" class="fw-bold mb-md-0 mb-3">收件人姓名：</label>
+                    <input type="text" id="receiver" class="form-control w-25 px-2 py-1">
+                    <div><input type="checkbox" id="useMemberName" class="me-2">同會員資料</div>
+                </div>
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
+                    <!-- phone -->
+                    <label for="phone" class="fw-bold mb-md-0 mb-3">收件人電話：</label>
+                    <input type="tel"
+                           id="phone"
+                           class="form-control w-25 px-2 py-1"
+                           placeholder="請填寫國內的手機號碼"
+                           value="0912987654">
+                </div>
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
+                    <!-- address -->
+                    <label for="address" class="fw-bold mb-md-0 mb-3">收件人地址：</label>
+                    <input type="text"
+                           id="address"
+                           class="form-control w-50 px-2 py-1"
+                           placeholder="請填寫國內的地址"
+                           value="台南市東區大學路一號">
+                </div>
+                <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
+                    <!-- shippingTime -->
+                    <p class="fw-bold mb-md-0 mb-3">指定收貨時段：</p>
+                    <div>
+                        <input type="radio" name="shippingTime" id="不指定" value="不指定">
+                        <label name="shippingTime" for="不指定">不指定</label>
+                        <input type="radio" name="shippingTime" id="ante-meridiem" value="中午前">
+                        <label name="shippingTime" for="ante-meridiem">中午前</label>
+                        <input type="radio" name="shippingTime" id="post-meridiem" value="下午兩點～六點">
+                        <label name="shippingTime" for="post-meridiem">下午兩點～六點</label>
+                    </div>
+                </div>
+            </form>
         </div>`
         main.innerHTML = content;
     
@@ -435,7 +435,7 @@ function completeOrder(data, info) {
                     content: data,
                     total: Number(total),
                     info,
-                    createdTime: moment().format('YYYY-MM-D A hh:mm:ss'),
+                    createdTime: new Date().getTime(),
                     userId: data[0].userId,
                     isFinished: false,
                 };

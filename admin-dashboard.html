@@ -6,10 +6,10 @@
     <title>後台管理｜Akheng's Desserts 甜點工作室</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/admin-dashboard-13f8e003.js"></script>
+    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/admin-dashboard-e5550099.js"></script>
     <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-78beb421.js">
-    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/tab-1e253613.js">
     <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/moment-fbc5633a.js">
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/tab-1e253613.js">
     <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/ScrollEvent-2d368248.js">
     <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-e07f34ec.css">
 </head>
@@ -264,7 +264,14 @@
                              role="tabpanel"
                              aria-labelledby="v-pills-products-tab"
                              tabindex="0">
-                        <h3 class="d-md-block d-none mb-8">商品管理</h3>
+                        <div class="mb-8">
+                            <button type="button"
+                                    id="create-new-product"
+                                    class="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#productDetailModal">新增商品
+                            </button>
+                        </div>
                         <div id="products-content" class="row p-0">
                         <div class="loading col-12">
     <div class="alert bg-tertiary text-center m-0">
@@ -285,7 +292,137 @@
         <p>與伺服器取得聯繫中，請稍候</p>
     </div>
 </div>                        </div>
-                        <div class="text-center d-md-none d-block mt-5">
+                        <div id="productDetailModal"
+     class="modal modal-lg fade"
+     tabindex="-1"
+     aria-labelledby="productModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"
+                    id="productModalLabel">新增商品</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="product-form"
+                  class="overflow-y-scroll d-flex flex-column">
+                <div class="modal-body">
+                    <div class="mb-7">
+                        <label for="name"
+                               class="form-label">
+                               商品名稱<span class="text-danger">（必填）</label>
+                        <input id="name"
+                               type="text"
+                               name="name"
+                               class="form-control p-2 text-black">
+                    </div>
+                    <div class="mb-7">
+                        <label for="otherName"
+                               class="form-label">商品別名</label>
+                        <input id="otherName"
+                               type="text"
+                               name="otherName"
+                               class="form-control p-2 text-black">
+                    </div>
+                    <div class="mb-7">
+                        <label for="info"
+                               class="form-label">商品介紹</label>
+                        <input id="info"
+                               type="text"
+                               name="info"
+                               class="form-control p-2 text-black">
+                    </div>
+                    <div class="mb-7">
+                        <p class="mb-2">商品類型<span class="text-danger">（必填）</p>
+                        <div>
+                            <input name="type" id="本店招牌" value="本店招牌"
+                                   type="checkbox">
+                            <label name="type" for="本店招牌">本店招牌</label>
+                            
+                            <input name="type" id="南洋風味" value="南洋風味"
+                                   type="checkbox">
+                            <label name="type" for="南洋風味">南洋風味</label>
+                            
+                            <input name="type" id="特色蛋糕" value="特色蛋糕"
+                                   type="checkbox">
+                            <label name="type" for="特色蛋糕">特色蛋糕</label>
+                            
+                            <br>
+
+                            <input name="type" id="午茶輕食" value="午茶輕食"
+                                   type="checkbox">
+                            <label name="type" for="午茶輕食">午茶輕食</label>
+
+                            <input name="type" id="期間限定" value="期間限定"
+                                   type="checkbox">
+                            <label name="type" for="期間限定">期間限定</label>
+
+                            <input name="type" id="節慶禮盒" value="節慶禮盒"
+                                   type="checkbox">
+                            <label name="type" for="節慶禮盒">節慶禮盒</label>
+                        </div>
+                    </div>
+                    <div class="mb-7">
+                        <label for="ingredients"
+                               class="form-label">主要成分</label>
+                        <input id="ingredients"
+                               type="text"
+                               name="ingredients"
+                               class="form-control p-2 text-black"
+                               placeholder="請以半形逗號 “,” 區隔材料">
+                    </div>
+                    <div class="mb-7">
+                        <label for="price"
+                               class="form-label">
+                               商品價格<span class="text-danger">（必填）</label>
+                        <input id="price"
+                               type="text"
+                               name="price"
+                               class="form-control p-2 text-black">
+                    </div>
+                    <div class="mb-7">
+                        <div class="d-flex align-items-center gap-4 mb-2">
+                            <label>商品圖片</label>
+                            <button id="createNewImage"
+                                    type="button"
+                                    class="btn btn-primary btn-sm px-2 py-0 d-flex align-items-center gap-1">
+                                <span class="material-icons fs-5 d-flex">add_circle</span>
+                                <span class="fs-7">新增圖片</span>
+                            </button>
+                        </div>
+                        <p class="fs-7 text-muted mb-2">註：若想刪除圖片，欄位留白即可 🌝</p>
+                        <div class="images d-flex flex-column gap-2">
+                        <input type="text" name="image"
+                               class="form-control p-2 text-black">
+                        </div>
+                    </div>
+                    <div class="mb-7">
+                        <label for="size"
+                               class="form-label">
+                               商品尺寸<span class="text-danger">（必填）</label>
+                        <input id="size"
+                               type="text"
+                               name="size"
+                               class="form-control p-2 text-black">
+                    </div>
+                    <div class="mb-7">
+                        <label for="shelfLife"
+                               class="form-label">
+                               賞味期限<span class="text-danger">（必填）</label>
+                        <input id="shelfLife"
+                               type="text"
+                               name="shelfLife"
+                               class="form-control p-2 text-black">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-primary">送出</button>
+                    <button type="button" class="btn btn-sm btn-orange" data-bs-dismiss="modal">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>                        <div class="text-center d-md-none d-block mt-5">
                             <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>
                         </div>
                         </div>

@@ -6,12 +6,13 @@
     <title>後台管理｜Akheng's Desserts 甜點工作室</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/admin-dashboard-e5550099.js"></script>
-    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-78beb421.js">
+    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/admin-dashboard-8192f0b1.js"></script>
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-2e79e1a8.js">
     <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/moment-fbc5633a.js">
-    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/tab-1e253613.js">
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/tab-82bde17a.js">
     <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/ScrollEvent-2d368248.js">
-    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-e07f34ec.css">
+    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-8d2b0438.css">
+    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/admin-dashboard-b2abc2cd.css">
 </head>
 <body>
 
@@ -76,7 +77,7 @@
         </div>
     </div>
 </header>
-    <section class="container-fluid">
+    <section class="container-fluid font-style-lato">
         <div class="pb-md-13 pt-9 border-bottom">
             <div class="row">
                 <div class="col-md-2">
@@ -432,10 +433,24 @@
                              aria-labelledby="v-pills-charts-tab"
                              tabindex="0">
                         <h3 class="d-md-block d-none mb-8">銷售數據</h3>
+                        <div id="monthly-sales" class="d-flex gap-3 mb-8">
+                            <div class="rounded-2 p-6 shadow w-50 d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                <span class="fw-bold">上月總銷售額</span>
+                                <span id="last-month" class="text-orange fw-bold fs-3"></span>
+                            </div>
+                            <div class="rounded-2 p-6 shadow w-50 d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                <span class="fw-bold mb-md-0 mb-3">本月總銷售額</span>
+                                <span id="this-month" class="text-orange fw-bold fs-3"></span>
+                            </div>
+                        </div>
                         <div id="charts-content" class="row p-0">
                             <div class="col-12">
-                                <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                            <div class="bg-secondary rounded-2 p-8 mb-8">
+                                <h4 id="chart-title"
+                                    class="text-center mb-8">商品總銷量</h4>
+                                <div id="chart"></div>
                             </div>
+                            <div id="chart-detail"></div>
                         </div>
                         <div class="text-center d-md-none d-block mt-5">
                             <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>

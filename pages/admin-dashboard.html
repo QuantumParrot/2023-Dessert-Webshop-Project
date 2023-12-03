@@ -11,7 +11,7 @@
 
     <%- include('./layout/header-admin'); -%>
 
-    <section class="container-fluid">
+    <section class="container-fluid font-style-lato">
         <div class="pb-md-13 pt-9 border-bottom">
             <div class="row">
                 <div class="col-md-2">
@@ -136,10 +136,24 @@
                              aria-labelledby="v-pills-charts-tab"
                              tabindex="0">
                         <h3 class="d-md-block d-none mb-8">銷售數據</h3>
+                        <div id="monthly-sales" class="d-flex gap-3 mb-8">
+                            <div class="rounded-2 p-6 shadow w-50 d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                <span class="fw-bold">上月總銷售額</span>
+                                <span id="last-month" class="text-orange fw-bold fs-3"></span>
+                            </div>
+                            <div class="rounded-2 p-6 shadow w-50 d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                <span class="fw-bold mb-md-0 mb-3">本月總銷售額</span>
+                                <span id="this-month" class="text-orange fw-bold fs-3"></span>
+                            </div>
+                        </div>
                         <div id="charts-content" class="row p-0">
                             <div class="col-12">
-                                <p class="alert bg-tertiary text-center m-0">切版中 ┏( .-. ┏ ) ┓</p>
+                            <div class="bg-secondary rounded-2 p-8 mb-8">
+                                <h4 id="chart-title"
+                                    class="text-center mb-8">商品總銷量</h4>
+                                <div id="chart"></div>
                             </div>
+                            <div id="chart-detail"></div>
                         </div>
                         <div class="text-center d-md-none d-block mt-5">
                             <button type="button" class="back-to-top btn btn-sm btn-primary">回到上方</button>

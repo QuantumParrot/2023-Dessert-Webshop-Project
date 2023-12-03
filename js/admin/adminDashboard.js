@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 
 import Tab from "bootstrap/js/dist/tab.js";
 
+import { renderCharts } from "../chart";
 import { decodeToken, errorHandle, getToken } from "../utilities/authorization";
 import { toastMessage } from "../utilities/message";
 
@@ -54,6 +55,7 @@ function getData() {
     if (hash === 'orders') { getOrders() }
     else if (hash === 'announcements') { getAnnouncements() }
     else if (hash === 'products') { getProducts() }
+    else if (hash === 'charts') { getChartData() }
 
 }
 
@@ -61,11 +63,9 @@ function getData() {
 
 function getOrders() {
 
-    const token = decodeToken(getToken());
-
     axios.get(`${VITE_APP_SITE}/660/orders`, {
         headers: {
-            "authorization": `Bearer ${token}`
+            "authorization": `Bearer ${getToken()}`
         }
     })
     .then((res)=>{
@@ -292,11 +292,9 @@ function manageOrders(initialData) {
 
 function getAnnouncements() {
 
-    const token = decodeToken(getToken());
-
     axios.get(`${VITE_APP_SITE}/660/announcements?_sort=id&_order=desc`, {
         headers: {
-            "authorization": `Bearer ${token}`
+            "authorization": `Bearer ${getToken()}`
         }
     })
     .then((res)=>{
@@ -420,11 +418,9 @@ function deleteAnnouncement(id) {
 
 function getProducts() {
 
-    const token = decodeToken(getToken());
-
     axios.get(`${VITE_APP_SITE}/660/products`, {
         headers: {
-            "authorization": `Bearer ${token}`
+            "authorization": `Bearer ${getToken()}`
         }
     })
     .then((res)=>{
@@ -729,3 +725,17 @@ createNewImage.addEventListener('click', (e) => {
     images.appendChild(input);
 
 })
+
+function getChartData() {
+
+    axios.get(`${VITE_APP_SITE}/660/orders`, {
+        headers: {
+            "authorization": `Bearer ${getToken()}`
+        }
+    })
+    .then((res)=>{
+        renderCharts(res.data);
+    })
+    .catch((error)=>{ errorHandle(error) });
+    
+}

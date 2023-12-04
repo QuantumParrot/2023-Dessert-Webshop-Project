@@ -34,6 +34,8 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + [Apache Echarts](https://echarts.apache.org/zh/index.html)
 
++ [AOS](https://michalsnik.github.io/aos/)
+
 ***
 
 ### 使用素材及工具
@@ -116,14 +118,18 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 ### 特別感謝
 
-六角學院的講師群（按筆畫順序排列）：卡斯伯老師、洧杰老師、穎旻老師
++ 六角學院的講師群（按筆畫順序排列）：
 
-六角學院的助教群（按字母及筆畫順序排列）：Bingbingboom 助教、dOvOb 助教、林賽亞助教、俞方助教、致愷助教、焦糖助教、傑利助教
+  卡斯伯老師、洧杰老師、穎旻老師
 
-設計助教長：Joanne 助教
++ 六角學院的助教群（按字母及筆畫順序排列）：
 
-設計師：Tori Chen
+  Bingbingboom 助教、dOvOb 助教、林賽亞助教、俞方助教、致愷助教、焦糖助教、傑利助教
 
-專題教練：Amberhh
++ 設計助教長：Joanne 助教
+
++ 設計師：Tori Chen
+
++ 專題指導教練：Amberhh
 
 ＆共同營造出良好共學環境的直播班同學們！以及選擇挑戰專題並堅持到最後一刻的自己：Ｄ

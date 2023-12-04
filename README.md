@@ -2,7 +2,7 @@
 
 此為 2023 年六角學院 JavaScript 直播班的專題。純屬練習，不做商用。
 
-當前進度：**開發中**
+當前進度：**已完成核心開發，剩下細節優化中**
 
 ***
 
@@ -29,6 +29,10 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 + [Swiper](https://swiperjs.com/)
 
 + [Moment.js](https://momentjs.com/)
+
++ [C3.js](https://c3js.org/)
+
++ [Apache Echarts](https://echarts.apache.org/zh/index.html)
 
 ***
 
@@ -84,7 +88,7 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + [CSS Loaders](https://cssloaders.github.io/)
 
-  > 在首頁的每月推薦專欄裡使用了以它的 loading 動畫為基礎修改而成的 click 動畫 ( index.html )
+  > 在首頁的每月推薦專欄裡使用了以它的 loading 動畫為基礎修改而成的 click 動畫
 
 + [LADY KELLY](https://www.ladykelly.com.tw/faq)
 
@@ -107,3 +111,19 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 + [線稿圖](https://whimsical.com/2023-js-21-44Canzh72P2sqMKYmMbg3d)
 
 + [開發專案時遇上的疑難雜症及解決方法](https://hackmd.io/1TD4c7jCR0qesT7dppjt3g)
+
+***
+
+### 特別感謝
+
+六角學院的講師群（按筆畫順序排列）：卡斯伯老師、洧杰老師、穎旻老師
+
+六角學院的助教群（按字母及筆畫順序排列）：Bingbingboom 助教、dOvOb 助教、林賽亞助教、俞方助教、致愷助教、焦糖助教、傑利助教
+
+設計助教長：Joanne 助教
+
+設計師：Tori Chen
+
+專題教練：Amberhh
+
+＆共同營造出良好共學環境的直播班同學們！以及選擇挑戰專題並堅持到最後一刻的自己：Ｄ

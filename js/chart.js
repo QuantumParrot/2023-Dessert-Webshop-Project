@@ -1,6 +1,3 @@
-import c3 from "c3";
-import '../node_modules/c3/c3.min.css';
-
 import * as echarts from 'echarts/core';
 import { TooltipComponent, GridComponent } from 'echarts/components';
 import { BarChart } from 'echarts/charts';

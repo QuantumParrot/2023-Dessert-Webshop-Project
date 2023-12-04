@@ -1,7 +1,10 @@
 import c3 from "c3";
 import '../node_modules/c3/c3.min.css';
 
-import * as echarts from 'echarts';
+import * as echarts from 'echarts/core';
+import { TooltipComponent, GridComponent } from 'echarts/components';
+import { BarChart } from 'echarts/charts';
+import { CanvasRenderer } from 'echarts/renderers';
 
 import moment from "moment";
 
@@ -109,6 +112,8 @@ export function renderCharts(data) {
 
 function renderBarChart(xAxis, values) {
 
+    echarts.use([TooltipComponent, GridComponent, BarChart, CanvasRenderer]);
+
     const qtyChartElement = document.querySelector('#qty-chart');
     qtyChartElement.style.height = '320px';
 
@@ -154,40 +159,3 @@ function renderBarChart(xAxis, values) {
     option && qtyChart.setOption(option);
 
 }
-
-// 商品的總銷售量與總銷售額（陣列解構版本，不好讀，已棄用，但難得寫出來了做個紀念 XD）
-
-// const figures = {};
-
-// data.forEach(order => order.content.forEach(item => {
-
-//     if (figures[item.product.name]) {
-
-//         figures[item.product.name][0] += item.qty;
-//         figures[item.product.name][1] += item.product.price * item.qty;
-
-//     } else {
-
-//         figures[item.product.name] = [item.qty, item.product.price * item.qty];
-
-//     }
-
-// }))  
-
-// const total = [0, 0];
-
-// Object.values(figures).forEach(([quantity, revenue]) => {
-
-//     total[0] += quantity; total[1] += revenue;
-
-// })
-
-// const qtyChartData = [];
-// const revenueChartData = [];
-
-// Object.keys(figures).forEach(key => {
-    
-//     qtyChartData.push([key, (figures[key][0]/total[0])]);
-//     revenueChartData.push([key, (figures[key][1]/total[1])]);
-
-// });

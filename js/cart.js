@@ -411,6 +411,9 @@ function nextStep(e,data) {
 }
 
 function completeOrder(data, info) {
+
+    const deliveryFee = document.querySelector('#delivery-fee');
+
     Swal.fire({
         icon: 'warning',
         title: '確定送出訂單？',
@@ -435,6 +438,7 @@ function completeOrder(data, info) {
                     content: data,
                     total: Number(total),
                     info,
+                    deliveryFee: Number(deliveryFee.textContent),
                     createdTime: new Date().getTime(),
                     userId: data[0].userId,
                     isFinished: false,
@@ -467,4 +471,5 @@ function completeOrder(data, info) {
             }).then(() => location.href = 'member.html')
         }
     })
+    
 }

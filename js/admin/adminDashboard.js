@@ -95,7 +95,7 @@ function renderOrders(data) {
                         class="accordion-title w-100 btn d-md-block d-flex justify-content-between
                                text-start bg-white rounded-2 shadow px-md-8 px-5 py-5">
                     <div class="mb-md-6 mb-0">
-                        <span class="fw-bold">訂單</span>編號：</span>
+                        <span class="fw-bold">訂單編號：</span>
                         <span class="text-black">${order.orderNum}</span>
                     </div>
                     <div class="row">
@@ -324,7 +324,13 @@ function renderAnnouncements() {
             <div class="d-flex flex-md-row flex-column align-items-md-center align-items-start gap-md-8 gap-6 p-md-8 p-6">
                 <button data-id="${item.id}" class="btn btn-sm btn-primary px-4">刪除消息</button>
                 <p class="text-black">${moment(+item.date).format('YYYY-MM-DD')}</p>
-                <p>${item.title}</p>
+                <p class="d-flex gap-2">
+                    <a class="text-decoration-none d-flex align-items-center fs-7"
+                       href="news-detail.html?id=${item.id}"
+                       target="_blank">
+                    <span class="material-icons">open_in_new</span></a>
+                    ${item.title}
+                </p>
             </div>
         </li>
         `;
@@ -456,7 +462,12 @@ function renderProductList() {
             </div>
             <div class="px-5">
                 <div class="d-flex flex-md-column justify-content-between align-items-center">
-                    <h4 class="fs-6 my-6">${product.name}</h4>
+                    <div class="d-flex gap-1">
+                        <h4 class="fs-6 my-6">${product.name}</h4>
+                        <a href="products-detail.html?id=${product.id}"
+                           target="_blank"
+                           class="text-decoration-none d-flex align-items-center fs-7"><span class="material-icons">open_in_new</span></a>
+                    </div>
                     <div class="d-flex justify-content-center gap-3 mb-md-6 mb-0">
                         <button type="button"
                                 class="edit btn btn-primary btn-sm p-2"
@@ -557,13 +568,17 @@ function handleProductDetail(e) {
 
             function checkContent(prop) {
 
-                if (prop === 'type' || prop === 'image' || prop === 'ingredients') {
-                    
-                    // 因為 type, image, ingredients 的值為陣列
+                if (prop === 'type' || prop === 'ingredients') {
                     
                     // 判斷是否有無編輯的方式：1. 陣列長度是否不同 2. 新陣列的元素是否有其中一個不包含在舊陣列裡
 
                     return newData[prop].length !== originData[prop].length || newData[prop].some(item => !originData[prop].includes(item))
+
+                } else if (prop === 'image') {
+
+                    // 考慮到交換圖片順序的需求，不能使用和 type / ingredients 一樣的判斷方式
+
+                    return newData[prop].length !== originData[prop].length || newData[prop].every(item => item !== originData[prop])
 
                 } else { return newData[prop] !== originData[prop] }
             

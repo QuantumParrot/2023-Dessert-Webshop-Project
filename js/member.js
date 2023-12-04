@@ -108,24 +108,33 @@ function renderOrders(orders) {
         <div class="col-12">
             <div class="accordion-item mb-6">
                 <button type="button"
-                        class="accordion-title w-100 btn d-flex justify-content-center align-items-center gap-md-5 gap-2 bg-white rounded-2 shadow px-md-8 py-5">
-                    <p class="pe-5 border-end">
-                        <span class="fw-bold">訂單</span>編號：</span>
+                        class="accordion-title w-100 btn d-md-block d-flex justify-content-between
+                               text-start bg-white rounded-2 shadow px-md-8 py-5">
+                    <div class="mb-md-6 mb-0">
+                        <span class="fw-bold">訂單編號：</span>
                         <span class="text-black">${order.orderNum}</span>
-                    </p>
-                    <p class="d-md-inline-block d-none pe-5 border-end">
-                        <span class="fw-bold">成立日期：</span>
-                        <span class="fw-normal">${moment(order.createdTime).format('YYYY-MM-DD')}</span>
-                    </p>
-                    <p class="d-md-inline-block d-none pe-5 border-end">
-                        <span class="fw-bold">訂購金額：</span>
-                        ${order.total} 元
-                    </p>
-                    <p class="pe-5 ps-2">
-                        <span class="d-md-inline-block d-none fw-bold">訂單狀態：</span>
-                        <span class=${order.isFinished ? "text-success" : "text-danger"}>
-                        ${order.isFinished ? `已完成`: `製作中`}</span>
-                    </p>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 d-md-block d-none">
+                            <div>
+                                <span class="fw-bold">成立日期：</span>
+                                <span class="fw-normal">${moment(order.createdTime).format('YYYY-MM-DD')}</span>
+                            </div>
+                        </div>
+                        <div class="col-3 d-md-block d-none border-start border-end">
+                            <div class="d-flex justify-content-between px-7">
+                                <span class="fw-bold">訂購金額：</span>
+                                <span>${order.total} 元</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="ps-md-7 ps-0">
+                                <span class="d-md-inline-block d-none fw-bold">訂單狀態：</span>
+                                <span class=${order.isFinished ? "text-success" : "text-danger"}>
+                                ${order.isFinished ? `已完成`: `製作中`}</span>
+                            </div>
+                        </div>
+                    </div>
                 </button>
                 <div class="accordion-content rounded-2 shadow">
                     <div class="px-md-8 px-6 pt-5 pb-7">
@@ -146,7 +155,7 @@ function renderOrders(orders) {
                     </div>
                     <div class="row fs-5 fw-bold border-bottom mb-5">
                         <div class="col-12">
-                            <p class="mb-5">總計：${order.total} 元<span class="text-muted fs-7">（含運費）</span></p>
+                            <p class="mb-5">總計：${order.total} 元<span class="text-muted fs-7">（ 含運費 ${order.deliveryFee} 元 ）</span></p>
                         </div>
                     </div>
                     <div class="lh-lg">

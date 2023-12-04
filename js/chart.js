@@ -72,16 +72,17 @@ export function renderCharts(data) {
         bindto: '#revenue-chart',
         color: {
             pattern: [
-                '#FFC6AC',
-                '#FFF6DC',
-                '#C4C1A4',
-                '#9EB384',
-                '#EAC696',
-                '#C8AE7D',
                 '#EFB495',
                 '#FAEED1',
                 '#DED0B6',
-                '#BBAB8C'
+                '#BBAB8C',
+                '#C08261',
+                '#E2C799',
+                '#B0926A',
+                '#E1C78F',
+                '#A9B388',
+                '#C4C1A4',
+                '#FFC6AC',
             ],
         },
         data: {

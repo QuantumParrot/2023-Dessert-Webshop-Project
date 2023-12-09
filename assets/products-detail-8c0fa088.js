@@ -1,15 +1,15 @@
-import{a as o,g as p,t as l,e as v,w as b}from"./main-e513b98b.js";import{S as m}from"./swiper-bundle-856ac9ac.js";class f{constructor(s){this.element=document.querySelector(s),this.clickEventListener()}render(s){let n="";s.image.forEach(i=>{n+=`
+import{a as r,h as o,e as u,b,t as c,w as f,c as g}from"./main-050bd7e3.js";import{S as w}from"./swiper-bundle-856ac9ac.js";class h{constructor(t){this.element=document.querySelector(t),this.clickEventListener()}render(t){let s="";t.image.forEach(e=>{s+=`
             <div class="swiper-slide overflow-hidden rounded">
-                <img class="image-slide" src="${i||"https://fakeimg.pl/451x451/?text=🍰&font=noto"}" alt="${s.name}">
-            </div>`}),this.element.innerHTML=n}clickEventListener(){this.element.addEventListener("click",({target:s})=>{s.nodeName==="IMG"&&this.show(s.src)})}show(s){document.querySelector("#current-image").setAttribute("src",s)}}const{VITE_APP_SITE:c}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",VITE_APP_ADMIN_IDENTITY:"528491",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1},d=location.href.split("?id=").pop(),g=document.querySelector("#product");(async function(){var e;try{const s=await o.get(`${c}/products/${d}`),n=(e=JSON.parse(localStorage.getItem("userData")))==null?void 0:e.id;let i;n&&(i=!!(await o.get(`${c}/users/${n}/collects`)).data.find(t=>t.productId==d)),h(s.data,i)}catch(s){console.log(s)}})();function h(e,s){g.innerHTML=`
+                <img class="image-slide" src="${e||"https://fakeimg.pl/451x451/?text=🍰&font=noto"}" alt="${t.name}">
+            </div>`}),this.element.innerHTML=s}clickEventListener(){this.element.addEventListener("click",({target:t})=>{t.nodeName==="IMG"&&this.show(t.src)})}show(t){document.querySelector("#current-image").setAttribute("src",t)}}const{VITE_APP_SITE:l}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",VITE_APP_ADMIN_IDENTITY:"528491",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1},d=location.href.split("?id=").pop();let i={};(async function(){var a;try{i=(await r.get(`${l}/products/${d}`)).data;const s=(a=JSON.parse(localStorage.getItem("userData")))==null?void 0:a.id;let e;s&&(e=!!(await r.get(`${l}/600/users/${s}/collects`,o)).data.find(p=>p.productId==d)),v(e)}catch(t){u(t)}})();const y=document.querySelector("#product");function v(a){y.innerHTML=`
     <div class="d-flex flex-column gap-6">
         <div class="row">
             <div class="col-md-5 mb-md-0 mb-6">
                 <div class="position-relative mb-6">
                     <img id="current-image"
                          class="rounded w-100"
-                         src="${e.image[0]||"https://fakeimg.pl/451x451/?text=🍰&font=noto"}" alt="${e.name}">
-                    ${e.forSale?"":`
+                         src="${i.image[0]||"https://fakeimg.pl/451x451/?text=🍰&font=noto"}" alt="${i.name}">
+                    ${i.forSale?"":`
                     <div class="custom-tooltip w-100 h-100 position-absolute top-0 d-flex justify-content-center align-items-center">
                         <div class="text-center">
                             <h3 class="display-4 fw-bold mb-9">已售完</h3>
@@ -27,15 +27,15 @@ import{a as o,g as p,t as l,e as v,w as b}from"./main-e513b98b.js";import{S as m
                 <div class="h-100 d-flex flex-column justify-content-between border rounded p-md-9 p-6">
                     <div>
                         <h2 class="d-flex justify-content-between mb-4">
-                            ${e.name}
-                            <button id="favorite" data-num="${e.id}" class="btn p-0 text-orange">
-                                <span class="material-icons fs-2">${s?"favorite":"favorite_outline"}</span>
+                            ${i.name}
+                            <button id="favorite" class="btn p-0 text-orange">
+                                <span class="material-icons fs-2">${a?"favorite":"favorite_outline"}</span>
                             </button>
                         </h2>
-                        <p class="text-muted fs-7 mb-6">${e.otherName}</p>
-                        <h3 class="mb-6">NT＄${e.price}</h3>
+                        <p class="text-muted fs-7 mb-6">${i.otherName}</p>
+                        <h3 class="mb-6">NT＄${i.price}</h3>
                         <hr>
-                        <p class="fs-6 my-6">${e.info}</p>
+                        <p class="fs-6 my-6">${i.info}</p>
                         <p class="text-orange fw-bold d-flex align-items-center mb-md-0 mb-6">
                             <span class="material-icons me-2">info</span>
                             下單前務必詳閱<a class="link-orange" href="#nav-delivery-tab">寄送說明</a>
@@ -48,7 +48,7 @@ import{a as o,g as p,t as l,e as v,w as b}from"./main-e513b98b.js";import{S as m
                             <button class="btn p-0"><span class="material-icons fs-2 mt-1">remove_circle</span></button>
                         </div>
                         <button class="btn btn-sm btn-primary"
-                                ${e.forSale?"":"disabled"}>加入購物車</button>
+                                ${i.forSale?"":"disabled"}>加入購物車</button>
                     </div>
                 </div>
             </div>
@@ -84,9 +84,9 @@ import{a as o,g as p,t as l,e as v,w as b}from"./main-e513b98b.js";import{S as m
                  aria-labelledby="nav-product-tab"
                  tabindex="0">
             <ul>
-                <li class="mb-6"><span class="fw-bold">成分：</span>${e.ingredients.join("、")}</li>
-                <li class="mb-6"><span class="fw-bold">規格：</span>${e.size}</li>
-                <li class="mb-6"><span class="fw-bold">賞味期限：</span>${e.shelfLife}</li>
+                <li class="mb-6"><span class="fw-bold">成分：</span>${i.ingredients.join("、")}</li>
+                <li class="mb-6"><span class="fw-bold">規格：</span>${i.size}</li>
+                <li class="mb-6"><span class="fw-bold">賞味期限：</span>${i.shelfLife}</li>
             </ul>
             </div>
             <div id="nav-delivery"
@@ -113,4 +113,4 @@ import{a as o,g as p,t as l,e as v,w as b}from"./main-e513b98b.js";import{S as m
             </div>
         </div>
     </div>
-    `,new m(".product-swiper",{slidesPerView:3,spaceBetween:8,navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}}),new f(".swiper-wrapper").render(e);const i=document.querySelector("#favorite");w(i);const a=document.querySelector("#quantity");$(a,e)}function w(e,s){e.addEventListener("click",()=>{if(!p())l("warning","請先登入");else{const n=document.querySelector(`#${e.id} .material-icons`),i=JSON.parse(localStorage.getItem("userData")).id;if(n.textContent=="favorite_outline"){const a={productId:Number(d),userId:i};o.post(`${c}/640/collects`,a,{headers:{authorization:`Bearer ${p()}`}}).then(t=>{n.textContent="favorite",l("success","已成功收藏")}).catch(t=>{v(t)})}else n.textContent=="favorite"&&o.get(`${c}/users/${i}/collects`).then(a=>{const{data:t}=a,r=t.find(u=>u.productId==d).id;return o.delete(`${c}/640/collects/${r}`,{headers:{authorization:`Bearer ${p()}`}})}).then(a=>{n.textContent="favorite_outline",l("success","已取消收藏")}).catch(a=>{v(a)})}},!1)}function $(e,s){e.addEventListener("click",function(n){const{nodeName:i,textContent:a}=n.target;if(!(i!=="BUTTON"&&i!=="SPAN")){let r=function(u){return isNaN(u)?(l("warning","請輸入阿拉伯數字"),t.value=1,!1):!Number.isInteger(u)||u<=0?(l("warning","請輸入大於零的正整數"),t.value=1,!1):!0};const t=document.querySelector(`#${e.id} input`);a.includes("add")?t.value<10?t.value++:t.value:a.includes("remove")?t.value>1?t.value--:t.value:a==="加入購物車"&&(p()||l("warning","請先登入"),r(Number(t.value))&&y(s,Number(t.value)))}})}function y(e,s){const n=JSON.parse(localStorage.getItem("userData")).id,i=p();o.get(`${c}/640/users/${n}/carts`,{headers:{authorization:`Bearer ${i}`}}).then(a=>{let t=a.data.find(r=>r.productId==d);if(t){const r=t.qty+s;return r>10?void 0:(t={...t,qty:r},o.patch(`${c}/640/carts/${t.id}`,t,{headers:{authorization:`Bearer ${i}`}}))}else{if(s>10)return;const r={productId:d,qty:s,userId:n};return o.post(`${c}/640/carts`,r,{headers:{authorization:`Bearer ${i}`}})}}).then(a=>{a?l("success","成功加入購物車"):b("數量達上限","如果需要大量訂購，請直接與我們聯絡")}).catch(a=>{v(a)})}
+    `,new w(".product-swiper",{slidesPerView:3,spaceBetween:8,navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}}),new h(".swiper-wrapper").render(i),document.querySelector("#favorite").addEventListener("click",n=>{x(a)}),document.querySelector("#quantity").addEventListener("click",$)}function x(a){if(!b())c("warning","請先登入");else{const s=JSON.parse(localStorage.getItem("userData")).id;if(a)r.get(`${l}/600/users/${s}/collects`,o).then(e=>{const{data:n}=e,p=n.find(m=>m.productId==d).id;return r.delete(`${l}/640/collects/${p}`,o)}).then(e=>{v(!a),c("success","已取消收藏")}).catch(e=>{u(e)});else{const e={productId:Number(d),userId:s};r.post(`${l}/600/collects`,e,o).then(n=>{v(!a),c("success","已成功收藏")}).catch(n=>{u(n)})}}}function $(a){if(!a.target.closest("button"))return;const{textContent:t}=a.target;function s(n){if(isNaN(n)){c("warning","請輸入阿拉伯數字"),e.value=1;return}else if(!Number.isInteger(n)||n<=0){c("warning","請輸入大於零的正整數"),e.value=1;return}return!0}let e=document.querySelector("#quantity input");t.includes("add")?e.value<10?e.value++:e.value:t.includes("remove")?e.value>=2?e.value--:e.value:t==="加入購物車"&&(b()?s(Number(e.value))&&I(Number(e.value)):c("warning","請先登入"))}function I(a){const t=JSON.parse(localStorage.getItem("userData")).id;r.get(`${l}/600/users/${t}/carts`,o).then(s=>{let e=s.data.find(n=>n.productId==d);if(e){const n=e.qty+a;return n>10?void 0:r.patch(`${l}/600/carts/${e.id}`,{qty:n},o)}else return a>10?void 0:(e={productId:Number(d),qty:a,userId:t},r.post(`${l}/600/carts`,e,o))}).then(s=>{s?c("success","成功加入購物車"):f("數量達上限","如果需要大量訂購，請直接與我們聯絡"),g()}).catch(s=>{u(s)})}

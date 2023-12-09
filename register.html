@@ -6,8 +6,8 @@
     <title>註冊｜Akheng's Desserts 甜點工作室</title>
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/register-f26c2130.js"></script>
-    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-e513b98b.js">
+    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/register-efc3ee40.js"></script>
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-050bd7e3.js">
     <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-e8f6c81b.css">
 </head>
 <body>
@@ -57,16 +57,29 @@
                             <input id="username"
                                    type="text"
                                    class="form-control p-2"
+                                   placeholder="您的真實姓名或暱稱"
                                    aria-describedby="validationUsername">
                             <div id="validationUsername"
                                  class="invalid-feedback"
                                  data-validation="username"></div>
                         </div>
                         <div class="mb-6">
+                            <label for="phone" class="mb-2">手機</label>
+                            <input id="phone"
+                                   type="tel"
+                                   class="form-control p-2"
+                                   placeholder="僅限臺灣的手機門號"
+                                   aria-describedby="validationPhone">
+                            <div id="validationPhone"
+                                 class="invalid-feedback"
+                                 data-validation="phone"></div>
+                        </div>
+                        <div class="mb-6">
                             <label for="account" class="mb-2">帳號</label>
                             <input id="account"
                                    type="email"
                                    class="form-control p-2"
+                                   placeholder="設定常用的電子信箱"
                                    aria-describedby="validationAccount">
                             <div id="validationAccount"
                                  class="invalid-feedback"
@@ -77,16 +90,18 @@
                             <input id="password"
                                    type="password"
                                    class="form-control p-2"
+                                   placeholder="密碼須在六個字以上"
                                    aria-describedby="validationPassword" autocomplete>
                             <div id="validationPassword"
                                  class="invalid-feedback"
                                  data-validation="password"></div>
                         </div>
                         <div class="mb-9">
-                            <label for="password-confirm" class="mb-2">再次輸入密碼</label>
+                            <label for="password-confirm" class="mb-2">確認密碼</label>
                             <input id="password-confirm"
                                    type="password"
                                    class="form-control p-2"
+                                   placeholder="請再次輸入您的密碼"
                                    aria-describedby="validationPasswordConfirm" autocomplete>
                             <div id="validationPasswordConfirm"
                                  class="invalid-feedback"

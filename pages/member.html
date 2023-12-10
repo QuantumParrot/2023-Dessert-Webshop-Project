@@ -9,6 +9,8 @@
 </head>
 <body>
 
+    <main class="d-none">
+
     <%- include('./layout/header'); -%>
 
     <section class="container">
@@ -84,21 +86,21 @@
                     <div class="modal-body">
                         <div class="mb-5">
                         <label for="current-password" class="form-label">當前密碼：</label>
-                        <input id="current-password"
+                        <input id="current-password" name="current-password"
                                type="password"
-                               class="form-control p-2" autocomplete required>
+                               class="form-control p-2" autocomplete>
                         </div>
                         <div class="mb-5">
                         <label for="new-password" class="form-label">新密碼：</label>
-                        <input id="new-password"
+                        <input id="new-password" name="new-password"
                                type="password"
-                               class="form-control p-2" autocomplete required>
+                               class="form-control p-2" autocomplete>
                         </div>
                         <div>
                         <label for="new-password-confirm" class="form-label">再次確認新密碼：</label>
-                        <input id="new-password-confirm"
+                        <input id="new-password-confirm" name="new-password-confirm"
                                type="password"
-                               class="form-control p-2" autocomplete required>
+                               class="form-control p-2" autocomplete>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -111,6 +113,8 @@
     </div>
     
     <%- include('./layout/footer'); -%>
+
+    </main>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="module" src="../main.js"></script>

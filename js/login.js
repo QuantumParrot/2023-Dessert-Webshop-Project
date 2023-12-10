@@ -1,13 +1,15 @@
+// 本頁面待解決問題：尚無
+
 import axios from "axios";
 
-import { getToken, validation } from "./utilities/authorization.js";
+import { token, validation } from "./utilities/authorization.js";
 import { toastMessage } from "./utilities/message.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 
 // 轉址 ( 如果用戶處於登入狀態，不要讓他們訪問這個頁面 )
 
-function init() { if (getToken()) { location.href="index.html" } }
+function init() { if (token()) { location.href="index.html" } }
 
 init();
 
@@ -15,11 +17,15 @@ const account = document.getElementById('account');
 const password = document.getElementById('password');
 const submit = document.getElementById('submit');
 
+// 即時驗證
+
 const inputList = document.querySelectorAll('input');
 
 inputList.forEach((input) => {
     input.addEventListener('input', (e)=>{validation(e.target)}, false)
 });
+
+// 提交驗證
 
 submit.addEventListener('click', submitData, false);
 
@@ -63,7 +69,7 @@ async function handleLogin(info) {
 }
 
 function clear() {
-    inputList.forEach((input)=>{
+    inputList.forEach(input => {
         input.value = '';
         input.classList.remove('is-valid');
     })

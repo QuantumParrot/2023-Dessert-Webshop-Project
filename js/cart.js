@@ -1,29 +1,33 @@
+// 本頁面待解決問題：尚無
+
 import axios from "axios";
 import Swal from "sweetalert2";
 
 import { toastMessage, warningMessage } from "./utilities/message.js";
-import { getToken, errorHandle } from "./utilities/authorization.js";
+import { token, headers, errorHandle } from "./utilities/authorization.js";
 import { modifyProductData } from "./utilities/modification.js";
+import { removeCartIcon } from "./nav.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 
 // init
 
+let data = [];
+
 function init() {
 
-    const token = getToken();
+    const tokenValue = token();
     
-    if (!token) {
+    if (!tokenValue) {
+
         toastMessage('warning','請先登入','login.html');
+
     } else {
         const userId = JSON.parse(localStorage.getItem('userData')).id;
-        axios.get(`${VITE_APP_SITE}/640/user/${userId}/carts?_expand=product`, {
-            headers : {
-                "authorization": `Bearer ${token}`
-            }
-        })
+        axios.get(`${VITE_APP_SITE}/600/users/${userId}/carts?_expand=product`, headers)
         .then((res)=>{
-            renderData(res.data);
+            data = res.data;
+            renderData();
         })
         .catch((error)=>{ errorHandle(error) })
     }
@@ -32,12 +36,14 @@ function init() {
 
 init();
 
-function renderData(data) {
+function renderData() {
 
     const cart = document.querySelector('#cart');
     let str = '';
 
     if (data.length === 0) {
+
+        removeCartIcon();
 
         str = /*html*/`
         <div class="col-12">
@@ -99,20 +105,20 @@ function renderData(data) {
         `
         cart.innerHTML = str;
 
-        renderCart(data);
-        showTotalCost(data);
+        renderCart();
+        showTotalCost();
 
     }
 
 }
 
-function renderCart(data) {
+function renderCart() {
 
     const main = document.querySelector('#main-content');
     let content = '';
 
     data.forEach(item => content += /*html*/`
-    <li data-num=${item.id} class="list-group-item shadow-sm py-md-0 py-8">
+    <li data-id="${item.id}" class="list-group-item shadow-sm py-md-0 py-8">
         <div class="row align-items-center">
             <!-- 1 -->
             <div class="col-md-1 col-2 text-center">
@@ -159,114 +165,104 @@ function renderCart(data) {
     )
 
     main.innerHTML = content;
+    main.addEventListener('click', cartListener);
 
     const confirm = document.querySelector('#confirm');
-    confirm.addEventListener('click', (event) => {
+    confirm.addEventListener('click', (e) => {
         if (data.some(item => !item.product.forSale)) {
             warningMessage('OOPS', '購物車內有完售的商品，請刪除後再重新結帳')
         } else {
-            nextStep(event,data);
+            nextStep(e);
         }
     }, false);
-    
-    const listItems = [...main.children];
-    listItems.forEach(item => {
-        const currentQty = document.querySelector(`[data-num="${item.dataset.num}"] input`).value;
-        cartListener(item, currentQty);
-    });
 
 }
 
-function cartListener(element, currentQuantity) {
+function cartListener(e) {
 
-    element.addEventListener('click', function(e){
-        const { target } = e;
-        const id = target.closest('li').dataset.num; // !important
-        if (!target.closest('.btn')) { return }
-        else {
-            
-            e.preventDefault();
-            const token = getToken();
+    if (!e.target.closest('.btn')) { return }
 
-            if (target.textContent.includes('delete')) {
+    e.preventDefault();
+
+    const id = e.target.closest('li').dataset.id; // 購物車的 id 而非商品 id
+        
+    if (e.target.textContent.includes('delete')) {
             
-                axios.delete(`${VITE_APP_SITE}/640/carts/${id}`, {
-                    headers: {
-                        "authorization": `Bearer ${token}`
-                    }
-                })
+        axios.delete(`${VITE_APP_SITE}/600/carts/${id}`, headers)
+        .then((res)=>{
+            toastMessage('success','成功刪除商品');
+            init();
+        })
+        .catch((error)=>{ errorHandle(error) })
+
+    } else {
+
+        const qty = document.querySelector(`li[data-id="${id}"] input`); // !important
+        const currentQuantity = qty.getAttribute('value');
+
+        if (e.target.textContent.includes('add')) {
+
+            qty.value > 9 ? qty.value : qty.value++;
+
+        } else if (e.target.textContent.includes('remove')) {
+        
+            qty.value < 2 ? qty.value : qty.value--;
+
+        } else if (e.target.classList.contains('changeQuantity')) {
+
+            function checkValue(value) {
+
+                if (isNaN(value)) {
+
+                    toastMessage('warning','請輸入阿拉伯數字');
+                    qty.value = currentQuantity;
+                    return;
+
+                } else if (!Number.isInteger(value) || value <= 0){
+
+                    toastMessage('warning','請輸入大於零的正整數');
+                    qty.value = currentQuantity;
+                    return;
+
+                }
+
+                return true;
+
+            }
+
+            if (currentQuantity == qty.value) {
+
+                toastMessage("question","數量沒變哦 (ㆆᴗㆆ)"); // 數量沒更新時，不需要發送網路請求
+
+            } else if (qty.value > 10) {
+
+                warningMessage('數量達上限','如果需要大量訂購，請直接與我們聯絡');
+
+            } else {
+
+                checkValue(Number(qty.value)) &&
+                axios.patch(`${VITE_APP_SITE}/600/carts/${id}`, { qty: Number(qty.value) }, headers)
                 .then((res)=>{
-                    toastMessage('success','刪除成功');
+                    toastMessage('success','數量修改成功！')
                     init();
                 })
                 .catch((error)=>{ errorHandle(error) })
 
-            } else {
-
-                const qty = document.querySelector(`li[data-num="${id}"] input`); // !important
-
-                if (target.textContent.includes('add')) {
-                    qty.value > 9 ? qty.value : qty.value++;
-                } else if (target.textContent.includes('remove')) {
-                    qty.value < 2 ? qty.value : qty.value--;
-                } else if (target.classList.contains('changeQuantity')) {
-
-                    function checkValue(value) {
-                        if (isNaN(value)) {
-                            toastMessage('warning','請輸入阿拉伯數字');
-                            qty.value = currentQuantity;
-                            return false;
-                        } else if (!Number.isInteger(value) || value <= 0){
-                            toastMessage('warning','請輸入大於零的正整數');
-                            qty.value = currentQuantity;
-                            return false;
-                        }
-                        return true;
-                    }
-
-                    if (currentQuantity == qty.value) {
-                        toastMessage("question","數量沒變哦 (ㆆᴗㆆ)"); // 數量沒更新時，不需要發送網路請求
-                    } else if (qty.value > 10) {
-                        warningMessage('數量達上限','如果需要大量訂購，請直接與我們聯絡');
-                    } else {
-                        checkValue(+qty.value) &&
-                        axios.get(`${VITE_APP_SITE}/640/carts/${id}`, {
-                            headers: {
-                                "authorization": `Bearer ${token}`
-                            }
-                        })
-                        .then((res)=>{
-                            let targetProduct = res.data;
-                            targetProduct = { ...targetProduct, qty: +qty.value };
-                            return axios.patch(`${VITE_APP_SITE}/640/carts/${id}`, targetProduct, {
-                                headers: {
-                                    "authorization": `Bearer ${token}`
-                                }
-                            })
-                        })
-                        .then((res)=>{
-                            toastMessage('success','數量修改成功！')
-                            init();
-                        })
-                        .catch((error)=>{ errorHandle(error) })
-                    }
-
-                }
-
             }
-        
+
         }
-    })
+
+    }
 
 }
 
-function showTotalCost(data) {
+function showTotalCost() {
 
     const subtotal = document.querySelector('#subtotal');
     const deliveryFee = document.querySelector('#delivery-fee');
     const total = document.querySelector('#total');
 
-    subtotal.textContent = data.reduce((acc,curr) => { 
+    subtotal.textContent = data.reduce((acc, curr) => { 
        return acc + (Number(curr.product.price) * curr.qty)
     }, 0);
 
@@ -276,7 +272,7 @@ function showTotalCost(data) {
 
 }
 
-function nextStep(e,data) {
+function nextStep(e) {
 
     if (e.target.textContent === '下一步') {
 
@@ -305,9 +301,13 @@ function nextStep(e,data) {
                 </div>
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
                     <!-- receiver -->
-                    <label for="receiver" class="fw-bold mb-md-0 mb-3">收件人姓名：</label>
-                    <input type="text" id="receiver" class="form-control w-25 px-2 py-1">
-                    <div><input type="checkbox" id="useMemberName" class="me-2">同會員資料</div>
+                    <label for="name" class="fw-bold mb-md-0 mb-3">收件人姓名：</label>
+                    <input type="text" id="name" class="form-control w-25 px-2 py-1">
+                    <div>
+                        <input type="checkbox" id="useMemberName" data-receiver="name"
+                               class="me-2">
+                        <label for="useMemberName">同會員資料</label>
+                    </div>
                 </div>
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
                     <!-- phone -->
@@ -315,8 +315,12 @@ function nextStep(e,data) {
                     <input type="tel"
                            id="phone"
                            class="form-control w-25 px-2 py-1"
-                           placeholder="請填寫國內的手機號碼"
-                           value="0912987654">
+                           placeholder="請填寫國內的手機號碼">
+                    <div>
+                        <input type="checkbox" id="useMemberPhone" data-receiver="phone"
+                               class="me-2">
+                        <label for="useMemberPhone">同會員資料</label>
+                    </div>
                 </div>
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
                     <!-- address -->
@@ -343,21 +347,22 @@ function nextStep(e,data) {
         </div>`
         main.innerHTML = content;
     
-        const useMemberName = document.querySelector('#useMemberName');
-        useMemberName.addEventListener('change', function(e){
+        const useMemberData = document.querySelectorAll('[data-receiver]');
+        useMemberData.forEach(checkbox => checkbox.addEventListener('change', function(e){
+            const input = document.querySelector(`input#${e.target.dataset.receiver}`);
             if (e.target.checked) {
-                const userName = JSON.parse(localStorage.getItem('userData')).name;
-                receiver.value = userName;
+                const value = JSON.parse(localStorage.getItem('userData'))[e.target.dataset.receiver];
+                input.value = value;
             } else {
-                receiver.value = '';
+                input.value = '';
             }
-        })
+        }))
 
     } else if (e.target.textContent ==='結　帳') {
 
         const method = document.querySelector('input[name="method"]:checked');
         const payment = document.querySelector('input[name="payment"]:checked');
-        const receiver = document.querySelector('#receiver');
+        const receiver = document.querySelector('#name');
         const phone = document.querySelector('#phone');
         const address = document.querySelector('#address');
         const shippingTime = document.querySelector('input[name="shippingTime"]:checked');
@@ -366,17 +371,22 @@ function nextStep(e,data) {
         function checkInput(element) {
 
             if (element?.id === 'delivery-confirm' && !element?.checked) {
+
                 toastMessage('warning','請詳閱並同意寄送說明');
-                return false;
-            } else if (!element?.value) {
+                return;
+
+            } else if (!element?.value.replace(/\s/g,"")) {
+
                 toastMessage('warning','請確實填寫所有的欄位');
-                return false;
-            } else if (element?.id === 'phone') {
-                if (!/^09(\d){8}/.test(element.value)) {
-                    toastMessage('warning','手機號碼格式不正確'); 
-                    return false;
-                }
+                return;
+
+            } else if (element?.id === 'phone' && !/^09\d{8}$/.test(element?.value)) {
+
+                toastMessage('warning','手機格式不正確'); 
+                return;
+
             }
+
             return true;
 
         }
@@ -404,13 +414,13 @@ function nextStep(e,data) {
                 method: method.value,
                 shippingTime: shippingTime.value,
             }
-            completeOrder(data, deliveryInfo);
+            completeOrder(deliveryInfo);
         })();
 
     }
 }
 
-function completeOrder(data, info) {
+function completeOrder(info) {
 
     const deliveryFee = document.querySelector('#delivery-fee');
 
@@ -430,7 +440,6 @@ function completeOrder(data, info) {
         showLoaderOnConfirm: true,
         preConfirm: async () => {
             try {
-                const token = getToken();
                 const total = document.querySelector('#total').textContent;
                 data = data.map(item => { return { ...item, product: modifyProductData(item.product) } });
                 const orderInfo = {
@@ -443,23 +452,15 @@ function completeOrder(data, info) {
                     userId: data[0].userId,
                     isFinished: false,
                 };
-                axios.post(`${VITE_APP_SITE}/640/orders`, orderInfo, {
-                    headers: {
-                        "authorization": `Bearer ${token}`
-                    }
-                })
+                axios.post(`${VITE_APP_SITE}/600/orders`, orderInfo, headers)
                 .then((res)=>{
                     return data.forEach(item => {
-                        axios.delete(`${VITE_APP_SITE}/640/carts/${item.id}`, {
-                            headers: {
-                                "authorization": `Bearer ${token}`
-                            }
-                        })
+                        axios.delete(`${VITE_APP_SITE}/600/carts/${item.id}`, headers)
                     })
                 })
             } catch(error) { errorHandle(error) }
         }
-    }).then((result)=>{
+    }).then(result => {
         if (result.isConfirmed) {
             Swal.fire({
                 icon: 'success',

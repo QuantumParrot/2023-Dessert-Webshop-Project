@@ -1,7 +1,10 @@
+// 本頁面待解決問題：尚無
+
 import axios from "axios";
 
 import { toastMessage, warningMessage } from "./utilities/message.js";
-import { getToken, errorHandle } from "./utilities/authorization.js";
+import { token, headers, errorHandle } from "./utilities/authorization.js";
+import { changeCartIcon } from "./nav.js";
 import { ImageDisplay } from "./components/ImageDisplay.js";
 
 import Swiper from 'swiper/bundle';
@@ -12,25 +15,25 @@ import 'swiper/css/bundle';
 const { VITE_APP_SITE } = import.meta.env;
 
 const id = location.href.split('?id=').pop();
-
-const product = document.querySelector('#product');
+let data = {};
 
 (async function(){
     try {
         const res = await axios.get(`${VITE_APP_SITE}/products/${id}`);
+        data = res.data;
         const userId = JSON.parse(localStorage.getItem("userData"))?.id;
         let isCollected;
         if (userId) {
-            const response = await axios.get(`${VITE_APP_SITE}/users/${userId}/collects`);
+            const response = await axios.get(`${VITE_APP_SITE}/600/users/${userId}/collects`, headers);
             isCollected = !!(response.data.find(collect => collect.productId == id));
         };
-        renderData(res.data, isCollected);
-    } catch(error) {
-        console.log(error);
-    }
+        renderProduct(isCollected);
+    } catch(error) { errorHandle(error) }
 })();
 
-function renderData(data, isCollected) {
+const product = document.querySelector('#product');
+
+function renderProduct(isCollected) {
 
     product.innerHTML = /*html*/`
     <div class="d-flex flex-column gap-6">
@@ -59,7 +62,7 @@ function renderData(data, isCollected) {
                     <div>
                         <h2 class="d-flex justify-content-between mb-4">
                             ${data.name}
-                            <button id="favorite" data-num="${data.id}" class="btn p-0 text-orange">
+                            <button id="favorite" class="btn p-0 text-orange">
                                 <span class="material-icons fs-2">${isCollected ? "favorite" : "favorite_outline"}</span>
                             </button>
                         </h2>
@@ -160,114 +163,122 @@ function renderData(data, isCollected) {
     const images = new ImageDisplay('.swiper-wrapper');
     images.render(data);
 
+    // 收藏功能
+
     const favoriteButton = document.querySelector('#favorite');
-    toggleStatus(favoriteButton, data);
+    favoriteButton.addEventListener('click', (e) => { toggleStatus(isCollected) });
+
+    // 購物車車 ( 只是想湊四個字 )
 
     const quantity = document.querySelector('#quantity');
-    changeQty(quantity, data);
+    quantity.addEventListener('click', changeQty);
 
 };
 
-function toggleStatus(element, data) {
-    element.addEventListener('click',()=>{
-        if (!getToken()) { toastMessage('warning','請先登入') }
-        else {
+function toggleStatus(status) {
+
+    const tokenValue = token();
+
+    if (!tokenValue) { toastMessage('warning','請先登入') }
+    else {
+
+        // 取得使用者個人資料
+
+        const userId = JSON.parse(localStorage.getItem("userData")).id;
+
+        if (!status) {
+
+            const product = { productId: Number(id), userId };
+
+            axios.post(`${VITE_APP_SITE}/600/collects`, product, headers)
+            .then((res)=>{
+
+                renderProduct(!status);
+                toastMessage('success','已成功收藏');
             
-            // 取得收藏按鈕下的愛心圖案 <span class="material-icons">...</span>
+            })
+            .catch((error)=>{ errorHandle(error) })
 
-            const icon = document.querySelector(`#${element.id} .material-icons`)
+        } else {
 
-            // 取得使用者個人資料
+            axios.get(`${VITE_APP_SITE}/600/users/${userId}/collects`, headers)
+            .then((res)=>{
+                const { data } = res;
+                const targetId = data.find(collect => collect.productId == id).id;
+                return axios.delete(`${VITE_APP_SITE}/640/collects/${targetId}`, headers)
+            })
+            .then((res)=>{
 
-            const userId = JSON.parse(localStorage.getItem("userData")).id;
+                renderProduct(!status);
+                toastMessage('success','已取消收藏');
 
-            // 從 icon 樣式判斷該商品是否已被收藏，沒有則加入，有則取消
+            })
+            .catch((error)=>{ errorHandle(error) })
 
-            if (icon.textContent == 'favorite_outline') {
-
-                const product = { productId: Number(id), userId };
-
-                axios.post(`${VITE_APP_SITE}/640/collects`, product, {
-                    headers: {
-                        "authorization": `Bearer ${getToken()}`
-                    }
-                })
-                .then((res)=>{
-                    icon.textContent = 'favorite';
-                    toastMessage('success', '已成功收藏');
-                })
-                .catch((error)=>{ errorHandle(error) })
-
-            } else if (icon.textContent == 'favorite') {
-
-                axios.get(`${VITE_APP_SITE}/users/${userId}/collects`)
-                .then((res)=>{
-                    const { data } = res;
-                    const targetId = data.find(collect => collect.productId == id).id;
-                    return axios.delete(`${VITE_APP_SITE}/640/collects/${targetId}`, {
-                        headers: {
-                            "authorization": `Bearer ${getToken()}`
-                        }
-                    })
-                })
-                .then((res)=>{
-                    icon.textContent = 'favorite_outline';
-                    toastMessage('success', '已取消收藏');
-                })
-                .catch((error)=>{ errorHandle(error) })
-
-            }
         }
-    },false)
+    
+    }
+
 }
 
-function changeQty(element, data) {
-    element.addEventListener('click', function(e){
-        const { nodeName, textContent } = e.target;
-        if (nodeName !== 'BUTTON' && nodeName !== 'SPAN') { return }
-        else {
+function changeQty(e) {
 
-            const qty = document.querySelector(`#${element.id} input`);
+    if (!e.target.closest('button')) return;
 
-            function checkValue(value) {
-                if (isNaN(value)) {
-                    toastMessage('warning','請輸入阿拉伯數字');
-                    qty.value = 1;
-                    return false;
-                } else if (!Number.isInteger(value) || value <= 0) {
-                    toastMessage('warning','請輸入大於零的正整數');
-                    qty.value = 1;
-                    return false;
-                }
-                return true;
-            }
+    const { textContent } = e.target;
+
+    function checkValue(value) {
+
+        if (isNaN(value)) {
+
+            toastMessage('warning','請輸入阿拉伯數字');
+            qty.value = 1;
             
-            if (textContent.includes('add')) {
-                qty.value < 10 ? qty.value++ : qty.value
-            } else if (textContent.includes('remove')) {
-                qty.value > 1 ? qty.value-- : qty.value
-            } else if (textContent === '加入購物車') {
-                if (!getToken()) { toastMessage('warning','請先登入') }
-                checkValue(Number(qty.value)) && addToCart(data, Number(qty.value));
-            }
+            return;
+
+        } else if (!Number.isInteger(value) || value <= 0) {
+
+            toastMessage('warning','請輸入大於零的正整數');
+            qty.value = 1;
+
+            return;
+
         }
-    })
+
+        return true;
+
+    }
+    
+    let qty = document.querySelector(`#quantity input`);
+    
+    if (textContent.includes('add')) {
+
+        qty.value < 10 ? qty.value++ : qty.value
+
+    } else if (textContent.includes('remove')) {
+
+        qty.value >= 2 ? qty.value-- : qty.value
+        
+    } else if (textContent === '加入購物車') {
+
+        const tokenValue = token();
+
+        if (!tokenValue) { toastMessage('warning','請先登入') } 
+        else { checkValue(Number(qty.value)) && addToCart(Number(qty.value)) }
+        
+    }
+
 }
 
-function addToCart(data, value) {
+function addToCart(qty) {
 
     // 取得使用者個人資料
 
     const userId = JSON.parse(localStorage.getItem('userData')).id;
-    const token = getToken();
 
     // 取得使用者當前的購物車資料
 
-    axios.get(`${VITE_APP_SITE}/640/users/${userId}/carts`, {
-        headers : {
-            "authorization": `Bearer ${token}`
-        }
-    })
+    axios.get(`${VITE_APP_SITE}/600/users/${userId}/carts`, headers)
     .then((res)=>{
 
         let product = res.data.find(item => item.productId == id);
@@ -280,28 +291,26 @@ function addToCart(data, value) {
         //          回傳空值，讓下一個階段可以判斷跳出哪一種提示訊息
 
         if (!product) {
-            if (value > 10) { return }
-            const product = { productId: id, qty: value, userId };
-            return axios.post(`${VITE_APP_SITE}/640/carts`, product, {
-                headers : {
-                    "authorization": `Bearer ${token}`
-                }
-            })
+
+            if (qty > 10) return;
+
+            product = { productId: Number(id), qty, userId };
+            return axios.post(`${VITE_APP_SITE}/600/carts`, product, headers);
+
         } else {
-            const total = product.qty + value;
-            if (total > 10) { return }
-            else {
-                product = { ...product, qty: total};
-                return axios.patch(`${VITE_APP_SITE}/640/carts/${product.id}`, product, {
-                    headers : {
-                        "authorization": `Bearer ${token}`
-                    }
-                })
-            }
+
+            const total = product.qty + qty;
+
+            if (total > 10) return;
+
+            return axios.patch(`${VITE_APP_SITE}/600/carts/${product.id}`, { qty: total }, headers)
+
         }
+
     })
     .then((res)=>{
         res ? toastMessage('success','成功加入購物車') : warningMessage('數量達上限','如果需要大量訂購，請直接與我們聯絡');
+        changeCartIcon();
     })
     .catch((error)=>{ errorHandle(error) })
 

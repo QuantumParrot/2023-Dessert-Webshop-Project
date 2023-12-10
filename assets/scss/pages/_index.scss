@@ -1,4 +1,4 @@
-.swiper-button-next,.swiper-button-prev {
+.swiper-button-next, .swiper-button-prev {
     position: absolute;
     top: var(--swiper-navigation-top-offset,50%);
     width: calc(var(--swiper-navigation-size)/ 44 * 27);
@@ -19,8 +19,26 @@
     background-size: 2rem auto, 2rem auto;
 }
 
-@media (max-width:375px) {
+.slogan { top: 25% }
+
+@media (max-width: 1024px) {
     .slogan {
+        top: 20%;
+    }
+}
+
+@media (max-width: 768px) {
+    .slogan {
+        top: 16%;
+        & h2 {
+            font-size: 24px;
+        }
+    }
+}
+
+@media (max-width: 425px) {
+    .slogan {
+        top: 25%;
         color: white;
         background: rgba(0, 0, 0, 0.36);
         text-shadow: 0 0 .75rem black;
@@ -45,20 +63,20 @@
 .product {
     position: relative;
     &::before {
-      content: '';
-      position: absolute;
-      border: .25rem solid rgba(214, 214, 214, 0.6);
-      border-radius: .75rem;
-      box-shadow: inset 0 0 .25rem 0 rgba(214, 214, 214, 0.6), 0 0 .25rem 0 rgba(214, 214, 214, 0.6);
-      margin: .75rem;
-      height: calc(100% - 1.5rem);
-      width:  calc(100% - 1.5rem);
+        content: '';
+        position: absolute;
+        border: .25rem solid rgba(214, 214, 214, 0.6);
+        border-radius: .75rem;
+        box-shadow: inset 0 0 .25rem 0 rgba(214, 214, 214, 0.6), 0 0 .25rem 0 rgba(214, 214, 214, 0.6);
+        margin: .75rem;
+        height: calc(100% - 1.5rem);
+        width:  calc(100% - 1.5rem);
     }
     &::after {
-      content: url('../../assets/images/flower2.png');
-      transform: rotate(345deg);
-      opacity: 0.8;
-      position: absolute;
-      top: 0;
+        content: url('../../assets/images/flower2.png');
+        transform: rotate(345deg);
+        opacity: 0.8;
+        position: absolute;
+        top: 0;
     }
 }

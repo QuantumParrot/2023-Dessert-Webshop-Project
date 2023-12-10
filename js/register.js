@@ -1,11 +1,13 @@
+// 本頁面待解決問題：在即時驗證的部分，如果用戶先輸入確認密碼欄位再輸入密碼欄位時，密碼比對不會運作
+
 import axios from "axios";
 
-import { getToken, validation } from "./utilities/authorization.js";
+import { token, validation } from "./utilities/authorization.js";
 import { toastMessage } from "./utilities/message.js";
 
 // 轉址 ( 如果用戶處於登入狀態，不要讓他們訪問這個頁面 )
 
-function init() { if (getToken()) { location.href="index.html" } }
+function init() { if (token()) { location.href="index.html" } }
 
 init();
 
@@ -14,6 +16,7 @@ const { VITE_APP_SITE } = import.meta.env;
 const form = document.querySelector('#register-form');
 
 const username = document.getElementById('username');
+const phone = document.getElementById('phone');
 const account = document.getElementById('account');
 const password = document.getElementById('password');
 const passwordConfirm = document.getElementById('password-confirm');
@@ -26,8 +29,13 @@ const inputList = form.querySelectorAll('input');
 
 inputList.forEach((input) => {
     input.addEventListener('input', (e)=>{
-        validation(e.target);
-        e.target.id === 'password-confirm' ? checkPasswordConfirm(e.target) : null;
+
+        // 1. 所有的欄位都要進行驗證，此驗證包含：(1) 是否空白 (2) 手機、帳號、密碼是否符合格式
+
+        // 2. 確認密碼欄位必須要和密碼欄位進行比對
+
+        e.target.id === 'password-confirm' ? checkPasswordConfirm(e.target) : validation(e.target);
+
     }, false)
 });
 
@@ -39,11 +47,15 @@ function submitData(event) {
 
     event.preventDefault();
 
-    inputList.forEach(input => validation(input)); // 同時驗證每個表單元素
+    // 1. 為了讓所有欄位的驗證樣式能夠 " 同時 " 顯示
+
+    inputList.forEach(input => validation(input));
+
+    // 2. 滿足所有條件之後才會執行 handleRegister()
 
     [...inputList].every(input => validation(input)) &&
     checkPasswordConfirm(passwordConfirm) &&
-    handleRegister({ email: account.value, password: password.value, name: username.value, role: "member" });
+    handleRegister({ phone: phone.value, email: account.value, password: password.value, name: username.value.trim(), role: "member" });
 
 }
 
@@ -53,13 +65,13 @@ function checkPasswordConfirm(input) {
     const feedback = document.querySelector(`[data-validation="${id}"]`);
 
     if (value !== password.value) {
+
         classList.remove('is-valid');
         classList.add('is-invalid');
         feedback.textContent = "兩次密碼不一致";
         return false;
-    }
 
-    return true;
+    } else { return validation(input) }
     
 }
 
@@ -93,7 +105,7 @@ function handleRegister(info) {
 
 function clear() {
     inputList.forEach(input => {
-        input.value= '';
+        input.value = '';
         input.classList.remove('is-valid');
     });
 };

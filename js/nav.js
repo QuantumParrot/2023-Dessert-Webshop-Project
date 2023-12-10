@@ -2,19 +2,17 @@
 
 import axios from "axios";
 
-import { getToken } from "./utilities/authorization.js";
+import { token, headers, errorHandle } from "./utilities/authorization.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 
 (function() {
 
-    const token = getToken();
-
-    if (token) { changeNavbar(token) };
+    if (token()) { changeNavbar() };
 
 })();
 
-function changeNavbar(token) {
+function changeNavbar() {
 
     const membership = document.querySelector('#common-header #membership');
     
@@ -57,33 +55,31 @@ function changeNavbar(token) {
 
     // 確認購物車狀態
 
+    checkCartStatus();
+
+}
+
+async function checkCartStatus() {
+
     const userId = JSON.parse(localStorage.getItem('userData')).id;
-    userId ? checkCartStatus(userId, token) : null;
-
-}
-
-async function checkCartStatus(id, token) {
     
-    const res = axios.get(`${VITE_APP_SITE}/users/${id}/carts`, {
-        headers: {
-            "authorization": `Bearer ${token}`
-        }
-    })
+    const res = axios.get(`${VITE_APP_SITE}/600/users/${userId}/carts`, headers)
     .then((res)=>{
-        changeCartIcon(res.data);
+        res.data.length !== 0 ? changeCartIcon() : removeCartIcon();
     })
-    .catch((error)=>{
-        console.log(error);
-    })
+    .catch((error)=>{ errorHandle(error) })
 
 }
 
-export function changeCartIcon(data) {
-    if (data.length !== 0) {
-        const icon = document.querySelector('#cart-icon');
-        icon.innerHTML += `
-        <span class="position-absolute top-0 end-0 p-1 bg-danger border border-light rounded-circle">
+export function changeCartIcon() {
+    const icon = document.querySelector('#cart-icon');
+    icon.innerHTML += /*html*/`
+    <span class="marker position-absolute top-0 end-0 p-1 bg-danger border border-light rounded-circle">
         <span class="visually-hidden">New alerts</span>
-        </span>`;
-    }
+    </span>`;
+}
+
+export function removeCartIcon() {
+    const marker = document.querySelector('#cart-icon .marker');
+    if (marker) { marker.remove() };
 }

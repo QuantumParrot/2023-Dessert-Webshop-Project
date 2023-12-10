@@ -1,13 +1,21 @@
+// 本頁面待解決問題：尚無
+
+import AOS from "aos";
+import 'aos/dist/aos.css';
+
 import axios from "axios";
 import moment from "moment";
 
-const { VITE_APP_SITE } = import.meta.env;
+import { imageConfig } from "./utilities/config";
 
 const userId = JSON.parse(localStorage.getItem("userData"))?.id;
+
+const { VITE_APP_SITE } = import.meta.env;
 
 // init
 
 function init() { 'use strict';
+
     axios.get(`${VITE_APP_SITE}/664/announcements?_sort=id&_order=desc&_limit=3`)
     .then((res)=>{
         renderAnnouncements(res.data);
@@ -17,9 +25,10 @@ function init() { 'use strict';
         const getRandomProducts = randomRender(res.data);
         getRandomProducts(3);
     })
-    .catch((error)=>{
-        console.log(error);
-    })
+    .catch((error)=>{ console.log(error) })
+
+    AOS.init();
+
 };
 
 init();
@@ -29,31 +38,25 @@ init();
 const announcements = document.querySelector('#announcements');
 
 function renderAnnouncements(data){
-    const img = {
-        "網站公告": "https://i.imgur.com/ZdVvBk0.jpg",
-        "開放預購": "https://i.imgur.com/uAiFLTz.jpg",
-        "出貨通知": `https://fakeimg.pl/416x320/?text=出貨通知&font=noto`,
-        "價格調整": "https://i.imgur.com/0v5peZM.jpg",
-    }
+
     let str = ``;
     for (let i=0; i<data.length; i++) {
         str += /*html*/`
-        <div class="col-lg-4 col-12">
-            <div class="mb-6">
-                <div class="card hover-scale h-100 shadow px-6 py-7">
-                    <img class="d-block position-relative rounded-3 mb-6"
-                         style="height: 314px;"
-                         src="${data[i].image || img[data[i].type]}"
-                         alt="${data[i].type}">
-                    <h3 class="custom-tooltip w-75 position-absolute top-30 start-11 shadow-lg py-4 text-center">
-                    ${data[i].type}
-                    </h3>
-                    <div class="card-body d-flex flex-column p-0">
-                        <p class="fs-6 text-black mb-2">${moment(data[i].date).format('YYYY-MM-DD')}</p>
-                        <h4 class="flex-grow-1 fs-5 mb-9">${data[i].title}</h4>
-                        <div class="text-center">
-                            <a class="btn btn-sm btn-outline-primary" href="news-detail.html?id=${data[i].id}">繼續閱讀</a>
-                        </div>
+        <div class="col-lg-4 col-12 gy-6"
+             data-aos="flip-right" data-aos-duration="1000">
+            <div class="card hover-scale h-100 shadow px-6 py-7">
+                <img class="d-block position-relative rounded-3 mb-6"
+                     style="height: 314px;"
+                     src="${data[i].image || imageConfig[data[i].type]}"
+                     alt="${data[i].type}">
+                <h3 class="custom-tooltip w-75 position-absolute top-30 start-11 shadow-lg py-4 text-center">
+                ${data[i].type}
+                </h3>
+                <div class="card-body d-flex flex-column p-0">
+                    <p class="fs-6 text-black mb-2">${moment(data[i].date).format('YYYY-MM-DD')}</p>
+                    <h4 class="flex-grow-1 fs-5 mb-9">${data[i].title}</h4>
+                    <div class="text-center">
+                    <a class="btn btn-sm btn-outline-primary" href="news-detail.html?id=${data[i].id}">繼續閱讀</a>
                     </div>
                 </div>
             </div>
@@ -61,6 +64,7 @@ function renderAnnouncements(data){
         `
     };
     announcements.innerHTML = str;
+
 }
 
 // 熱銷排行
@@ -74,10 +78,10 @@ async function renderProducts(data) {
     // 如果處在登入狀態 ( 取得到 userId ) 時，渲染至頁面上的每一筆商品資料都需要新增屬性，判斷是否被使用者收藏
 
     if (userId) {
-        const res = await axios.get(`${VITE_APP_SITE}/664/user/${userId}/collects?_expand=product`); // res.data 是特定使用者的收藏清單
+        const res = await axios.get(`${VITE_APP_SITE}/664/user/${userId}/collects`); // res.data 是特定使用者的收藏清單
         data = data.map(product => {
             return { ...product,
-            isCollected: res.data.find(item => item.product.id == product.id) ? true : false }
+            isCollected: !!res.data.find(item => item.productId == product.id) }
         })
     }
 
@@ -85,7 +89,8 @@ async function renderProducts(data) {
     let str = '';
     for (let i=0; i<data.length; i++) {
         str += /*html*/`
-        <div class="col-lg-4 col-12">
+        <div class="col-lg-4 col-12 gy-6"
+             data-aos="flip-left" data-aos-duration="1000">
             <a class="text-decoration-none" href="products-detail.html?id=${data[i].id}">
                 <div class="card h-100 overflow-hidden border-0">
                     <div class="product h-100 mb-6 overflow-hidden">

@@ -1,11 +1,13 @@
+// 本頁面待解決問題：圖片上傳方式
+
 import axios from "axios";
 import moment from "moment";
 import Swal from "sweetalert2";
 
 import Tab from "bootstrap/js/dist/tab.js";
 
-import { renderCharts } from "../chart";
-import { decodeToken, errorHandle, getToken } from "../utilities/authorization";
+import { renderCharts } from "./adminChart";
+import { headers, errorHandle, checkEmpty } from "../utilities/authorization";
 import { toastMessage } from "../utilities/message";
 
 const { VITE_APP_SITE, VITE_APP_ADMIN_IDENTITY } = import.meta.env;
@@ -29,7 +31,17 @@ let data = [];
 
             toastMessage('error','身份驗證失敗','index.html');
 
-        } else { getData() }
+        } else { 
+            
+            // 參考了同學 Moreene 的程式碼終於做出類似先驗證再載入的效果，謝謝同學！
+
+            const main = document.querySelector('main');
+            main.classList.remove('d-none');
+            main.removeAttribute('class');
+            
+            getData();
+        
+        }
     
     }
 
@@ -55,7 +67,7 @@ function getData() {
     if (hash === 'orders') { getOrders() }
     else if (hash === 'announcements') { getAnnouncements() }
     else if (hash === 'products') { getProducts() }
-    else if (hash === 'charts') { getChartData() }
+    else if (hash === 'charts') { getCharts() }
 
 }
 
@@ -63,11 +75,7 @@ function getData() {
 
 function getOrders() {
 
-    axios.get(`${VITE_APP_SITE}/660/orders`, {
-        headers: {
-            "authorization": `Bearer ${getToken()}`
-        }
-    })
+    axios.get(`${VITE_APP_SITE}/660/orders`, headers)
     .then((res)=>{
         data = res.data;
         renderOrders(data.filter(order => !order.isFinished)); // 預設值為顯示未完成訂單
@@ -123,7 +131,7 @@ function renderOrders(data) {
                 <div class="accordion-content rounded-2 shadow">
                     <div class="px-md-8 px-6 pt-5 pb-7">
                     <div class="mb-5">
-                        ${order.content.map(item => `
+                        ${order.content.map(item => /*html*/`
                         <div class="row gap-md-5 py-2 border-bottom lh-lg">
                             <div class="col-lg-3 col-12">
                                 <p class="text-orange fw-bold">${item.product.name}</p>
@@ -168,7 +176,7 @@ function renderOrders(data) {
                     </div>
                     ${order.isFinished ? `` : /*html*/`
                     <div class="mt-5 text-center">
-                        <button data-num=${order.id} class="btn btn-primary">完成訂單</button>
+                        <button data-id=${order.id} class="btn btn-primary">完成訂單</button>
                     </div>`}
                 </div>
             </div>
@@ -177,7 +185,7 @@ function renderOrders(data) {
     })
     element.innerHTML = str;
 
-    const buttons = element.querySelectorAll('button[data-num]');
+    const buttons = element.querySelectorAll('button[data-id]');
     if (buttons) { buttons.forEach(button => button.addEventListener('click', finishOrder)) }
 
     $('.accordion-content').hide();
@@ -190,8 +198,6 @@ function renderOrders(data) {
 // 完成訂單
 
 function finishOrder(e) {
-
-    const token = decodeToken(localStorage.getItem('token'));
 
     Swal.fire({
         icon: 'warning',
@@ -207,15 +213,12 @@ function finishOrder(e) {
         showLoaderOnConfirm: true,
         preConfirm: async () => {
             try {
-                const id = e.target.dataset.num;
-                const order = { ...data.find(order => order.id == id), isFinished: true };
-                const res = await axios.patch(`${VITE_APP_SITE}/660/orders/${id}`, order, {
-                    headers: {
-                        "authorization": `Bearer ${token}`
-                    }
-                });
+
+                const id = e.target.dataset.id;
+                const res = await axios.patch(`${VITE_APP_SITE}/660/orders/${id}`, { isFinished: true }, headers);
                 toastMessage('success','訂單完成！已通知客戶！');
                 getOrders();
+
             } catch(error) { errorHandle(error) }
         }
     });
@@ -237,14 +240,14 @@ function manageOrders(initialData) {
 
     }
 
-    time.addEventListener('change', function(e){
+    time.addEventListener('change', (e) => {
 
         sortOrder(e.target.value);
         renderOrders(initialData);
 
     });
 
-    status.addEventListener('change', function(e){
+    status.addEventListener('change', (e) => {
 
         const { value } = e.target;
 
@@ -269,7 +272,7 @@ function manageOrders(initialData) {
 
     })
 
-    search.addEventListener('input', function(e){
+    search.addEventListener('input', (e) => {
 
         let { value } = e.target;
 
@@ -292,11 +295,7 @@ function manageOrders(initialData) {
 
 function getAnnouncements() {
 
-    axios.get(`${VITE_APP_SITE}/660/announcements?_sort=id&_order=desc`, {
-        headers: {
-            "authorization": `Bearer ${getToken()}`
-        }
-    })
+    axios.get(`${VITE_APP_SITE}/660/announcements?_sort=id&_order=desc`, headers)
     .then((res)=>{
         
         data = res.data;
@@ -319,21 +318,20 @@ function renderAnnouncements() {
 
     let content = `<div class="col-12"><ul class="list-group gap-5">`;
     data.forEach(item => {
-        content += /*html*/`
-        <li class="list-group-item bg-white rounded-2 shadow p-0 fw-bold">
-            <div class="d-flex flex-md-row flex-column align-items-md-center align-items-start gap-md-8 gap-6 p-md-8 p-6">
-                <button data-id="${item.id}" class="btn btn-sm btn-primary px-4">刪除消息</button>
-                <p class="text-black">${moment(+item.date).format('YYYY-MM-DD')}</p>
-                <p class="d-flex gap-2">
-                    <a class="text-decoration-none d-flex align-items-center fs-7"
-                       href="news-detail.html?id=${item.id}"
-                       target="_blank">
-                    <span class="material-icons">open_in_new</span></a>
-                    ${item.title}
-                </p>
-            </div>
-        </li>
-        `;
+    content += /*html*/`
+    <li class="list-group-item bg-white rounded-2 shadow p-0 fw-bold">
+        <div class="d-flex flex-md-row flex-column align-items-md-center align-items-start gap-md-8 gap-6 p-md-8 p-6">
+            <button data-id="${item.id}" class="btn btn-sm btn-primary px-4">刪除消息</button>
+            <p class="text-black">${moment(+item.date).format('YYYY-MM-DD')}</p>
+            <p class="d-flex gap-2">
+                <a class="text-decoration-none d-flex align-items-center fs-7"
+                   href="news-detail.html?id=${item.id}" target="_blank">
+                <span class="material-icons">open_in_new</span></a>
+                ${item.title}
+            </p>
+        </div>
+    </li>
+    `;
     })
     content += `</ul></div>`;
     element.innerHTML = content;
@@ -352,7 +350,7 @@ function createAnnouncement(e) {
     const content = e.target.querySelector('#content');
     const type = e.target.querySelector('#type');
 
-    if (!title.value || !content.value) { toastMessage('warning', '欄位不得空白') }
+    if (checkEmpty(title.value) || checkEmpty(content.value)) { toastMessage('warning', '欄位不得空白') }
     else {
         Swal.fire({
             icon: 'warning',
@@ -374,11 +372,7 @@ function createAnnouncement(e) {
                         date: new Date().getTime(),
                         image: "",
                     };
-                    const res = await axios.post(`${VITE_APP_SITE}/660/announcements`, data, {
-                        headers: { 
-                            "authorization": `Bearer ${getToken()}`
-                        }
-                    });
+                    const res = await axios.post(`${VITE_APP_SITE}/660/announcements`, data, headers);
                     toastMessage('success', '新增成功！');
                     e.target.reset();
                     getAnnouncements();
@@ -407,11 +401,7 @@ function deleteAnnouncement(id) {
         showLoaderOnConfirm: true,
         preConfirm: async () => {
             try { 
-                const res = await axios.delete(`${VITE_APP_SITE}/660/announcements/${id}`, {
-                    headers: {
-                        "authorization": `Bearer ${getToken()}`
-                    }
-                });
+                const res = await axios.delete(`${VITE_APP_SITE}/660/announcements/${id}`, headers);
                 toastMessage('success', '刪除成功！');
                 getAnnouncements();
             } catch(error) { errorHandle(error) };
@@ -424,11 +414,7 @@ function deleteAnnouncement(id) {
 
 function getProducts() {
 
-    axios.get(`${VITE_APP_SITE}/660/products`, {
-        headers: {
-            "authorization": `Bearer ${getToken()}`
-        }
-    })
+    axios.get(`${VITE_APP_SITE}/660/products`, headers)
     .then((res)=>{
         data = res.data;
         renderProductList();
@@ -450,7 +436,7 @@ function renderProductList() {
     let str = '';
     data.forEach(product => str += /*html*/`
     <div class="col-md-3 col-12 mb-md-9 mb-6">
-        <div class="card hover-shadow overflow-hidden" data-num="${product.id}">
+        <div class="card hover-shadow overflow-hidden" data-id="${product.id}">
             <div class="position-relative d-md-block d-none">
                 <img class="w-100"
                      src="${product.image[0] || `https://fakeimg.pl/291x291/?text=🍰&font=noto`}"
@@ -515,10 +501,10 @@ function handleProductDetail(e) {
     const size = e.target.size.value;
     const ingredients = e.target.ingredients.value.split(',');
     const price = e.target.price.value;
-    const image = [...e.target.querySelectorAll(`[name="image"]`)].map(i => i.value).filter(i => i);
+    const image = [...e.target.querySelectorAll(`[name="image"]`)].map(i => i.value).filter(i => !checkEmpty(i));
     const shelfLife = e.target.shelfLife.value;
 
-    if (!name || !type.length || !price || !size || !shelfLife) {
+    if (checkEmpty(name) || !type.length || checkEmpty(price) || checkEmpty(size) || checkEmpty(shelfLife)) {
 
         toastMessage('warning','必填欄位不可空白！');
         return;
@@ -596,16 +582,12 @@ function handleProductDetail(e) {
 
 function createNewProduct(info) {
 
-    const token = getToken();
-
-    axios.post(`${VITE_APP_SITE}/660/products`, info, {
-        headers: {
-            authorization: `Bearer ${token}`
-        }
-    })
+    axios.post(`${VITE_APP_SITE}/660/products`, info, headers)
     .then((res)=>{
+
         toastMessage('success','成功！記得上架商品哦！');
         getProducts();
+    
     })
     .catch((error)=>{ errorHandle(error) });
 
@@ -616,7 +598,7 @@ function handleProducts({target}) {
     else {
         
         const parent = target.closest('.card');
-        const id = parent.dataset.num;
+        const id = parent.dataset.id;
         const product = data.find(item => item.id == id);
 
         if (target.classList.contains('status')) {
@@ -634,17 +616,12 @@ function handleProducts({target}) {
                 confirmButtonText: '確定',
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
-                    try { 
-                        const res = await axios.patch(`${VITE_APP_SITE}/660/products/${id}`, {
-                            forSale: !product.forSale,
-                        },
-                        {
-                            headers: {
-                                "authorization": `Bearer ${getToken()}`
-                            }
-                        });
-                        getProducts();
+                    try {
+
+                        const res = await axios.patch(`${VITE_APP_SITE}/660/products/${id}`, { forSale: !product.forSale }, headers);
                         toastMessage('success', `成功${target.textContent}！`);
+                        getProducts();
+
                     } catch(error) { errorHandle(error) };
                 }
             })
@@ -664,14 +641,12 @@ function handleProducts({target}) {
                 confirmButtonText: '確定',
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
-                    try { 
-                        const res = await axios.delete(`${VITE_APP_SITE}/660/products/${id}`, {
-                            headers: {
-                                "authorization": `Bearer ${getToken()}`
-                            }
-                        });
-                        getProducts();
+                    try {
+
+                        const res = await axios.delete(`${VITE_APP_SITE}/660/products/${id}`, headers);
                         toastMessage('success', `再見，${product.name}！\n我們懷念它 ${"｡ﾟ(ﾟ´ω`ﾟ)ﾟ｡"}`);
+                        getProducts();
+
                     } catch(error) { errorHandle(error) };
                 }
             })
@@ -713,14 +688,12 @@ function renderModal(product) {
 
 function editProduct(id, info) {
     
-    axios.patch(`${VITE_APP_SITE}/660/products/${id}`, info, {
-        headers: {
-            authorization: `Bearer ${getToken()}`
-        }
-    })
+    axios.patch(`${VITE_APP_SITE}/660/products/${id}`, info, headers)
     .then((res) => {
-        toastMessage('success','修改成功！');
+
+        toastMessage('success', '修改成功！');
         getProducts();
+    
     })
     .catch((error)=> { errorHandle(error) })
 
@@ -741,13 +714,11 @@ createNewImage.addEventListener('click', (e) => {
 
 })
 
-function getChartData() {
+// 渲染圖表
 
-    axios.get(`${VITE_APP_SITE}/660/orders`, {
-        headers: {
-            "authorization": `Bearer ${getToken()}`
-        }
-    })
+function getCharts() {
+
+    axios.get(`${VITE_APP_SITE}/660/orders`, headers)
     .then((res)=>{
         renderCharts(res.data);
     })

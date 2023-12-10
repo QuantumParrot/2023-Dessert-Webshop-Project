@@ -1,17 +1,18 @@
+// 本頁面待解決問題：尚無
+
 import axios from "axios";
 
-import { getToken, validation } from "../utilities/authorization";
+import { token, validation } from "../utilities/authorization";
 import { toastMessage, errorMessage } from "../utilities/message";
 
 function init() {
 
     const role = JSON.parse(localStorage.getItem('userData'))?.role;
-    if (role === 'admin' && getToken()) { location.href="admin-dashboard.html#orders" }
+    if (role === 'admin' && token()) { location.href="admin-dashboard.html#orders" }
     
 }
 
 init();
-
 
 const { VITE_APP_SITE, VITE_APP_ADMIN_IDENTITY } = import.meta.env;
 
@@ -19,7 +20,7 @@ const form = document.querySelector('#admin-login-form');
 const inputList = form.querySelectorAll('input');
 const submit = form.querySelector('button[type="submit"]');
 
-form.addEventListener('submit', function(e){
+form.addEventListener('submit', (e) => {
 
     e.preventDefault();
 
@@ -39,7 +40,7 @@ function checkAdminIdentity(input) {
     if (input.value !== VITE_APP_ADMIN_IDENTITY) {
 
         toastMessage('error', '金鑰錯誤');
-        return false;
+        return;
 
     } else { return true }
 }
@@ -68,7 +69,7 @@ function handleLogin() {
         clear();
     })
     .catch((error)=>{
-        console.log(error);
+        // console.log(error);
         if (error.message === 'Network Error') {
 
             toastMessage('error', '無法連接伺服器，請聯絡管理員');

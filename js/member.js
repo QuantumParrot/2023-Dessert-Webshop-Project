@@ -1,26 +1,37 @@
+// 本頁面待解決問題：開發儲存寄送資訊的功能
+
 import axios from "axios";
 import Swal from "sweetalert2";
 import moment from "moment";
 
 import Tab from "bootstrap/js/dist/tab.js";
 
-import { getToken, errorHandle } from "./utilities/authorization.js";
 import { toastMessage, warningMessage } from "./utilities/message.js";
+import { token, headers, errorHandle } from "./utilities/authorization.js";
+import { changeCartIcon } from "./nav.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 
-let currentElement = '';
-let currentData = [];
+let element = '';
+let data = [];
 
 // init
 
 function init() {
     
-    if (!getToken()) {
+    if (!token()) {
 
         toastMessage('warning','請先登入','login.html');
 
-    } else { getData() }
+    } else { 
+        
+        const main = document.querySelector('main');
+        main.classList.remove('d-none');
+        main.removeAttribute('class');
+
+        getData();
+    
+    }
 
 }
 
@@ -49,24 +60,18 @@ function getData() {
 
     // 渲染資料的主要區塊
 
-    currentElement = document.querySelector(`#v-pills-${hash} #${hash}-content`);
+    element = document.querySelector(`#v-pills-${hash} #${hash}-content`);
 
     // 取得使用者個人資料
 
-    const userId = JSON.parse(localStorage.getItem("userData"))?.id;
-
-    const headers = {
-        headers: {
-            "authorization": `Bearer ${getToken()}`
-        }
-    }
+    const userId = JSON.parse(localStorage.getItem("userData")).id;
 
     if (hash === 'orders') {
 
         axios.get(`${VITE_APP_SITE}/600/users/${userId}/orders?_sort=id&_order=desc`, headers) // 由新到舊
         .then((res) => {
-            currentData = res.data;
-            renderOrders(currentData);
+            data = res.data;
+            renderOrders(data);
         })
         .catch((error)=>{ errorHandle(error) })
 
@@ -74,8 +79,8 @@ function getData() {
 
         axios.get(`${VITE_APP_SITE}/600/users/${userId}/collects?_expand=product`, headers)
         .then((res) => {
-            currentData = res.data;
-            renderCollection(currentData);
+            data = res.data;
+            renderCollection(data);
         })
         .catch((error)=>{ errorHandle(error) })
 
@@ -83,8 +88,8 @@ function getData() {
 
         axios.get(`${VITE_APP_SITE}/600/users/${userId}`, headers)
         .then((res) => {
-            currentData = res.data;
-            renderProfile();
+            data = res.data;
+            renderProfile(data);
         })
         .catch((error)=>{ errorHandle(error) })
 
@@ -187,7 +192,7 @@ function renderOrders(orders) {
         </div>
         `
     })
-    currentElement.innerHTML = str;
+    element.innerHTML = str;
 
     $('.accordion-content').hide();
     
@@ -229,10 +234,10 @@ function renderCollection(collects) {
                             <p class="fs-7 text-orange fw-bold">NT＄${product.price}</p>
                         </div>
                         <div class="d-flex gap-3">
-                            <button data-num="${product.id}" class="favorite btn btn-sm btn-outline-orange p-1">
+                            <button data-id="${product.id}" class="favorite btn btn-sm btn-outline-orange p-1">
                                 <span class="material-icons d-flex">favorite</span>
                             </button>
-                            <button data-num="${product.id}" class="cart btn btn-sm btn-primary p-1 ${product.forSale ? '' : 'disabled'}">
+                            <button data-id="${product.id}" class="cart btn btn-sm btn-primary p-1 ${product.forSale ? '' : 'disabled'}">
                                 <span class="material-icons d-flex">shopping_bag</span>
                             </button>
                         </div>
@@ -242,104 +247,70 @@ function renderCollection(collects) {
         </a>
     </div>
     `);
-    currentElement.innerHTML = str;
+    element.innerHTML = str;
 
     // 待優化的程式碼 //
 
     const favoriteButtons = document.querySelectorAll('.favorite');
-    favoriteButtons.forEach(favoriteButton => { toggleStatus(favoriteButton) });
+    favoriteButtons.forEach(button => button.addEventListener('click', toggleStatus));
 
     const cartButtons = document.querySelectorAll('.cart');
-    cartButtons.forEach(cartButton => { addToCart(cartButton) });
+    cartButtons.forEach(button => button.addEventListener('click', addToCart));
 
 }
 
-function toggleStatus(trigger) {
+function toggleStatus(e) {
 
-    trigger.addEventListener('click', (e) => {
+    e.preventDefault();
 
-        e.preventDefault();
+    const id = e.target.closest('button').dataset.id;
+    const collect = data.find(item => item.productId == id);
 
-        const targetProduct = currentData.find(item => item.product.id == trigger.dataset.num);
+    axios.delete(`${VITE_APP_SITE}/600/collects/${collect.id}`, headers)
+    .then((res)=>{
+        toastMessage('success',`已取消收藏${collect.product.name}`);
+        getData();
+    })
+    .catch((error)=>{ errorHandle(error) })
 
-        // 取得使用者個人資料
+}
 
-        const userId = JSON.parse(localStorage.getItem("userData")).id;
-        const token = getToken();
+function addToCart(e) {
 
-        axios.delete(`${VITE_APP_SITE}/640/collects/${targetProduct.id}`, {
-            headers: {
-                "authorization": `Bearer ${token}`
+    e.preventDefault();
+
+    const id = e.target.closest('button').dataset.id;
+    const userId = JSON.parse(localStorage.getItem("userData")).id;
+
+    axios.get(`${VITE_APP_SITE}/600/users/${userId}/carts`, headers)
+    .then((res)=>{
+        let product = res.data.find(item => item.productId == id); // 確認購物車有沒有重複品項
+        if (product) {
+            if (product.qty > 9) { return } // 如果已有重複品項，確認數量是否超過
+            else {
+                return axios.patch(`${VITE_APP_SITE}/600/carts/${product.id}`, { qty: product.qty += 1 }, headers)
             }
-        })
-        .then((res)=>{
-            toastMessage('success',`已取消收藏${targetProduct.product.name}`);
-            getData();
-        })
-        .catch((error)=>{ errorHandle(error) })
-            
-    }, false)
-
-}
-
-function addToCart(trigger) {
+        } else {
+            product = { productId: Number(id), qty: 1, userId }; // 如果沒有重複品項，加入它並補上數量屬性
+            return axios.post(`${VITE_APP_SITE}/600/carts`, product, headers)
+        }  
+    })
+    .then((res)=>{
+        res ? toastMessage('success','成功加入購物車') : warningMessage('數量達上限','如果需要大量訂購，請直接與我們聯絡');
+        changeCartIcon();
+    })
+    .catch((error)=>{ errorHandle(error) })
     
-    trigger.addEventListener('click', function(e){
-
-        e.preventDefault();
-
-        const token = getToken();
-
-        if (!token) { toastMessage('warning','請先登入') }
-        else {
-
-            const userId = JSON.parse(localStorage.getItem("userData")).id;
-
-            axios.get(`${VITE_APP_SITE}/640/users/${userId}/carts`, {
-                headers: {
-                    "authorization": `Bearer ${token}`
-                }
-            })
-            .then((res)=>{
-                const { data } = res;
-                let product = data.find(item => item.productId == trigger.dataset.num); // 確認購物車有沒有重複品項
-                if (product) {
-                    if (product.qty > 9) { return } // 如果已有重複品項，確認數量是否超過
-                    else {
-                        product = { ...product, qty: product.qty += 1 };
-                        return axios.patch(`${VITE_APP_SITE}/640/carts/${product.id}`, product, {
-                            headers: {
-                                "authorization": `Bearer ${token}`
-                            }
-                        })
-                    }
-                } else {
-                    product = { productId: Number(trigger.dataset.num), qty: 1, userId }; // 如果沒有重複品項，加入它並補上數量屬性
-                    return axios.post(`${VITE_APP_SITE}/640/carts`, product, {
-                        headers: {
-                            "authorization": `Bearer ${token}`
-                        }
-                    })
-                }  
-            })
-            .then((res)=>{
-                res ? toastMessage('success','成功加入購物車') : warningMessage('數量達上限','如果需要大量訂購，請直接與我們聯絡');
-            })
-            .catch((error)=>{ errorHandle(error) })
-        }
-
-    }, false)
-
 }
 
 // 會員資料
 
-function renderProfile() {
-
-    const userData = currentData;
+function renderProfile(userData) {    
 
     let str = '';
 
+    // 1. 修改會員資料
+    
     str += /*html*/`
     <div class="col-12">
         <h4 class="mb-8">修改會員資料</h4>
@@ -347,9 +318,9 @@ function renderProfile() {
             <div class="d-flex flex-column gap-7">
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-md-6 gap-4">
                     <div class="d-flex align-items-center gap-6">
-                        <label for="userName" class="fw-bold mb-0">名字</label>
+                        <label for="name" class="fw-bold mb-0">名字</label>
                         <div class="flex-grow-1">
-                        <input id="userName"
+                        <input id="name"
                                type="text"
                                class="form-control p-2 border-secondary"
                                name="name"
@@ -359,31 +330,31 @@ function renderProfile() {
                     </div>
                     <div>
                         <button class="btn btn-sm btn-primary py-1"
-                                data-target="userName">修改</button>
+                                data-target="name">修改</button>
                     </div>
                 </div>
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-md-6 gap-4">
                     <div class="d-flex align-items-center gap-6">
-                        <label for="userEmail" class="fw-bold">帳號</label>
+                        <label for="phone" class="fw-bold">手機</label>
                         <div class="flex-grow-1">
-                        <input id="userEmail"
-                               type="email"
+                        <input id="phone"
+                               type="tel"
                                class="form-control p-2 border-secondary"
-                               name="email"
-                               value="${userData.email}"
+                               name="phone"
+                               value="${userData.phone}"
                                disabled>
                         </div>
                     </div>
                     <div>
                         <button class="btn btn-sm btn-primary py-1"
-                                data-target="userEmail">修改</button>
+                                data-target="phone">修改</button>
                     </div>
                 </div>
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-md-6 gap-4">
                     <div class="d-flex align-items-center gap-6">
-                        <label for="userPassword" class="fw-bold mb-0">密碼</label>
+                        <label for="password" class="fw-bold mb-0">密碼</label>
                         <div class="flex-grow-1">
-                        <input id="userPassword"
+                        <input id="password"
                                type="password"
                                class="form-control p-2 border-secondary"
                                name="password"
@@ -394,7 +365,7 @@ function renderProfile() {
                     <div>
                         <button type="button"
                                 class="btn btn-sm btn-primary py-1"
-                                data-target="userPassword"
+                                data-target="password"
                                 data-bs-toggle="modal"
                                 data-bs-target="#changePasswordModal">修改</button>
                     </div>
@@ -405,6 +376,8 @@ function renderProfile() {
     </div>
     `;
 
+    // 2. 儲存寄送資訊
+
     str += /*html*/`
     <div class="col-12">
         <h4 class="d-flex align-items-center gap-5 mb-8">常用寄送資訊（功能開發中）</h4>
@@ -412,28 +385,31 @@ function renderProfile() {
             <div class="d-flex flex-column gap-7">
                 <!-- 會員姓名 -->
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
-                    <label for="receiver" class="fw-bold">收件人姓名</label>
-                    <input id="receiver"
+                    <label for="receiver-name" class="fw-bold">收件人姓名</label>
+                    <input id="receiver-name"
                            type="text"
                            class="form-control w-25 p-2 border-secondary"
-                           required>
-                    <div><input type="checkbox" id="useMemberName" class="me-4">同會員資料</div>
+                           name="name">
+                    <div><input type="checkbox" class="me-4"
+                                data-target="name">同會員資料</div>
                 </div>
                 <!-- 會員電話 -->
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
-                    <label for="phone" class="fw-bold">收件人電話</label>
-                    <input id="phone"
+                    <label for="receiver-phone" class="fw-bold">收件人電話</label>
+                    <input id="receiver-phone"
                            type="tel"
                            class="form-control w-25 p-2 border-secondary"
-                           required>
+                           name="phone">
+                    <div><input type="checkbox" class="me-4"
+                                data-target="phone">同會員資料</div>
                 </div>
                 <!-- 會員住址 -->
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
-                    <label for="address" class="fw-bold">收件人地址</label>
-                    <input id="address"
+                    <label for="receiver-address" class="fw-bold">收件人地址</label>
+                    <input id="receiver-address"
                            type="text"
                            class="form-control w-50 p-2 border-secondary"
-                           required>
+                           name="address">
                 </div>
                 <div>
                     <button type="submit" class="btn btn-sm btn-primary">儲存</button>
@@ -443,200 +419,227 @@ function renderProfile() {
     </div>
     `;
 
-    currentElement.innerHTML = str;
-
-    changeProfile(userData);
-    saveDeliveryInfo(userData);
-
-}
-
-function changeProfile(userData) {
+    element.innerHTML = str;
 
     const profileForm = document.querySelector('#profile-form');
+    profileForm.addEventListener('click', changeProfile);
 
-    profileForm.addEventListener('click', function(e){
-
-        e.preventDefault();
-        
-        if (e.target.nodeName === 'BUTTON') {
-
-            const target = e.target.dataset.target;
-            const targetInput = profileForm.querySelector(`#${target}`);
-
-            if (target !== 'userPassword' && e.target.textContent === '修改') {
-
-                targetInput.removeAttribute('disabled');
-                e.target.textContent = '送出';
-
-            } else if (e.target.textContent === '送出') {
-
-                Swal.fire({
-                    icon: 'warning',
-                    title: '確定修改資料？',
-                    text: `您的${targetInput.name === 'name' ? '名字' : '帳號'}將改為：${targetInput.value}`,
-                    /* cancel */
-                    showCancelButton: true,
-                    cancelButtonColor: '#D1741F',
-                    cancelButtonText: '取消',
-                    /* deal with AJAX */
-                    confirmButtonColor: '#A37A64',
-                    confirmButtonText: '確定',
-                    showLoaderOnConfirm: true,
-                    preConfirm: async () => {
-                        try {
-
-                            if (targetInput.value === userData[targetInput.name]) {
-                    
-                                toastMessage('question', '資料沒變哦 (ㆆᴗㆆ)');
-                                return;
-            
-                            }
-
-                            const token = getToken();
-                            const userInfo = { [targetInput.name]: targetInput.value };
-    
-                            e.target.setAttribute('disabled', true);
-                            const res = await axios.patch(`${VITE_APP_SITE}/660/users/${userData.id}`, userInfo, {
-                                headers: {
-                                    "authorization": `Bearer ${token}`
-                                }
-                            });
-
-                            e.target.removeAttribute('disabled');
-                            toastMessage('success','修改完成！');
-                            localStorage.setItem('userData', JSON.stringify(res.data));
-                            getData();
-
-                        } catch (error) { errorHandle(error) }
-                    }
-                })
-                .then((result)=>{
-                    targetInput.setAttribute('disabled', true);
-                    targetInput.value = userData[targetInput.name];
-                    e.target.textContent = '修改';
-                })
-
-            } else if (target === 'userPassword') { changePassword(userData) }
-
-        }
-
-    })
-
-}
-
-function changePassword(userData) {
-
-    const form = document.querySelector('#change-password-form');
-    const inputList = form.querySelectorAll('input');
-    const submit = form.querySelector('button[type="submit"]');
-    
-    submit.addEventListener('click', function(e){
-
-        e.preventDefault();
-
-        const currentPassword = inputList[0].value;
-        const newPassword = inputList[1].value;
-        const newPasswordConfirm = inputList[2].value;
-
-        function checkValue(value) {
-
-            const regex = /\w{6,}/;
-    
-            if (!value) {
-    
-                toastMessage("warning", "欄位不可空白");
-                return;
-            
-            } else if (!regex.test(value)) { 
-                
-                toastMessage("warning", "長度需在六個字以上");
-                return;
-    
-            } else if (currentPassword === newPassword) {
-
-                toastMessage("warning", "新密碼不可與舊密碼相同");
-                return;
-
-            } else if (newPassword !== newPasswordConfirm) {
-    
-                toastMessage("warning", "兩次密碼不一致");
-                return;
-    
-            }
-    
-            return true;
-    
-        }
-
-        [...inputList].every(input => checkValue(input.value)) &&
-        (function(){
-
-            const userInfo = { email: userData.email, password: currentPassword };
-
-            axios.post(`${VITE_APP_SITE}/login/${userData.id}`, userInfo)
-            .then((res)=>{
-                const headers = {
-                    headers: {
-                        "authorization": `Bearer ${getToken()}`
-                    }
-                }
-                return axios.patch(`${VITE_APP_SITE}/660/users/${userData.id}`, {
-                    password: newPassword
-                }, headers)
-            })
-            .then((res)=>{
-                form.reset();
-                localStorage.removeItem('token');
-                localStorage.removeItem('userData');
-                toastMessage("success", "修改成功！請重新登入！", "login.html");
-            })
-            .catch((error)=>{ errorHandle(error) })
-
-        })();
-
-    })
-
-
-}
-
-function saveDeliveryInfo(userData) {
+    const changePasswordform = document.querySelector('#change-password-form');
+    changePasswordform.addEventListener('submit', changePassword);
 
     const deliveryForm = document.querySelector('#delivery-form');
+    deliveryForm.addEventListener('submit', checkDeliveryInfo);
 
-    const useMemberName = deliveryForm.querySelector('#useMemberName');
-    const receiver = deliveryForm.querySelector('#receiver');
-    const phone = deliveryForm.querySelector('#phone');
-    const address = deliveryForm.querySelector('#address');
+    const useMemberData = deliveryForm.querySelectorAll('input[type="checkbox"]');
+    useMemberData.forEach(checkbox => checkbox.addEventListener('change', (e) => {
 
-    useMemberName.addEventListener('change', function(e){
+        const input = deliveryForm[`${e.target.dataset.target}`];
+
         if (e.target.checked) {
-            receiver.value = userData.name;
+            input.value = data[`${e.target.dataset.target}`];
         } else {
-            receiver.value = '';
+            input.value = '';
         }
+
+    }));
+
+}
+
+// 修改會員資料
+
+function changeProfile(e) {
+
+    e.preventDefault();
+
+    const { nodeName } = e.target;
+        
+    if (nodeName === 'BUTTON') {
+
+        const target = e.target.dataset.target;
+        const input = document.querySelector(`#profile-form input[name="${target}"]`);
+
+        if (target !== 'password' && e.target.textContent === '修改') {
+
+            input.removeAttribute('disabled');
+            e.target.textContent = '送出';
+
+        } else if (e.target.textContent === '送出') {
+
+            checkContent(input) &&
+
+            Swal.fire({
+                icon: 'warning',
+                title: '確定修改資料？',
+                text: `您的${input.name === 'name' ? '名字' : '手機'}將改為：${input.value}`,
+                /* cancel */
+                showCancelButton: true,
+                cancelButtonColor: '#D1741F',
+                cancelButtonText: '取消',
+                /* deal with AJAX */
+                confirmButtonColor: '#A37A64',
+                confirmButtonText: '確定',
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    try {
+
+                        if (input.value === data[input.name]) {
+                
+                            toastMessage('question', '資料沒變哦 (ㆆᴗㆆ)');
+                            return;
+        
+                        }
+
+                        const userInfo = { [input.name]: input.value };
+
+                        e.target.setAttribute('disabled', true);
+                        const res = await axios.patch(`${VITE_APP_SITE}/660/users/${data.id}`, userInfo, headers);
+
+                        e.target.removeAttribute('disabled');
+                        toastMessage('success','修改完成！');
+                        localStorage.setItem('userData', JSON.stringify(res.data));
+                        getData();
+
+                    } catch (error) { errorHandle(error) }
+                }
+            })
+            .then((result) => {
+                input.setAttribute('disabled', true);
+                input.value = data[input.name];
+                e.target.textContent = '修改';
+            })
+
+        }
+
+    } else if (nodeName !== 'BUTTON' && nodeName !== 'INPUT') { 
+        
+        document.querySelectorAll('#profile-form input')
+        .forEach(input => input.setAttribute('disabled', true));
+
+        document.querySelectorAll('#profile-form button')
+        .forEach(button => button.textContent = '修改');
+    
+    }
+
+}
+
+// 修改會員密碼
+
+function changePassword(e) {
+
+    e.preventDefault();
+    
+    const inputList = e.target.querySelectorAll('input');
+
+    const currentPassword = e.target["current-password"].value;
+    const newPassword = e.target["new-password"].value;
+    const newPasswordConfirm = e.target["new-password-confirm"].value;
+
+    function checkValue(value) {
+
+        const regex = /\w{6,}/;
+
+        if (!value.replace(/\s/g,'')) {
+
+            toastMessage("warning", "欄位不可空白");
+            return;
+        
+        } else if (!regex.test(value)) { 
+            
+            toastMessage("warning", "長度需在六個字以上");
+            return;
+
+        } else if (currentPassword === newPassword) {
+
+            toastMessage("warning", "新密碼不可與舊密碼相同");
+            return;
+
+        } else if (newPassword !== newPasswordConfirm) {
+
+            toastMessage("warning", "兩次密碼不一致");
+            return;
+
+        }
+
+        return true;
+
+    }
+
+    [...inputList].every(input => checkValue(input.value)) &&
+    (function(){
+
+        const userInfo = { email: data.email, password: currentPassword };
+
+        axios.post(`${VITE_APP_SITE}/login/${data.id}`, userInfo)
+        .then((res)=>{
+            return axios.patch(`${VITE_APP_SITE}/660/users/${data.id}`, {
+                password: newPassword
+            }, headers)
+        })
+        .then((res)=>{
+            e.target.reset();
+            localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            toastMessage("success", "修改成功！請重新登入！", "login.html");
+        })
+        .catch((error)=>{ errorHandle(error) })
+
+    })();
+
+}
+
+// 儲存寄送資訊
+
+function checkDeliveryInfo(e) {
+
+    e.preventDefault();
+
+    const receiver = e.target.name;
+    const phone = e.target.phone;
+    const address = e.target.address;
+
+    checkContent(receiver) && checkContent(phone) && checkContent(address) && 
+    ((info) => {
+
+        saveDeliveryInfo(info);
+        e.target.reset();
+
+    })({
+        receiver: receiver.value,
+        phone: phone.value,
+        address: address.value,
+        userId: data.id,
     });
 
-    deliveryForm.addEventListener('submit', function(e){
+}
 
-        e.preventDefault();
+function saveDeliveryInfo(info) {
 
-        if (phone) {
-            const regex = /^09(\d){8}/;
-            if (!regex.test(phone.value)) {
-                toastMessage('warning','手機號碼格式不正確');
-                return;
-            }
-        }
-        
-        const receiverInfo = {
-            receiver: receiver.value,
-            phone: phone.value,
-            address: address.value,
-            userId: JSON.parse(localStorage.getItem('userData')).id,
-        }
-
-        deliveryForm.reset();
-
+    axios.post(`${VITE_APP_SITE}/600/deliveryInfos`, headers)
+    .then((res)=>{
+        toastMessage('success','成功儲存資料！');
     })
+    .catch((error)=>{ errorHandle(error) })
+
+}
+
+function checkContent(input) {
+
+    const { name, value } = input;
+
+    if (!(value.replace(/\s/g,""))) {
+
+        toastMessage('warning','欄位不可空白');
+        input.closest('form').id === 'profile-form' ? input.value = data[name] : null;
+        return;
+    
+    } else if (name === 'phone' && !/^09\d{8}$/.test(value)) {
+
+        toastMessage('warning','手機格式不正確');
+        input.closest('form').id === 'profile-form' ? input.value = data[name] : null;
+        return;
+
+    }
+
+    return true;
 
 }

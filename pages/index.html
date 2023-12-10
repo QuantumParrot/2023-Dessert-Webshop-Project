@@ -12,39 +12,45 @@
 
     <%- include('./layout/header'); -%>
 
-    <!-- section: Carousel by Swiper-->
+    <!-- section: Carousel by Swiper -->
     <section class="swiper banner-swiper">
-      <div class="swiper-wrapper">
-          <div class="swiper-slide">
-              <img class="d-md-block d-none position-relative" src="../assets/images/banner1-lg.png" alt="傳統風味・獨家配方">
-              <img class="d-md-none d-block position-relative" src="../assets/images/banner1-sm.png" alt="傳統風味・獨家配方">
-              <div class="slogan w-100 position-absolute top-25 ps-lg-11 ps-0 py-lg-0 py-4 text-lg-start text-center">
-                  <p class="fs-5 mb-5">傳統風味・獨家配方</p>
-                  <h2 class="mb-lg-9 mb-5">體驗<span class="text-orange">嶄新</span>的味蕾饗宴</h2>
-                  <a href="products.html" class="btn btn-primary">立即選購</a>
-              </div>
-          </div>
-          <div class="swiper-slide">
-              <img class="d-md-block d-none position-relative" src="../assets/images/banner2-lg.png" alt="天然食材・嚴選工法">
-              <img class="d-md-none d-block position-relative" src="../assets/images/banner2-sm.png" alt="天然食材・嚴選工法">
-              <div class="slogan position-absolute top-25 end-10 px-2 py-lg-0 py-4 text-lg-start text-center">
-                  <p class="fs-5 mb-5">天然食材・嚴選工法</p>
-                  <h2 class="mb-lg-9 mb-5"><span class="text-orange">安心</span>享受每一口甜蜜邂逅</h2>
-                  <a href="products.html" class="btn btn-primary">立即選購</a>
-              </div>
-          </div>
-          <div class="swiper-slide">
-              <img class="d-md-block d-none position-relative" src="../assets/images/banner3-lg.png" alt="現點現做・新鮮美味">
-              <img class="d-md-none d-block position-relative" src="../assets/images/banner3-sm.png" alt="現點現做・新鮮美味">
-              <div class="slogan w-100 position-absolute top-25 ps-lg-11 px-5 py-lg-0 py-4 text-lg-start text-center">
-                  <p class="fs-5 mb-5">現點現做・新鮮美味</p>
-                  <h2 class="mb-lg-9 mb-5"><span class="text-orange">即時</span>品嚐甜點的完美時刻</h2>
-                  <a href="products.html" class="btn btn-primary">立即選購</a>
-              </div>
-          </div>
-      </div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="position-relative">
+                    <img class="d-md-block d-none" src="../assets/images/banner1-lg.png" alt="傳統風味・獨家配方">
+                    <img class="d-md-none d-block w-100" src="../assets/images/banner1-sm.png" alt="傳統風味・獨家配方">
+                    <div class="slogan w-100 position-absolute ps-lg-11 ps-md-10 py-md-0 py-4 text-md-start text-center">
+                        <p class="fs-5 mb-5">傳統風味・獨家配方</p>
+                        <h2 class="mb-lg-9 mb-5">體驗<span class="text-orange">嶄新</span>的味蕾饗宴</h2>
+                        <a href="products.html" class="btn btn-primary">立即選購</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="position-relative">
+                    <img class="d-md-block d-none" src="../assets/images/banner2-lg.png" alt="天然食材・嚴選工法">
+                    <img class="d-md-none d-block w-100" src="../assets/images/banner2-sm.png" alt="天然食材・嚴選工法">
+                    <div class="slogan w-100 position-absolute pe-lg-11 pe-md-10 py-md-0 py-4 text-md-end text-center">
+                        <p class="fs-5 mb-5">天然食材・嚴選工法</p>
+                        <h2 class="mb-lg-9 mb-5"><span class="text-orange">安心</span>享受每一口甜蜜邂逅</h2>
+                        <a href="products.html" class="btn btn-primary">立即選購</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="position-relative">
+                    <img class="d-md-block d-none" src="../assets/images/banner3-lg.png" alt="現點現做・新鮮美味">
+                    <img class="d-md-none d-block w-100" src="../assets/images/banner3-sm.png" alt="現點現做・新鮮美味">
+                    <div class="slogan w-100 position-absolute ps-lg-11 ps-md-10 px-5 py-md-0 py-4 text-md-start text-center">
+                        <p class="fs-5 mb-5">現點現做・新鮮美味</p>
+                        <h2 class="mb-lg-9 mb-5"><span class="text-orange">即時</span>品嚐甜點的完美時刻</h2>
+                        <a href="products.html" class="btn btn-primary">立即選購</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </section>
     <!-- section: Lateset News -->
     <section class="news bg-white py-lg-12 py-10">
@@ -57,7 +63,7 @@
     </section>
     <!-- section: Monthly Special -->
     <%- include('./layout/monthly-special'); -%>
-    <!-- Rank --->
+    <!-- section: Rank --->
     <section class="bg-white py-lg-12 py-10">
         <div class="container">
             <h2 class="h1 text-center mb-11">熱銷排行</h2>
@@ -69,26 +75,26 @@
             </div>
         </div>
     </section>
-    <!-- Benefits -->
+    <!-- section: Benefits -->
     <section class="bg-tertiary py-lg-12 py-10"
              style="background-image: url('../assets/images/background.png')">
         <div class="container">
             <h2 class="h1 text-center mb-lg-11 mb-9">加入會員之後，您可以⋯⋯</h2>
             <div class="row mb-11">
                 <div class="col-lg-4 col-12 text-center">
-                    <div>
+                    <div data-aos="zoom-in" data-aos-duration="1000">
                         <img class="mb-7" src="../assets/images/benefit1.png" alt="Buy Anything You Want">
                         <h4 class="mb-9">購買您想要的商品</h4>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 text-center">
-                    <div>
+                    <div data-aos="zoom-in" data-aos-duration="1000">
                         <img class="mb-7" src="../assets/images/benefit2.png" alt="Collect Anything You Like">
                         <h4 class="mb-9">收藏您喜歡的商品</h4>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 text-center">
-                    <div>
+                    <div data-aos="zoom-in" data-aos-duration="1000">
                         <img class="mb-7" src="../assets/images/benefit3.png" alt="Get Latest News Immediately">
                         <h4 class="mb-9">優惠訊息即時通知</h4>
                     </div>
@@ -106,7 +112,7 @@
     <script type="module" src="../main.js"></script>
     <script type="module" src="../js/index.js"></script>
     <script type="module">
-
+    
       import Swiper from 'swiper/bundle';
       import 'swiper/css/bundle';
 

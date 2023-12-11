@@ -1,4 +1,4 @@
-// 本頁面待解決問題：圖片上傳方式
+// 本頁面待解決問題：圖片上傳方式、進階篩選功能
 
 import axios from "axios";
 import moment from "moment";
@@ -147,7 +147,7 @@ function renderOrders(data) {
                     </div>
                     <div class="row fs-5 fw-bold border-bottom mb-5">
                         <div class="col-12">
-                            <p class="mb-5">總計：${order.total} 元<span class="text-muted fs-7">（含運費）</span></p>
+                            <p class="mb-5">總計：${order.total} 元<span class="text-muted fs-7">（含運費 ${order.deliveryFee} 元）</span></p>
                         </div>
                     </div>
                     <div class="lh-lg">
@@ -162,7 +162,7 @@ function renderOrders(data) {
                         <span class="text-orange fw-bold">收件人電話：</span>${order.info.phone}
                         </p>
                         <p class="d-md-block d-flex flex-column">
-                        <span class="text-orange fw-bold">收件人地址：</span>${order.info.address}
+                        <span class="text-orange fw-bold">收件人地址：</span>${order.info.address.replace(/(\d+)/, " $1 ")}
                         </p>
                         <p>
                         <span class="text-orange fw-bold">取貨方式：</span>${order.info.method}
@@ -231,9 +231,14 @@ function manageOrders(initialData) {
 
     const status = document.querySelector('#filter-by-status');
     const time = document.querySelector('#sort-by-time');
-    const search = document.querySelector('#order-search');
 
-    function sortOrder(value) {
+    // init
+
+    time.value = '由舊到新'; status.value = '未完成';
+
+    // 時間排序 ( 排序初始資料 )
+
+    function sort(value) {
 
         if (value === '由新到舊') { initialData.sort((a,b)=>b.id-a.id) } 
         else if (value === '由舊到新') { initialData.sort((a,b)=>a.id-b.id) }
@@ -242,50 +247,61 @@ function manageOrders(initialData) {
 
     time.addEventListener('change', (e) => {
 
-        sortOrder(e.target.value);
+        sort(e.target.value);
         renderOrders(initialData);
 
     });
 
-    status.addEventListener('change', (e) => {
+    // 狀態分類 ( 控制初始資料數量 )
 
-        const { value } = e.target;
+    function filter(value) {
 
-        if (value === '全部訂單') {
-
+        if (value === '全部訂單') { 
+            
             initialData = data;
-            sortOrder(time.value);
+        
+        } else {
 
-        } else if (value === '已完成') {
-
-            initialData = data.filter(order => order.isFinished);
-            sortOrder(time.value);
-
-        } else if (value === '未完成') {
-
-            initialData = data.filter(order => !order.isFinished);
-            sortOrder(time.value);
+            initialData = data.filter(order => value === '已完成' ? order.isFinished : !order.isFinished);
 
         }
+
+    }
+
+    status.addEventListener('change', (e) => {
+
+        filter(e.target.value);
+
+        if (!checkEmpty(keyword.value)) { initialData = search(keyword.value) };
+
+        sort(time.value);
 
         renderOrders(initialData);
 
     })
 
-    search.addEventListener('input', (e) => {
+    // 關鍵字搜尋 ( 控制初始資料數量 )
 
-        let { value } = e.target;
+    function search(value) {
 
-        value = value.toLowerCase().trim();
+        value = value.toLowerCase().replace(/\s/g,'');
+        return initialData.filter(order => { return order.orderNum.includes(value) || Object.values(order.info).some(info => info.toLowerCase().includes(value)) });
+    
+    }
 
-        const target = data.filter(order => {
-            return order.orderNum.includes(value) || Object.values(order.info).some(info => info.toLowerCase().includes(value));        
-        });
+    const keyword = document.querySelector('#search-keyword');
 
-        status.value = '全部訂單';
-        time.value = '由舊到新';
+    keyword.addEventListener('input', (e) => {
 
-        renderOrders(target);
+        filter(status.value);
+
+        if (!checkEmpty(e.target.value)) { initialData = search(e.target.value) };
+        
+        // console.log(initialData);
+
+        sort(time.value);
+
+        renderOrders(initialData);
 
     })
 
@@ -347,6 +363,7 @@ function createAnnouncement(e) {
     // console.log(e.target); // 是整個表單 d(d＇∀＇)
 
     const title = e.target.querySelector('#title');
+    const image = e.target.querySelector('#image');
     const content = e.target.querySelector('#content');
     const type = e.target.querySelector('#type');
 
@@ -370,7 +387,7 @@ function createAnnouncement(e) {
                         type: type.value,
                         content: content.value,
                         date: new Date().getTime(),
-                        image: "",
+                        image: image.value,
                     };
                     const res = await axios.post(`${VITE_APP_SITE}/660/announcements`, data, headers);
                     toastMessage('success', '新增成功！');
@@ -564,11 +581,13 @@ function handleProductDetail(e) {
 
                     // 考慮到交換圖片順序的需求，不能使用和 type / ingredients 一樣的判斷方式
 
-                    return newData[prop].length !== originData[prop].length || newData[prop].every(item => item !== originData[prop])
+                    return newData[prop].length !== originData[prop].length || newData[prop].some((item, index) => item !== originData[prop][index])
 
                 } else { return newData[prop] !== originData[prop] }
             
             }
+
+            // 除錯用，很好用 OvOb
 
             // console.log(Object.keys(newData).forEach(key => console.log(key, checkContent(key))))
 

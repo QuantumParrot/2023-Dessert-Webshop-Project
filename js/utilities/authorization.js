@@ -119,6 +119,6 @@ export function validation(element) {
 
 // 檢查是否為空白
 
-export function checkEmpty(str) {
-    return !str.toString().replace(/\s/g,'')
+export function checkEmpty(value) {
+    return !String(value).replace(/\s/g,'')
 };

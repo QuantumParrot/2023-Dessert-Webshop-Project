@@ -4,7 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import { toastMessage, warningMessage } from "./utilities/message.js";
-import { token, headers, errorHandle } from "./utilities/authorization.js";
+import { token, headers, errorHandle, checkEmpty } from "./utilities/authorization.js";
 import { modifyProductData } from "./utilities/modification.js";
 import { removeCartIcon } from "./nav.js";
 
@@ -13,6 +13,8 @@ const { VITE_APP_SITE } = import.meta.env;
 // init
 
 let data = [];
+
+let carts;
 
 function init() {
 
@@ -27,6 +29,7 @@ function init() {
         axios.get(`${VITE_APP_SITE}/600/users/${userId}/carts?_expand=product`, headers)
         .then((res)=>{
             data = res.data;
+            carts = discountCalcultor({ data, fee: 150, threshold: 2000 });
             renderData();
         })
         .catch((error)=>{ errorHandle(error) })
@@ -65,32 +68,38 @@ function renderData() {
                 <div class="bg-secondary rounded-1 p-6 lh-lg">
                     <h3 class="text-center mb-9">總計</h3>
                     <!-- 小計 -->
+                    <div>
                     <div class="d-flex justify-content-between">
                         <p class="fw-bold">小計</p>
                         <p style="width: 40%" class="d-flex justify-content-between">
-                            <span>NT＄</span>
-                            <span id="subtotal"></span>
+                        <span>NT＄</span>
+                        <span id="subtotal">${carts.subtotal}</span>
                         </p>
                     </div>
+                    </div>
                     <!-- 運費 -->
+                    <div>
                     <div class="d-flex justify-content-between">
                         <p class="fw-bold">運費</p>
                         <p style="width: 40%" class="d-flex justify-content-between">
-                            <span>NT＄</span>
-                            <span id="delivery-fee"></span>
+                        <span>NT＄</span>
+                        <span id="delivery-fee">${carts.deliveryFeeOrigin}</span>
                         </p>
+                    </div>
+                    <div id="delivery-fee-discount" class="d-flex justify-content-between align-items-center"></div>
                     </div>
                     <hr>
                     <!-- 總計 -->
                     <div class="d-flex justify-content-between align-items-center fw-bold">
                         <p>總計</p>
                         <p class="fs-5">
-                        <span>NT＄</span><span id="total"></span>
+                        <span>NT＄</span>
+                        <span id="total"></span>
                         </p>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-6">
-                    <input type="checkbox" id="delivery-confirm">我已詳閱並同意
+                    <input type="checkbox" name="delivery-confirm" id="delivery-confirm">我已詳閱並同意
                     <a href="#"
                        class="text-decoration-none fw-bold text-orange"
                        data-bs-toggle="modal"
@@ -106,7 +115,7 @@ function renderData() {
         cart.innerHTML = str;
 
         renderCart();
-        showTotalCost();
+        showTotalCost(carts.haveReachThreshold);
 
     }
 
@@ -256,19 +265,31 @@ function cartListener(e) {
 
 }
 
-function showTotalCost() {
+function showTotalCost(boolean) {
 
-    const subtotal = document.querySelector('#subtotal');
-    const deliveryFee = document.querySelector('#delivery-fee');
     const total = document.querySelector('#total');
 
-    subtotal.textContent = data.reduce((acc, curr) => { 
-       return acc + (Number(curr.product.price) * curr.qty)
-    }, 0);
+    const fee = document.querySelector('#delivery-fee');
+    const discount = document.querySelector('#delivery-fee-discount');
 
-    deliveryFee.textContent = 150;
+    if (boolean) {
 
-    total.textContent = (+subtotal.textContent) + (+deliveryFee.textContent)
+        fee.classList.add('text-decoration-line-through');
+        discount.innerHTML = /*html*/` 
+        <p class="text-danger fs-7">符合免運條件！</p>
+        <p style="width: 40%" class="d-flex justify-content-between">
+            <span>NT＄</span>
+            <span>${carts.deliveryFee(boolean)}</span>
+        </p>`;
+
+    } else {
+
+        fee.classList.remove('text-decoration-line-through');
+        discount.innerHTML = '';       
+
+    }
+
+    total.textContent = carts.subtotal + carts.deliveryFee(boolean);
 
 }
 
@@ -285,13 +306,13 @@ function nextStep(e) {
         content += /*html*/`
         <div class="border border-primary rounded-1 px-6 py-7">
             <form id="order-form" class="d-flex flex-column gap-7">
-                <div class="d-flex gap-2">
+                <div id="method-listener" class="d-flex gap-2">
                     <!-- method -->
                     <p class="fw-bold">取貨方式：</p>
                     <input type="radio" name="method" id="宅配到府" value="宅配到府">
-                    <label name="method" for="宅配到府">宅配到府</label>
+                    <label for="宅配到府">宅配到府</label>
                     <input type="radio" name="method" id="來店取貨" value="來店取貨">
-                    <label name="method" for="來店取貨">來店取貨</label>
+                    <label for="來店取貨">來店取貨</label>
                 </div>
                 <div class="d-flex gap-2">
                     <!-- payment -->
@@ -302,7 +323,10 @@ function nextStep(e) {
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
                     <!-- receiver -->
                     <label for="name" class="fw-bold mb-md-0 mb-3">收件人姓名：</label>
-                    <input type="text" id="name" class="form-control w-25 px-2 py-1">
+                    <input type="text"
+                           name="name"
+                           id="name"
+                           class="form-control w-25 px-2 py-1">
                     <div>
                         <input type="checkbox" id="useMemberName" data-receiver="name"
                                class="me-2">
@@ -313,6 +337,7 @@ function nextStep(e) {
                     <!-- phone -->
                     <label for="phone" class="fw-bold mb-md-0 mb-3">收件人電話：</label>
                     <input type="tel"
+                           name="phone"
                            id="phone"
                            class="form-control w-25 px-2 py-1"
                            placeholder="請填寫國內的手機號碼">
@@ -326,10 +351,10 @@ function nextStep(e) {
                     <!-- address -->
                     <label for="address" class="fw-bold mb-md-0 mb-3">收件人地址：</label>
                     <input type="text"
+                           name="address"
                            id="address"
                            class="form-control w-50 px-2 py-1"
-                           placeholder="請填寫國內的地址"
-                           value="台南市東區大學路一號">
+                           placeholder="來店取貨可不填寫">
                 </div>
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
                     <!-- shippingTime -->
@@ -346,16 +371,25 @@ function nextStep(e) {
             </form>
         </div>`
         main.innerHTML = content;
-    
+
+        const deliveryMethod = document.querySelector('#method-listener');
+        deliveryMethod.addEventListener('change', (e) => {
+
+            if (e.target.nodeName !== 'INPUT') return;
+            
+            showTotalCost(carts.haveReachThreshold || e.target.value === '來店取貨');
+            
+        })
+         
         const useMemberData = document.querySelectorAll('[data-receiver]');
         useMemberData.forEach(checkbox => checkbox.addEventListener('change', function(e){
             const input = document.querySelector(`input#${e.target.dataset.receiver}`);
             if (e.target.checked) {
+
                 const value = JSON.parse(localStorage.getItem('userData'))[e.target.dataset.receiver];
                 input.value = value;
-            } else {
-                input.value = '';
-            }
+
+            } else { input.value = '' }
         }))
 
     } else if (e.target.textContent ==='結　帳') {
@@ -370,17 +404,21 @@ function nextStep(e) {
 
         function checkInput(element) {
 
-            if (element?.id === 'delivery-confirm' && !element?.checked) {
+            if (element?.name === 'delivery-confirm' && !element?.checked) {
 
                 toastMessage('warning','請詳閱並同意寄送說明');
                 return;
+
+            } else if (element?.name === 'address' && method.value === '來店取貨') {
+
+                return true;
 
             } else if (!element?.value.replace(/\s/g,"")) {
 
                 toastMessage('warning','請確實填寫所有的欄位');
                 return;
 
-            } else if (element?.id === 'phone' && !/^09\d{8}$/.test(element?.value)) {
+            } else if (element?.name === 'phone' && !/^09\d{8}$/.test(element.value)) {
 
                 toastMessage('warning','手機格式不正確'); 
                 return;
@@ -409,7 +447,7 @@ function nextStep(e) {
             const deliveryInfo = {
                 receiver: receiver.value,
                 phone: phone.value,
-                address: address.value,
+                address: checkEmpty(address.value) ? '來店取貨' : address.value,
                 payment: payment.value,
                 method: method.value,
                 shippingTime: shippingTime.value,
@@ -418,11 +456,10 @@ function nextStep(e) {
         })();
 
     }
+
 }
 
 function completeOrder(info) {
-
-    const deliveryFee = document.querySelector('#delivery-fee');
 
     Swal.fire({
         icon: 'warning',
@@ -439,15 +476,18 @@ function completeOrder(info) {
         confirmButtonText: '送出訂單',
         showLoaderOnConfirm: true,
         preConfirm: async () => {
+
             try {
-                const total = document.querySelector('#total').textContent;
+
+                const deliveryFee = carts.deliveryFee(carts.haveReachThreshold || info.method === '來店取貨');
+
                 data = data.map(item => { return { ...item, product: modifyProductData(item.product) } });
                 const orderInfo = {
                     orderNum: new Date().getTime()+`0${data[0].userId}`,
                     content: data,
-                    total: Number(total),
+                    total: carts.subtotal + deliveryFee,
                     info,
-                    deliveryFee: Number(deliveryFee.textContent),
+                    deliveryFee: deliveryFee,
                     createdTime: new Date().getTime(),
                     userId: data[0].userId,
                     isFinished: false,
@@ -458,9 +498,12 @@ function completeOrder(info) {
                         axios.delete(`${VITE_APP_SITE}/600/carts/${item.id}`, headers)
                     })
                 })
+
             } catch(error) { errorHandle(error) }
+
         }
     }).then(result => {
+
         if (result.isConfirmed) {
             Swal.fire({
                 icon: 'success',
@@ -471,6 +514,26 @@ function completeOrder(info) {
                 timer: 3000,
             }).then(() => location.href = 'member.html')
         }
+
     })
     
+}
+
+// 寫得超爛的運費計算工具
+
+function discountCalcultor(config) {
+
+    const { data, fee, threshold } = config;
+
+    const subtotal = data.reduce((acc, curr) => { 
+        return acc + (Number(curr.product.price) * curr.qty)
+    }, 0);
+
+    return {
+        subtotal,
+        deliveryFeeOrigin: fee,
+        haveReachThreshold: subtotal >= threshold,
+        deliveryFee: function(boolean) { return boolean ? 0 : fee },
+    }
+
 }

@@ -175,7 +175,7 @@ function renderOrders(orders) {
                         <span class="text-orange fw-bold">收件人電話：</span>${order.info.phone}
                         </p>
                         <p class="d-md-block d-flex flex-column">
-                        <span class="text-orange fw-bold">收件人地址：</span>${order.info.address}
+                        <span class="text-orange fw-bold">收件人地址：</span>${order.info.address.replace(/(\d+)/, " $1 ")}
                         </p>
                         <p>
                         <span class="text-orange fw-bold">取貨方式：</span>${order.info.method}

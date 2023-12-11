@@ -30,8 +30,6 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + [Moment.js](https://momentjs.com/)
 
-+ [C3.js](https://c3js.org/)
-
 + [Apache Echarts](https://echarts.apache.org/zh/index.html)
 
 + [AOS](https://michalsnik.github.io/aos/)
@@ -57,6 +55,12 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   > 在全站商品頁面使用的圖片 ( Images on products.html )
   >
   > [Free photo chocolate brownies on sackcloth and coffee beans on a wooden table](https://www.freepik.com/free-photo/chocolate-brownies-sackcloth-coffee-beans-wooden-table_7675249.htm#&position=3&from_view=user&uuid=aaee96ee-d386-41cf-8151-8acf4f2f3296) / Image by jcomp on Freepik
+  >
+  > [Free photo high angle delicious brownies arrangement](https://www.freepik.com/free-photo/high-angle-delicious-brownies-arrangement_24590947.htm#&position=6&from_view=user&uuid=948d0ec0-3ef0-40fb-8b8c-d5d2fed40561) / Image by Freepik
+  >
+  > 在首頁消息區塊使用的圖片 ( Images on announcements / index.html )
+  >
+  > [Watercolor background for mid-autumn festival celebration](https://www.freepik.com/free-vector/watercolor-background-mid-autumn-festival-celebration_31145960.htm) / Image by Freepik
 
 + [vecteezy](https://www.vecteezy.com/)（符合規範即可免費商用）
 
@@ -80,7 +84,11 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   >
   > [Indonesian Food Lapis Legit](https://www.istockphoto.com/photo/indonesian-food-lapis-legit-gm480491265-36330904) / rikirisnandar
   >
+  > [Lapis Legit, Sliced Layered Cinnamon Butter Cake stock photo](https://www.istockphoto.com/photo/lapis-legit-sliced-layered-cinnamon-butter-cake-gm1638386694-533080921) / Ika Rahma
+  > 
   > [Dadar Gulung](https://www.istockphoto.com/photo/dadar-gulung-or-dadar-unti-is-indonesian-traditional-finger-food-is-grated-coconut-gm1312053769-400967581) / sri widyowati
+  >
+  > [Dadar Gulung stock photo](https://www.istockphoto.com/photo/dadar-gulung-gm1369032659-438878303) / Ika Rahma
   >
   > [Pineapple Tart or Nanas Tart or Nastar Cookies](https://www.istockphoto.com/photo/pineapple-tart-or-nanas-tart-or-nastar-cookies-gm1452623415-488914755) / Edy Gunawan
   >

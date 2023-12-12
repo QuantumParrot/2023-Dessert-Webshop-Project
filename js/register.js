@@ -80,9 +80,9 @@ function handleRegister(info) {
     axios.post(`${VITE_APP_SITE}/signup`, info)
     .then((res)=>{
         // console.log(res);
-        submit.removeAttribute('disabled');
         toastMessage('success', '註冊成功！請登入', 'login.html')
         clear();
+        submit.removeAttribute('disabled');
     })
     .catch((error)=>{
         // console.log(error);

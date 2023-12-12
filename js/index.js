@@ -42,7 +42,7 @@ function renderAnnouncements(data){
     let str = ``;
     for (let i=0; i<data.length; i++) {
         str += /*html*/`
-        <div class="col-lg-4 col-12 gy-6"
+        <div class="col-lg-4 col-md-6 col-12 gy-6"
              data-aos="flip-right" data-aos-duration="1000">
             <div class="card hover-scale h-100 shadow px-6 py-7">
                 <img class="d-block position-relative rounded-3 mb-6"
@@ -56,7 +56,7 @@ function renderAnnouncements(data){
                     <p class="fs-6 text-black mb-2">${moment(data[i].date).format('YYYY-MM-DD')}</p>
                     <h4 class="flex-grow-1 fs-5 mb-9">${data[i].title}</h4>
                     <div class="text-center">
-                    <a class="btn btn-sm btn-outline-primary" href="news-detail.html?id=${data[i].id}">繼續閱讀</a>
+                        <a class="btn btn-sm btn-outline-primary" href="news-detail.html?id=${data[i].id}">繼續閱讀</a>
                     </div>
                 </div>
             </div>

@@ -436,6 +436,9 @@ function getProducts() {
         data = res.data;
         renderProductList();
         //
+        const unlock = document.querySelector('#delete-limit');
+        unlock.addEventListener('click', toggleDeleteLimit);
+        //
         const createNewProductTrigger = document.querySelector('#create-new-product');
         createNewProductTrigger.addEventListener('click', modalInit);
         //
@@ -480,7 +483,7 @@ function renderProductList() {
                         <button type="button" 
                                 class="status btn btn-orange btn-sm p-2">${product.forSale ? '下架' : '上架'}</button>
                         <button type="button"
-                                class="delete btn btn-danger btn-sm p-2"
+                                class="delete btn btn-danger btn-sm p-2 disabled"
                                 >刪除</button>
                     </div>
                 </div>
@@ -611,6 +614,28 @@ function createNewProduct(info) {
     .catch((error)=>{ errorHandle(error) });
 
 }
+
+function toggleDeleteLimit(e) {
+
+    let { textContent } = e.target;
+    const buttons = document.querySelectorAll('button.delete');
+
+    if (textContent === 'lock') {
+
+        buttons.forEach(btn => btn.classList.remove('disabled'));
+        toastMessage('success','刪除功能已解鎖');
+        e.target.textContent = 'lock_open';
+
+    } else {
+
+        buttons.forEach(btn => btn.classList.add('disabled'));
+        toastMessage('success','刪除功能已上鎖');
+        e.target.textContent = 'lock';
+
+    }
+    
+}
+
 
 function handleProducts({target}) {
     if (target.nodeName !== 'BUTTON') { return }

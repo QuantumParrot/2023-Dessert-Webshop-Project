@@ -1,11 +1,19 @@
-// typography
+// typography - align
 
 .text-justify {
     text-align: justify;
 }
 
+// typography - font style
+
 .font-style-lato {
     font-family: 'Lato', sans-serif;
+}
+
+// typography - shadow
+
+.text-shadow-wheat {
+    text-shadow: 0 0 .75rem wheat;
 }
 
 // backdrop-filter
@@ -13,6 +21,21 @@
 .backdrop-blur-sm {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+}
+
+.bg-transparent-mask {
+    position: relative;
+    &::before {
+        content: '';
+        display: block;
+        background-color: white;
+        opacity: 0.5;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
 }
 
 // hover effects

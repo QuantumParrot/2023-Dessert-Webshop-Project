@@ -82,19 +82,19 @@
             <h2 class="h1 text-center mb-lg-11 mb-9">加入會員之後，您可以⋯⋯</h2>
             <div class="row mb-11">
                 <div class="col-lg-4 col-12 text-center">
-                    <div data-aos="zoom-in" data-aos-duration="1000">
+                    <div data-aos="zoom-in" data-aos-duration="500" data-aos-offset="500">
                         <img class="mb-7" src="../assets/images/benefit1.png" alt="Buy Anything You Want">
                         <h4 class="mb-9">購買您想要的商品</h4>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 text-center">
-                    <div data-aos="zoom-in" data-aos-duration="1000">
+                    <div data-aos="zoom-in" data-aos-duration="500" data-aos-offset="500">
                         <img class="mb-7" src="../assets/images/benefit2.png" alt="Collect Anything You Like">
                         <h4 class="mb-9">收藏您喜歡的商品</h4>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 text-center">
-                    <div data-aos="zoom-in" data-aos-duration="1000">
+                    <div data-aos="zoom-in" data-aos-duration="500" data-aos-offset="500">
                         <img class="mb-7" src="../assets/images/benefit3.png" alt="Get Latest News Immediately">
                         <h4 class="mb-9">優惠訊息即時通知</h4>
                     </div>
@@ -135,10 +135,14 @@
       // toggle backdrop-filter
 
       $(document).ready(function(){
+        $('.click').click(function(){
+            $(this).parent().parent().siblings('#blur-filter').removeClass('backdrop-blur-sm');
+            $(this).parent('.d-inline-block').addClass('d-none');
+        });
         $('#blur-filter').click(function(){
-            $(this).toggleClass('backdrop-blur-sm');
-            $(this).siblings().find('.click').toggleClass('d-none');
-        })
+            $(this).addClass('backdrop-blur-sm');
+            $(this).siblings().find('.d-inline-block').removeClass('d-none');
+        });
       })
       
     </script>

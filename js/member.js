@@ -147,7 +147,7 @@ function renderOrders(orders) {
                         ${order.content.map(item => /*html*/`
                         <div class="row gap-md-5 py-2 border-bottom lh-lg">
                             <div class="col-lg-3 col-12">
-                                <p class="text-orange fw-bold">${item.product.name}</p>
+                                <a target="_blank" href="products-detail.html?id=${item.product.id}" class="text-orange fw-bold">${item.product.name}</a>
                             </div>
                             <div class="col-lg-3 col-12">
                                 <p><span class="fw-bold">數量：</span>${item.qty}</p>

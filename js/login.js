@@ -42,13 +42,13 @@ async function handleLogin(info) {
     try {
         submit.setAttribute('disabled',true); // 在 AJAX 完成之前，防止用戶重複點擊提交網路請求
         const res = await axios.post(`${VITE_APP_SITE}/login`, info);
-        submit.removeAttribute('disabled');
         // console.log(res);
         const { accessToken, user } = res.data;
         localStorage.setItem('token', accessToken);
         localStorage.setItem('userData', JSON.stringify(user));
         toastMessage('success', `歡迎您！${user.name}！`, 'member.html#orders');
         clear();
+        submit.removeAttribute('disabled');
     } catch(error) {
         // console.log(error);
         if (error.message === 'Network Error') {

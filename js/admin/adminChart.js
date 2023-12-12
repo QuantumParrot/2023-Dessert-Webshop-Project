@@ -176,7 +176,7 @@ function orderCalcultor(orders) {
             return figures;
         },
         revenue_ranks: function() {
-            return Object.keys(figures).sort((a,b) => figures[b].revenue - figures[a].revenue);
+            return Object.keys(figures).sort((a,b) => figures[b].revenue - figures[a].revenue).map(i => [i, figures[i]]);
         },
         revenue_total: function() {
             return orders.reduce((acc, curr) => acc + (curr.total - curr.deliveryFee), 0);
@@ -223,10 +223,13 @@ function rankHTMLTemplate(ranks) {
     }
 
     let str = '';
-    ranks.map((item, index) => str += /*html*/`
-    <li class="d-flex gap-2">
-        <span><span class="material-icons" style="color: ${colors[index+1]}">military_tech</span></span>
-        <span>${item}</span>
+    ranks.map(([name, data], index) => str += /*html*/`
+    <li class="d-flex justify-content-between">
+        <div class="d-flex gap-2">
+            <span><span class="material-icons" style="color: ${colors[index+1]}">military_tech</span></span>
+            <span>${name}</span>
+        </div>
+        <span class="fs-7 text-muted">NT＄ ${data.revenue}</span>
     </li>
     `);
     return str;

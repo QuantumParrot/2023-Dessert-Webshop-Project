@@ -617,20 +617,29 @@ function createNewProduct(info) {
 
 function toggleDeleteLimit(e) {
 
-    let { textContent } = e.target;
+    let target = e.target;
+    let { textContent } = target;
+
+    if (e.target.nodeName === 'BUTTON') {
+
+        target = e.target.querySelector('.material-icons');
+        textContent = target.textContent;
+
+    }
+
     const buttons = document.querySelectorAll('button.delete');
 
     if (textContent === 'lock') {
 
         buttons.forEach(btn => btn.classList.remove('disabled'));
         toastMessage('success','刪除功能已解鎖');
-        e.target.textContent = 'lock_open';
+        target.textContent = 'lock_open';
 
     } else {
 
         buttons.forEach(btn => btn.classList.add('disabled'));
         toastMessage('success','刪除功能已上鎖');
-        e.target.textContent = 'lock';
+        target.textContent = 'lock';
 
     }
     

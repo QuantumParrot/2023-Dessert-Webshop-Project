@@ -86,10 +86,15 @@ function getData() {
 
     } else if (hash === 'profile') { 
 
-        axios.get(`${VITE_APP_SITE}/600/users/${userId}`, headers)
+        Promise.all([
+            axios.get(`${VITE_APP_SITE}/600/users/${userId}`, headers),
+            axios.get(`${VITE_APP_SITE}/600/users/${userId}/deliveryInfos`, headers)
+        ])
         .then((res) => {
-            data = res.data;
-            renderProfile(data);
+            let [userData, deliveryInfoData] = res;
+            data = userData.data;
+            renderProfile(userData.data);
+            renderDeliveryInfo(deliveryInfoData.data);
         })
         .catch((error)=>{ errorHandle(error) })
 
@@ -380,11 +385,15 @@ function renderProfile(userData) {
 
     str += /*html*/`
     <div class="col-12">
-        <h4 class="d-flex align-items-center gap-5 mb-8">常用寄送資訊（功能開發中）</h4>
-        <form id="delivery-form" class="bg-secondary rounded-1 px-6 py-7">
+        <h4 class="d-flex align-items-center gap-5 mb-8">儲存寄送資訊</h4>
+        <ul class="list-unstyled bg-white border border-primary rounded-2 px-6 py-7 shadow mb-8">
+            <li class="fw-bold mb-3">儲存常用地址，加速結帳流程！</li>
+            <li class="text-muted">註：考慮到商品特性，暫不提供離島及海外寄送服務，敬請見諒。</li>
+        </ul>
+        <form id="delivery-form" class="bg-secondary rounded-1 px-6 py-7 mb-8">
             <div class="d-flex flex-column gap-7">
                 <!-- 會員姓名 -->
-                <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
+                <!-- <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
                     <label for="receiver-name" class="fw-bold">收件人姓名</label>
                     <input id="receiver-name"
                            type="text"
@@ -392,9 +401,9 @@ function renderProfile(userData) {
                            name="name">
                     <div><input type="checkbox" class="me-4"
                                 data-target="name">同會員資料</div>
-                </div>
+                </div> -->
                 <!-- 會員電話 -->
-                <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
+                <!-- <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
                     <label for="receiver-phone" class="fw-bold">收件人電話</label>
                     <input id="receiver-phone"
                            type="tel"
@@ -402,7 +411,7 @@ function renderProfile(userData) {
                            name="phone">
                     <div><input type="checkbox" class="me-4"
                                 data-target="phone">同會員資料</div>
-                </div>
+                </div> -->
                 <!-- 會員住址 -->
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
                     <label for="receiver-address" class="fw-bold">收件人地址</label>
@@ -410,12 +419,16 @@ function renderProfile(userData) {
                            type="text"
                            class="form-control w-50 p-2 border-secondary"
                            name="address">
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-sm btn-primary">儲存</button>
+                    <div>
+                        <button type="submit" class="btn btn-sm btn-primary">儲存</button>
+                    </div>
                 </div>
             </div>
         </form>
+        <div class="bg-white border border-primary rounded-2 px-6 py-7 shadow">
+            <h5 class="fs-5 mb-7">已儲存的地址</h5>
+            <ul id="address-list" class="list-unstyled d-flex flex-column gap-3 mb-0"></ul>
+        </div>
     </div>
     `;
 
@@ -430,18 +443,18 @@ function renderProfile(userData) {
     const deliveryForm = document.querySelector('#delivery-form');
     deliveryForm.addEventListener('submit', checkDeliveryInfo);
 
-    const useMemberData = deliveryForm.querySelectorAll('input[type="checkbox"]');
-    useMemberData.forEach(checkbox => checkbox.addEventListener('change', (e) => {
+    // const useMemberData = deliveryForm.querySelectorAll('input[type="checkbox"]');
+    // useMemberData.forEach(checkbox => checkbox.addEventListener('change', (e) => {
 
-        const input = deliveryForm[`${e.target.dataset.target}`];
+    //     const input = deliveryForm[`${e.target.dataset.target}`];
 
-        if (e.target.checked) {
-            input.value = data[`${e.target.dataset.target}`];
-        } else {
-            input.value = '';
-        }
+    //     if (e.target.checked) {
+    //         input.value = data[`${e.target.dataset.target}`];
+    //     } else {
+    //         input.value = '';
+    //     }
 
-    }));
+    // }));
 
 }
 
@@ -589,23 +602,52 @@ function changePassword(e) {
 
 // 儲存寄送資訊
 
+function renderDeliveryInfo(data) {
+
+    const list = document.querySelector('#address-list');
+
+    let str = '';
+    data.length === 0 ? 
+    str = `<li>尚未儲存任何地址</li>` :
+    data.forEach(item => str += /*html*/`
+    <li data-num="${item.id}" class="card px-6 py-3">
+        <div class="row">
+            <div class="col-1">
+                <button class="delete btn d-flex align-items-center p-0 ms-md-3">
+                <span class="material-icons text-orange">delete</span>
+                </button>
+            </div>
+            <div class="col-10">${item.address}</div>
+        </div>
+    </li>
+    `);
+    list.innerHTML = str;
+
+    list.addEventListener('click', (e) => {
+
+        if (!e.target.closest('button')) return;
+
+        const id = e.target.closest('li').dataset.num;
+        
+        deleteDeliveryInfo(id);
+
+    })
+
+}
+
 function checkDeliveryInfo(e) {
 
     e.preventDefault();
 
-    const receiver = e.target.name;
-    const phone = e.target.phone;
     const address = e.target.address;
 
-    checkContent(receiver) && checkContent(phone) && checkContent(address) && 
+    checkContent(address) && 
     ((info) => {
 
         saveDeliveryInfo(info);
         e.target.reset();
 
     })({
-        receiver: receiver.value,
-        phone: phone.value,
         address: address.value,
         userId: data.id,
     });
@@ -614,13 +656,44 @@ function checkDeliveryInfo(e) {
 
 function saveDeliveryInfo(info) {
 
-    axios.post(`${VITE_APP_SITE}/600/deliveryInfos`, headers)
+    axios.post(`${VITE_APP_SITE}/600/deliveryInfos`, info, headers)
     .then((res)=>{
+
         toastMessage('success','成功儲存資料！');
+        getData();
+
     })
     .catch((error)=>{ errorHandle(error) })
 
 }
+
+function deleteDeliveryInfo(id) {
+
+    Swal.fire({
+        icon: 'warning',
+        title: '確定刪除地址？',
+        /* cancel */
+        showCancelButton: true,
+        cancelButtonColor: '#D1741F',
+        cancelButtonText: '取消',
+        /* deal with AJAX */
+        confirmButtonColor: '#A37A64',
+        confirmButtonText: '確定',
+        showLoaderOnConfirm: true,
+        preConfirm: async () => {
+            try {
+
+                const res = await axios.delete(`${VITE_APP_SITE}/deliveryInfos/${id}`);
+                toastMessage('success','刪除成功！');
+                getData();
+
+            } catch (error) { errorHandle(error) }
+        }
+    })
+
+}
+
+// 驗證表單元素
 
 function checkContent(input) {
 

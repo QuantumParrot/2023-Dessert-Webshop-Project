@@ -61,6 +61,12 @@ function renderData() {
 
         str = /*html*/`
         <div class="col-md-9 mb-6">
+            <div class="bg-secondary rounded-2 p-3 mb-6">
+                <div class="d-flex gap-3">
+                    <span class="material-icons text-orange">campaign</span>
+                    <p>單筆消費<span class="text-danger">滿兩千</span>即享有免運優惠！</p>
+                </div>
+            </div>
             <ul id="main-content" class="list-group ps-0"></ul>
         </div>
         <div class="col-md-3">
@@ -297,6 +303,8 @@ function nextStep(e) {
 
     if (e.target.textContent === '下一步') {
 
+        if (window.innerWidth < 768) { document.documentElement.scrollTop = 0 };
+
         const title = document.querySelector('#process-title');
         e.target.textContent = '結　帳';
         title.textContent = '填寫寄送資訊';
@@ -326,10 +334,10 @@ function nextStep(e) {
                     <input type="text"
                            name="name"
                            id="name"
-                           class="form-control w-25 px-2 py-1">
+                           class="form-control w-25 px-2 py-1 me-md-1 mb-md-0 mb-3">
                     <div>
                         <input type="checkbox" id="useMemberName" data-receiver="name"
-                               class="me-2">
+                               class="me-1">
                         <label for="useMemberName">同會員資料</label>
                     </div>
                 </div>
@@ -339,11 +347,11 @@ function nextStep(e) {
                     <input type="tel"
                            name="phone"
                            id="phone"
-                           class="form-control w-25 px-2 py-1"
+                           class="form-control w-25 px-2 py-1 me-md-1 mb-md-0 mb-3"
                            placeholder="請填寫國內的手機號碼">
                     <div>
                         <input type="checkbox" id="useMemberPhone" data-receiver="phone"
-                               class="me-2">
+                               class="me-1">
                         <label for="useMemberPhone">同會員資料</label>
                     </div>
                 </div>
@@ -355,6 +363,11 @@ function nextStep(e) {
                            id="address"
                            class="form-control w-50 px-2 py-1"
                            placeholder="來店取貨可不填寫">
+                    <div>
+                        <select id="select-address" data-receiver="address" class="form-select px-2 py-1" style="min-width: 280px">
+                            <option value="" selected disabled>選擇已儲存的地址</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
                     <!-- shippingTime -->
@@ -372,6 +385,11 @@ function nextStep(e) {
         </div>`
         main.innerHTML = content;
 
+        getDeliveryInfo();
+
+        const addressSelector = document.querySelector('#select-address');
+        addressSelector.addEventListener('change', useSavedAddress);
+
         const deliveryMethod = document.querySelector('#method-listener');
         deliveryMethod.addEventListener('change', (e) => {
 
@@ -381,7 +399,7 @@ function nextStep(e) {
             
         })
          
-        const useMemberData = document.querySelectorAll('[data-receiver]');
+        const useMemberData = document.querySelectorAll('input[data-receiver]');
         useMemberData.forEach(checkbox => checkbox.addEventListener('change', function(e){
             const input = document.querySelector(`input#${e.target.dataset.receiver}`);
             if (e.target.checked) {
@@ -456,6 +474,38 @@ function nextStep(e) {
         })();
 
     }
+
+}
+
+function getDeliveryInfo() {
+
+    const id = JSON.parse(localStorage.getItem('userData')).id;
+    
+    axios.get(`${VITE_APP_SITE}/600/users/${id}/deliveryInfos`, headers)
+    .then(res => {
+        renderInfoOptions(res.data);
+    })
+    .catch(error => errorHandle(error));
+
+}
+
+function renderInfoOptions(data) {
+
+    const select = document.querySelector('#select-address');
+    
+    data.forEach(item => {
+        const option = document.createElement('option');
+        option.setAttribute('value', item.address);
+        option.textContent = item.address.replace(/(\d+)/g, " $1 ");
+        select.appendChild(option);
+    });
+
+}
+
+function useSavedAddress(e) {
+
+    const input = document.querySelector(`input#${e.target.dataset.receiver}`);
+    input.value = e.target.value;
 
 }
 

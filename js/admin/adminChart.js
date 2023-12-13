@@ -35,7 +35,7 @@ export function renderCharts(data) {
 
     const qtyChartData = Object.keys(figures).sort((a,b) => figures[a].qty - figures[b].qty);
 
-    const champion = orderCalcultor(data).revenue_ranks().splice(0,1).join('');
+    const [champion, championData] = orderCalcultor(data).revenue_ranks().splice(0,1)[0];
 
     renderBarChart(qtyChartData, qtyChartData.map(key => {
         return key !== champion ? figures[key].qty : { value: figures[key].qty, itemStyle: { color: '#D1741F' } } 

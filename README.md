@@ -1,8 +1,18 @@
-## Akheng's Desserts 甜點工作室 - 印尼傳統糕點電商網站
+## [Akheng's Desserts 甜點工作室 - 印尼傳統糕點電商網站](https://quantumparrot.github.io/2023-Dessert-Webshop-Project/)
 
 此為 2023 年六角學院 JavaScript 直播班的專題。純屬練習，不做商用。
 
 當前進度：**已完成核心開發，剩下細節優化中**
+
+***
+
+管理員帳號：akhengstudio@mail.com
+
+管理員密碼：654321
+
+管理員金鑰：528491
+
+伺服器每隔一段時間就會重置，資料不會保存，可以自由遊玩。
 
 ***
 
@@ -15,6 +25,26 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 後端：**JSON-Server & JSON-Server-Auth**
 
 以 JSON-Server 及延伸的 JSON-Server-Auth 模擬伺服器和資料庫介接 API
+
+***
+
+### 核心功能
+
+前台：
+
++ 會員註冊
++ 會員登入
++ 收藏商品
++ 將商品加入購物車，並完成結帳的流程
++ 修改會員資料
++ 儲存寄送資訊
+
+後台：
+
++ 管理訂單：篩選、修改狀態
++ 管理消息：新增、刪除
++ 管理商品：新增、編輯、上下架、刪除
++ 瀏覽銷售統計圖表
 
 ***
 
@@ -42,6 +72,10 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + [freepik](https://freepik.com/)（符合規範即可免費商用）
 
+  > 在消息詳情及登入頁面使用的圖片 ( Images on news-detail.html & login.html )
+  >
+  > [Free vector hand drawn dessert twitch background](https://www.freepik.com/free-vector/hand-drawn-dessert-twitch-background_17805860.htm#&position=3&from_view=user&uuid=2bc8a17e-32ec-4c97-bc26-de448444e340) / Image by Freepik
+  >
   > 在購物說明頁面使用的圖片 ( Images on faq.html )
   > 
   > [set of young people using smartphones](https://www.freepik.com/free-vector/set-young-people-using-smartphones_12557532.htm) / Image by Freepik
@@ -52,7 +86,7 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   >
   > [hand drawn sparkling stars collection](https://www.freepik.com/free-vector/hand-drawn-sparkling-stars-collection_16139383.htm) / Image by Freepik
   >
-  > 在全站商品頁面使用的圖片 ( Images on products.html )
+  > 在全站商品頁面使用的圖片 ( Images on products.html & products-details.html )
   >
   > [Free photo chocolate brownies on sackcloth and coffee beans on a wooden table](https://www.freepik.com/free-photo/chocolate-brownies-sackcloth-coffee-beans-wooden-table_7675249.htm#&position=3&from_view=user&uuid=aaee96ee-d386-41cf-8151-8acf4f2f3296) / Image by jcomp on Freepik
   >
@@ -80,7 +114,7 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + [iStock](https://www.istockphoto.com/hk)（付費圖庫）
 
-  > 在全站商品頁面使用的圖片 ( Images on products.html )
+  > 在全站商品頁面使用的圖片 ( Images on products.html & products-details.html )
   >
   > [Indonesian Food Lapis Legit](https://www.istockphoto.com/photo/indonesian-food-lapis-legit-gm480491265-36330904) / rikirisnandar
   >
@@ -95,6 +129,10 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
   > [Martabak Lipat, Martabak Manis (Sweet Martabak) is Indonesia Pancake](https://www.istockphoto.com/photo/martabak-lipat-martabak-manis-is-indonesia-pancake-gm1519485007-524498249) / ary pranggawan
   >
   > [Chiffon Cake](https://www.istockphoto.com/photo/chiffon-cake-gm1279445505-378055233) / Sulyono Haryono
+  >
+  > 在註冊頁面使用的圖片 ( Images on register.html )
+  > 
+  > [Cookies Kue Lebaran Food Background with Copy Space](https://www.istockphoto.com/hk/%E7%85%A7%E7%89%87/cookies-kue-lebaran-food-background-with-copy-space-gm1488989256-514006329) / Ika Rahma
 
 + [CSS Loaders](https://cssloaders.github.io/)
 

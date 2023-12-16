@@ -55,7 +55,7 @@ function changeNavbar() {
 
     // 確認購物車狀態
 
-    checkCartStatus();
+    if (window.innerWidth > 767) { checkCartStatus() }
 
 }
 
@@ -72,6 +72,7 @@ async function checkCartStatus() {
 }
 
 export function changeCartIcon() {
+    if (window.innerWidth < 768) return;
     const icon = document.querySelector('#cart-icon');
     icon.innerHTML += /*html*/`
     <span class="marker position-absolute top-0 end-0 p-1 bg-danger border border-light rounded-circle">
@@ -80,6 +81,7 @@ export function changeCartIcon() {
 }
 
 export function removeCartIcon() {
+    if (window.innerWidth < 768) return;
     const marker = document.querySelector('#cart-icon .marker');
     if (marker) { marker.remove() };
 }

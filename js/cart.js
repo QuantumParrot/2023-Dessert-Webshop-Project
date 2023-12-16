@@ -247,7 +247,7 @@ function cartListener(e) {
 
             if (currentQuantity == qty.value) {
 
-                toastMessage("question","數量沒變哦 (ㆆᴗㆆ)"); // 數量沒更新時，不需要發送網路請求
+                return; // 數量沒更新時，不需要發送網路請求
 
             } else if (qty.value > 10) {
 

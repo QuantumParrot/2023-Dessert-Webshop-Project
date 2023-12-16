@@ -1,4 +1,4 @@
-// 本頁面待解決問題：執行關鍵字搜尋時，讓左側的篩選頁籤跳回 " 全站商品 "
+// 本頁面待解決問題：執行關鍵字搜尋時，讓左側的篩選頁籤跳回 " 全站商品 " & 優化購物車點擊的導向
 
 import axios from "axios";
 
@@ -98,16 +98,15 @@ products.addEventListener('click', (e) => {
     if (!tokenValue) { toastMessage('warning','請先登入') }
     else {
 
-        const { classList } = e.target.closest('button');
-        const id = e.target.closest('div').dataset.id;
+        const button = e.target.closest('button');
 
-        if (classList.contains('favorite')) {
+        if (button.classList.contains('favorite')) {
 
-            toggleStatus(id);
+            toggleStatus(button);
 
-        } else if (classList.contains('cart')) {
+        } else if (button.classList.contains('cart')) {
 
-            addToCart(id);
+            addToCart(button);
 
         }
 
@@ -115,7 +114,9 @@ products.addEventListener('click', (e) => {
 
 });
 
-function toggleStatus(id) {
+function toggleStatus(button) {
+
+    const id = button.closest('div').dataset.id;
 
     // 1. 鎖定目標商品
 
@@ -131,6 +132,8 @@ function toggleStatus(id) {
 
     // 4. 根據收藏與否打出不同的 API
 
+    button.classList.add('disabled');
+
     if (!targetProduct.isCollected) {
 
         const productData = { productId: Number(id), userId };
@@ -141,8 +144,12 @@ function toggleStatus(id) {
             userData = userData.map(product => product.id == id ? targetProduct : product);
             renderProducts(filter === '全站商品' ? userData : userData.filter(item => item.type.includes(filter)));
             toastMessage('success',`已成功收藏${targetProduct.name}`);
+            button.classList.remove('disabled');
         })
-        .catch((error)=>{ errorHandle(error) })
+        .catch((error)=>{ 
+            errorHandle(error);
+            button.classList.remove('disabled'); 
+        })
         
     } else if (targetProduct.isCollected) {
 
@@ -156,16 +163,23 @@ function toggleStatus(id) {
             userData = userData.map(product => product.id == id ? targetProduct : product);
             renderProducts(filter === '全站商品' ? userData : userData.filter(item => item.type.includes(filter)));
             toastMessage('success',`已取消收藏${targetProduct.name}`);
+            button.classList.remove('disabled');
         })
-        .catch((error)=>{ errorHandle(error) })
+        .catch((error)=>{ 
+            errorHandle(error); 
+            button.classList.remove('disabled');
+        })
 
     }
 
 };
 
-function addToCart(id) {
-    
+function addToCart(button) {
+
+    const id = button.closest('div').dataset.id;
     const userId = JSON.parse(localStorage.getItem("userData")).id;
+
+    button.classList.add('disabled');
 
     axios.get(`${VITE_APP_SITE}/640/users/${userId}/carts?_expand=product`, headers)
     .then((res)=>{
@@ -184,8 +198,12 @@ function addToCart(id) {
     .then((res)=>{
         res ? toastMessage('success','成功加入購物車') : warningMessage('數量達上限','如果需要大量訂購，請直接與我們聯絡');
         changeCartIcon();
+        button.classList.remove('disabled');
     })
-    .catch((error)=>{ errorHandle(error) })
+    .catch((error)=>{ 
+        errorHandle(error);
+        button.classList.remove('disabled'); 
+    })
 
 };
 

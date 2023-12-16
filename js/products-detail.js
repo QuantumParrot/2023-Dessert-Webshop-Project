@@ -71,7 +71,7 @@ function renderProduct(isCollected) {
                         <hr>
                         <p class="fs-6 my-6">${data.info}</p>
                         <p class="text-orange fw-bold d-flex align-items-center mb-md-0 mb-6">
-                            <span class="material-icons me-2">info</span>
+                            <span class="material-icons fs-2 me-2">info</span>
                             下單前務必詳閱<a class="link-orange" href="#nav-delivery-tab">寄送說明</a>
                         </p>
                     </div>
@@ -141,7 +141,7 @@ function renderProduct(isCollected) {
                  <p>
                  <span class="fw-bold">下單前務必確保願意承擔宅配蛋糕的風險，如果您無法接受，請選擇來店取貨。</span>
                  <br>
-                 希望大家能夠體諒司機們的辛勞，謝謝您的友善與尊重讓這個世界變得更美好。${"(*´ω`)人(´ω`*)"}
+                 希望大家能夠體諒司機們的辛勞，謝謝您的友善與尊重讓這個世界變得更美好！
                  </p>
                  </div>
             </div>

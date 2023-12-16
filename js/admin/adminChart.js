@@ -104,7 +104,7 @@ function renderBarChart(xAxis, data) {
     const qtyChart = echarts.init(qtyChartElement);
     const option = {
         width: '100%',
-        color: ['#77BCB7'],
+        color: ['#9EB384'],
         title: {
             left: 'center',
             subtext: '橘色為當前的銷售額冠軍',

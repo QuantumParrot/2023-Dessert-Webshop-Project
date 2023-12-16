@@ -12,6 +12,8 @@ import { changeCartIcon } from "./nav.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 
+const userId = JSON.parse(localStorage.getItem("userData")).id;
+
 let element = '';
 let data = [];
 
@@ -64,45 +66,34 @@ function getData() {
 
     // 取得使用者個人資料
 
-    const userId = JSON.parse(localStorage.getItem("userData")).id;
-
-    if (hash === 'orders') {
-
-        axios.get(`${VITE_APP_SITE}/600/users/${userId}/orders?_sort=id&_order=desc`, headers) // 由新到舊
-        .then((res) => {
-            data = res.data;
-            renderOrders(data);
-        })
-        .catch((error)=>{ errorHandle(error) })
-
+    if (hash === 'orders') { 
+        
+        getOrders();
+    
     } else if (hash === 'collection') {
 
-        axios.get(`${VITE_APP_SITE}/600/users/${userId}/collects?_expand=product`, headers)
-        .then((res) => {
-            data = res.data;
-            renderCollection(data);
-        })
-        .catch((error)=>{ errorHandle(error) })
+        getCollection();
 
     } else if (hash === 'profile') { 
 
-        Promise.all([
-            axios.get(`${VITE_APP_SITE}/600/users/${userId}`, headers),
-            axios.get(`${VITE_APP_SITE}/600/users/${userId}/deliveryInfos`, headers)
-        ])
-        .then((res) => {
-            let [userData, deliveryInfoData] = res;
-            data = userData.data;
-            renderProfile(userData.data);
-            renderDeliveryInfo(deliveryInfoData.data);
-        })
-        .catch((error)=>{ errorHandle(error) })
+        getProfile();
 
     }
 
 }
 
 // 我的訂單
+
+function getOrders() {
+
+    axios.get(`${VITE_APP_SITE}/600/users/${userId}/orders?_sort=id&_order=desc`, headers) // 由新到舊
+    .then((res) => {
+        data = res.data;
+        renderOrders(data);
+    })
+    .catch((error)=>{ errorHandle(error) })
+
+}
 
 function renderOrders(orders) {
     let str = '';
@@ -131,7 +122,7 @@ function renderOrders(orders) {
                                 <span class="fw-normal">${moment(order.createdTime).format('YYYY-MM-DD')}</span>
                             </div>
                         </div>
-                        <div class="col-3 d-md-block d-none border-start border-end">
+                        <div class="col-4 d-md-block d-none border-start border-end">
                             <div class="d-flex justify-content-between px-7">
                                 <span class="fw-bold">訂購金額：</span>
                                 <span>${order.total} 元</span>
@@ -207,6 +198,17 @@ function renderOrders(orders) {
 }
 
 // 我的收藏
+
+function getCollection() {
+
+    axios.get(`${VITE_APP_SITE}/600/users/${userId}/collects?_expand=product`, headers)
+    .then((res) => {
+        data = res.data;
+        renderCollection(data);
+    })
+    .catch((error)=>{ errorHandle(error) })
+
+}
 
 function renderCollection(collects) {
 
@@ -309,6 +311,28 @@ function addToCart(e) {
 }
 
 // 會員資料
+
+function getProfile() {
+
+    axios.get(`${VITE_APP_SITE}/600/users/${userId}`, headers)
+    .then((res) => {
+        data = res.data;
+        renderProfile(data);
+        return getDeliveryInfo();
+    })
+    .catch((error)=>{ errorHandle(error) })
+
+}
+
+function getDeliveryInfo() {
+
+    axios.get(`${VITE_APP_SITE}/600/users/${userId}/deliveryInfos`, headers)
+    .then((res) => {
+        renderDeliveryInfo(res.data);
+    })
+    .catch((error)=>{ errorHandle(error) })
+
+}
 
 function renderProfile(userData) {    
 
@@ -478,7 +502,7 @@ function changeProfile(e) {
 
         } else if (e.target.textContent === '送出') {
 
-            checkContent(input) &&
+            checkContent(input) && input.value !== data[input.name] &&
 
             Swal.fire({
                 icon: 'warning',
@@ -494,13 +518,6 @@ function changeProfile(e) {
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
                     try {
-
-                        if (input.value === data[input.name]) {
-                
-                            toastMessage('question', '資料沒變哦 (ㆆᴗㆆ)');
-                            return;
-        
-                        }
 
                         const userInfo = { [input.name]: input.value };
 
@@ -660,7 +677,7 @@ function saveDeliveryInfo(info) {
     .then((res)=>{
 
         toastMessage('success','成功儲存資料！');
-        getData();
+        getDeliveryInfo();
 
     })
     .catch((error)=>{ errorHandle(error) })
@@ -685,7 +702,7 @@ function deleteDeliveryInfo(id) {
 
                 const res = await axios.delete(`${VITE_APP_SITE}/deliveryInfos/${id}`);
                 toastMessage('success','刪除成功！');
-                getData();
+                getDeliveryInfo();
 
             } catch (error) { errorHandle(error) }
         }

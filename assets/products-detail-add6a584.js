@@ -1,4 +1,4 @@
-import{a as r,h as o,e as u,b,t as c,w as f,c as g}from"./main-36634dc1.js";import{S as w}from"./swiper-bundle-856ac9ac.js";class h{constructor(t){this.element=document.querySelector(t),this.clickEventListener()}render(t){let s="";t.image.forEach(e=>{s+=`
+import{a as r,h as o,e as u,b,t as c,w as f,c as g}from"./main-2642ba12.js";import{S as w}from"./swiper-bundle-856ac9ac.js";class h{constructor(t){this.element=document.querySelector(t),this.clickEventListener()}render(t){let s="";t.image.forEach(e=>{s+=`
             <div class="swiper-slide overflow-hidden rounded">
                 <img class="image-slide" src="${e||"https://fakeimg.pl/451x451/?text=🍰&font=noto"}" alt="${t.name}">
             </div>`}),this.element.innerHTML=s}clickEventListener(){this.element.addEventListener("click",({target:t})=>{t.nodeName==="IMG"&&this.show(t.src)})}show(t){document.querySelector("#current-image").setAttribute("src",t)}}const{VITE_APP_SITE:l}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",VITE_APP_ADMIN_IDENTITY:"528491",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1},d=location.href.split("?id=").pop();let i={};(async function(){var a;try{i=(await r.get(`${l}/products/${d}`)).data;const s=(a=JSON.parse(localStorage.getItem("userData")))==null?void 0:a.id;let e;s&&(e=!!(await r.get(`${l}/600/users/${s}/collects`,o)).data.find(p=>p.productId==d)),v(e)}catch(t){u(t)}})();const y=document.querySelector("#product");function v(a){y.innerHTML=`
@@ -37,7 +37,7 @@ import{a as r,h as o,e as u,b,t as c,w as f,c as g}from"./main-36634dc1.js";impo
                         <hr>
                         <p class="fs-6 my-6">${i.info}</p>
                         <p class="text-orange fw-bold d-flex align-items-center mb-md-0 mb-6">
-                            <span class="material-icons me-2">info</span>
+                            <span class="material-icons fs-2 me-2">info</span>
                             下單前務必詳閱<a class="link-orange" href="#nav-delivery-tab">寄送說明</a>
                         </p>
                     </div>
@@ -107,7 +107,7 @@ import{a as r,h as o,e as u,b,t as c,w as f,c as g}from"./main-36634dc1.js";impo
                  <p>
                  <span class="fw-bold">下單前務必確保願意承擔宅配蛋糕的風險，如果您無法接受，請選擇來店取貨。</span>
                  <br>
-                 希望大家能夠體諒司機們的辛勞，謝謝您的友善與尊重讓這個世界變得更美好。(*´ω\`)人(´ω\`*)
+                 希望大家能夠體諒司機們的辛勞，謝謝您的友善與尊重讓這個世界變得更美好！
                  </p>
                  </div>
             </div>

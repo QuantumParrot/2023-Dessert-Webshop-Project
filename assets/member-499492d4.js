@@ -1,10 +1,10 @@
-import{a as r,h as c,e as i,t as l,w,c as x,S as g,b as y}from"./main-36634dc1.js";import{h as b}from"./moment-fbc5633a.js";import{T as S}from"./tab-b1a58ad3.js";import{S as T}from"./ScrollEvent-2d368248.js";const{VITE_APP_SITE:d}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",VITE_APP_ADMIN_IDENTITY:"528491",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1};let v="",o=[];function I(){if(!y())l("warning","請先登入","login.html");else{const e=document.querySelector("main");e.classList.remove("d-none"),e.removeAttribute("class"),f()}}I();window.addEventListener("hashchange",function(){f()});function f(){const e=location.hash.replace("#","")||"orders",a=document.querySelector(`#v-pills-${e}-tab`);a&&new S(a).show(),v=document.querySelector(`#v-pills-${e} #${e}-content`);const s=JSON.parse(localStorage.getItem("userData")).id;e==="orders"?r.get(`${d}/600/users/${s}/orders?_sort=id&_order=desc`,c).then(t=>{o=t.data,k(o)}).catch(t=>{i(t)}):e==="collection"?r.get(`${d}/600/users/${s}/collects?_expand=product`,c).then(t=>{o=t.data,D(o)}).catch(t=>{i(t)}):e==="profile"&&Promise.all([r.get(`${d}/600/users/${s}`,c),r.get(`${d}/600/users/${s}/deliveryInfos`,c)]).then(t=>{let[n,p]=t;o=n.data,q(n.data),B(p.data)}).catch(t=>{i(t)})}function k(e){let a="";e.length===0?a+=`
+import{a as r,h as d,e as i,t as l,w as y,c as S,S as w,b as T}from"./main-2642ba12.js";import{h}from"./moment-fbc5633a.js";import{T as I}from"./tab-716af076.js";import{S as k}from"./ScrollEvent-2d368248.js";const{VITE_APP_SITE:c}={VITE_APP_SITE:"https://two023-dessert-webshop-json-server.onrender.com",VITE_APP_ADMIN_IDENTITY:"528491",BASE_URL:"/2023-Dessert-Webshop-Project/",MODE:"production",DEV:!1,PROD:!0,SSR:!1},u=JSON.parse(localStorage.getItem("userData")).id;let v="",o=[];function D(){if(!T())l("warning","請先登入","login.html");else{const e=document.querySelector("main");e.classList.remove("d-none"),e.removeAttribute("class"),b()}}D();window.addEventListener("hashchange",function(){b()});function b(){const e=location.hash.replace("#","")||"orders",s=document.querySelector(`#v-pills-${e}-tab`);s&&new I(s).show(),v=document.querySelector(`#v-pills-${e} #${e}-content`),e==="orders"?E():e==="collection"?C():e==="profile"&&L()}function E(){r.get(`${c}/600/users/${u}/orders?_sort=id&_order=desc`,d).then(e=>{o=e.data,A(o)}).catch(e=>{i(e)})}function A(e){let s="";e.length===0?s+=`
     <div class="col-12">
         <p class="alert bg-tertiary text-center m-0">
         目前沒有訂單記錄
         </p>
     </div>
-    `:e.forEach(s=>{a+=`
+    `:e.forEach(t=>{s+=`
         <div class="col-12">
             <div class="accordion-item mb-6">
                 <button type="button"
@@ -12,26 +12,26 @@ import{a as r,h as c,e as i,t as l,w,c as x,S as g,b as y}from"./main-36634dc1.j
                                text-start bg-white rounded-2 shadow px-md-8 py-5">
                     <div class="mb-md-6 mb-0">
                         <span class="fw-bold">訂單編號：</span>
-                        <span class="text-black">${s.orderNum}</span>
+                        <span class="text-black">${t.orderNum}</span>
                     </div>
                     <div class="row">
                         <div class="col-3 d-md-block d-none">
                             <div>
                                 <span class="fw-bold">成立日期：</span>
-                                <span class="fw-normal">${b(s.createdTime).format("YYYY-MM-DD")}</span>
+                                <span class="fw-normal">${h(t.createdTime).format("YYYY-MM-DD")}</span>
                             </div>
                         </div>
-                        <div class="col-3 d-md-block d-none border-start border-end">
+                        <div class="col-4 d-md-block d-none border-start border-end">
                             <div class="d-flex justify-content-between px-7">
                                 <span class="fw-bold">訂購金額：</span>
-                                <span>${s.total} 元</span>
+                                <span>${t.total} 元</span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="ps-md-7 ps-0">
                                 <span class="d-md-inline-block d-none fw-bold">訂單狀態：</span>
-                                <span class=${s.isFinished?"text-success":"text-danger"}>
-                                ${s.isFinished?"已完成":"製作中"}</span>
+                                <span class=${t.isFinished?"text-success":"text-danger"}>
+                                ${t.isFinished?"已完成":"製作中"}</span>
                             </div>
                         </div>
                     </div>
@@ -39,58 +39,58 @@ import{a as r,h as c,e as i,t as l,w,c as x,S as g,b as y}from"./main-36634dc1.j
                 <div class="accordion-content rounded-2 shadow">
                     <div class="px-md-8 px-6 pt-5 pb-7">
                     <div class="mb-5">
-                        ${s.content.map(t=>`
+                        ${t.content.map(a=>`
                         <div class="row gap-md-5 py-2 border-bottom lh-lg">
                             <div class="col-lg-3 col-12">
-                                <a target="_blank" href="products-detail.html?id=${t.product.id}" class="text-orange fw-bold">${t.product.name}</a>
+                                <a target="_blank" href="products-detail.html?id=${a.product.id}" class="text-orange fw-bold">${a.product.name}</a>
                             </div>
                             <div class="col-lg-3 col-12">
-                                <p><span class="fw-bold">數量：</span>${t.qty}</p>
+                                <p><span class="fw-bold">數量：</span>${a.qty}</p>
                             </div>
                             <div class="col-lg-3 col-12">
-                                <p><span class="fw-bold">金額：</span>${t.product.price*t.qty}</p>
+                                <p><span class="fw-bold">金額：</span>${a.product.price*a.qty}</p>
                             </div>
                         </div>`).join("")}
                     </div>
                     <div class="row fs-5 fw-bold border-bottom mb-5">
                         <div class="col-12">
-                            <p class="mb-5">總計：${s.total} 元<span class="text-muted fs-7">（ 含運費 ${s.deliveryFee} 元 ）</span></p>
+                            <p class="mb-5">總計：${t.total} 元<span class="text-muted fs-7">（ 含運費 ${t.deliveryFee} 元 ）</span></p>
                         </div>
                     </div>
                     <div class="lh-lg">
                         <div class="d-flex justify-content-between align-items-center mb-5">
                             <p class="d-md-block d-none fw-bold fs-5">寄送資訊</p>
-                            <p class="text-black">${b(s.createdTime).format("YYYY-MM-DD A hh:mm:ss")}</p>
+                            <p class="text-black">${h(t.createdTime).format("YYYY-MM-DD A hh:mm:ss")}</p>
                         </div>
                         <p>
-                        <span class="text-orange fw-bold">收件人姓名：</span>${s.info.receiver}
+                        <span class="text-orange fw-bold">收件人姓名：</span>${t.info.receiver}
                         </p>
                         <p>
-                        <span class="text-orange fw-bold">收件人電話：</span>${s.info.phone}
+                        <span class="text-orange fw-bold">收件人電話：</span>${t.info.phone}
                         </p>
                         <p class="d-md-block d-flex flex-column">
-                        <span class="text-orange fw-bold">收件人地址：</span>${s.info.address.replace(/(\d+)/," $1 ")}
+                        <span class="text-orange fw-bold">收件人地址：</span>${t.info.address.replace(/(\d+)/," $1 ")}
                         </p>
                         <p>
-                        <span class="text-orange fw-bold">取貨方式：</span>${s.info.method}
+                        <span class="text-orange fw-bold">取貨方式：</span>${t.info.method}
                         </p>
                         <p>
-                        <span class="text-orange fw-bold">付款方式：</span>${s.info.payment}
+                        <span class="text-orange fw-bold">付款方式：</span>${t.info.payment}
                         </p>
                         <p>
-                        <span class="text-orange fw-bold">指定收貨時段：</span>${s.info.shippingTime}
+                        <span class="text-orange fw-bold">指定收貨時段：</span>${t.info.shippingTime}
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-        `}),v.innerHTML=a,$(".accordion-content").hide(),$(".accordion-title").click(function(){$(this).siblings(".accordion-content").slideToggle()})}function D(e){let a="";e.length===0?a+=`
+        `}),v.innerHTML=s,$(".accordion-content").hide(),$(".accordion-title").click(function(){$(this).siblings(".accordion-content").slideToggle()})}function C(){r.get(`${c}/600/users/${u}/collects?_expand=product`,d).then(e=>{o=e.data,q(o)}).catch(e=>{i(e)})}function q(e){let s="";e.length===0?s+=`
     <div class="col-12">
         <p class="alert bg-tertiary text-center m-0">
         還沒有收藏任何商品哦！去<a href="products.html">逛逛</a>吧！
         </p>
     </div>
-    `:e.forEach(({product:n})=>a+=`
+    `:e.forEach(({product:n})=>s+=`
     <div class="col-md-4 col-12 mb-9">
         <a class="text-decoration-none" href="products-detail.html?id=${n.id}">
             <div class="card hover-shadow h-100 overflow-hidden mb-6">
@@ -122,7 +122,7 @@ import{a as r,h as c,e as i,t as l,w,c as x,S as g,b as y}from"./main-36634dc1.j
             </div>
         </a>
     </div>
-    `),v.innerHTML=a,document.querySelectorAll(".favorite").forEach(n=>n.addEventListener("click",E)),document.querySelectorAll(".cart").forEach(n=>n.addEventListener("click",A))}function E(e){e.preventDefault();const a=e.target.closest("button").dataset.id,s=o.find(t=>t.productId==a);r.delete(`${d}/600/collects/${s.id}`,c).then(t=>{l("success",`已取消收藏${s.product.name}`),f()}).catch(t=>{i(t)})}function A(e){e.preventDefault();const a=e.target.closest("button").dataset.id,s=JSON.parse(localStorage.getItem("userData")).id;r.get(`${d}/600/users/${s}/carts`,c).then(t=>{let n=t.data.find(p=>p.productId==a);return n?n.qty>9?void 0:r.patch(`${d}/600/carts/${n.id}`,{qty:n.qty+=1},c):(n={productId:Number(a),qty:1,userId:s},r.post(`${d}/600/carts`,n,c))}).then(t=>{t?l("success","成功加入購物車"):w("數量達上限","如果需要大量訂購，請直接與我們聯絡"),x()}).catch(t=>{i(t)})}function q(e){let a="";a+=`
+    `),v.innerHTML=s,document.querySelectorAll(".favorite").forEach(n=>n.addEventListener("click",P)),document.querySelectorAll(".cart").forEach(n=>n.addEventListener("click",B))}function P(e){e.preventDefault();const s=e.target.closest("button").dataset.id,t=o.find(a=>a.productId==s);r.delete(`${c}/600/collects/${t.id}`,d).then(a=>{l("success",`已取消收藏${t.product.name}`),b()}).catch(a=>{i(a)})}function B(e){e.preventDefault();const s=e.target.closest("button").dataset.id,t=JSON.parse(localStorage.getItem("userData")).id;r.get(`${c}/600/users/${t}/carts`,d).then(a=>{let n=a.data.find(m=>m.productId==s);return n?n.qty>9?void 0:r.patch(`${c}/600/carts/${n.id}`,{qty:n.qty+=1},d):(n={productId:Number(s),qty:1,userId:t},r.post(`${c}/600/carts`,n,d))}).then(a=>{a?l("success","成功加入購物車"):y("數量達上限","如果需要大量訂購，請直接與我們聯絡"),S()}).catch(a=>{i(a)})}function L(){r.get(`${c}/600/users/${u}`,d).then(e=>(o=e.data,M(o),g())).catch(e=>{i(e)})}function g(){r.get(`${c}/600/users/${u}/deliveryInfos`,d).then(e=>{O(e.data)}).catch(e=>{i(e)})}function M(e){let s="";s+=`
     <div class="col-12">
         <h4 class="mb-8">修改會員資料</h4>
         <form id="profile-form" class="bg-secondary rounded-1 px-6 py-7">
@@ -185,7 +185,7 @@ import{a as r,h as c,e as i,t as l,w,c as x,S as g,b as y}from"./main-36634dc1.j
             </div>
         </form>
     </div>
-    `,a+=`
+    `,s+=`
     <div class="col-12">
         <h4 class="d-flex align-items-center gap-5 mb-8">儲存寄送資訊</h4>
         <ul class="list-unstyled bg-white border border-primary rounded-2 px-6 py-7 shadow mb-8">
@@ -232,15 +232,15 @@ import{a as r,h as c,e as i,t as l,w,c as x,S as g,b as y}from"./main-36634dc1.j
             <ul id="address-list" class="list-unstyled d-flex flex-column gap-3 mb-0"></ul>
         </div>
     </div>
-    `,v.innerHTML=a,document.querySelector("#profile-form").addEventListener("click",C),document.querySelector("#change-password-form").addEventListener("submit",P),document.querySelector("#delivery-form").addEventListener("submit",L)}function C(e){e.preventDefault();const{nodeName:a}=e.target;if(a==="BUTTON"){const s=e.target.dataset.target,t=document.querySelector(`#profile-form input[name="${s}"]`);s!=="password"&&e.target.textContent==="修改"?(t.removeAttribute("disabled"),e.target.textContent="送出"):e.target.textContent==="送出"&&h(t)&&g.fire({icon:"warning",title:"確定修改資料？",text:`您的${t.name==="name"?"名字":"手機"}將改為：${t.value}`,showCancelButton:!0,cancelButtonColor:"#D1741F",cancelButtonText:"取消",confirmButtonColor:"#A37A64",confirmButtonText:"確定",showLoaderOnConfirm:!0,preConfirm:async()=>{try{if(t.value===o[t.name]){l("question","資料沒變哦 (ㆆᴗㆆ)");return}const n={[t.name]:t.value};e.target.setAttribute("disabled",!0);const p=await r.patch(`${d}/660/users/${o.id}`,n,c);e.target.removeAttribute("disabled"),l("success","修改完成！"),localStorage.setItem("userData",JSON.stringify(p.data)),f()}catch(n){i(n)}}}).then(n=>{t.setAttribute("disabled",!0),t.value=o[t.name],e.target.textContent="修改"})}else a!=="BUTTON"&&a!=="INPUT"&&(document.querySelectorAll("#profile-form input").forEach(s=>s.setAttribute("disabled",!0)),document.querySelectorAll("#profile-form button").forEach(s=>s.textContent="修改"))}function P(e){e.preventDefault();const a=e.target.querySelectorAll("input"),s=e.target["current-password"].value,t=e.target["new-password"].value,n=e.target["new-password-confirm"].value;function p(m){const u=/\w{6,}/;if(m.replace(/\s/g,""))if(u.test(m)){if(s===t){l("warning","新密碼不可與舊密碼相同");return}else if(t!==n){l("warning","兩次密碼不一致");return}}else{l("warning","長度需在六個字以上");return}else{l("warning","欄位不可空白");return}return!0}[...a].every(m=>p(m.value))&&function(){const m={email:o.email,password:s};r.post(`${d}/login/${o.id}`,m).then(u=>r.patch(`${d}/660/users/${o.id}`,{password:t},c)).then(u=>{e.target.reset(),localStorage.removeItem("token"),localStorage.removeItem("userData"),l("success","修改成功！請重新登入！","login.html")}).catch(u=>{i(u)})}()}function B(e){const a=document.querySelector("#address-list");let s="";e.length===0?s="<li>尚未儲存任何地址</li>":e.forEach(t=>s+=`
-    <li data-num="${t.id}" class="card px-6 py-3">
+    `,v.innerHTML=s,document.querySelector("#profile-form").addEventListener("click",_),document.querySelector("#change-password-form").addEventListener("submit",N),document.querySelector("#delivery-form").addEventListener("submit",F)}function _(e){e.preventDefault();const{nodeName:s}=e.target;if(s==="BUTTON"){const t=e.target.dataset.target,a=document.querySelector(`#profile-form input[name="${t}"]`);t!=="password"&&e.target.textContent==="修改"?(a.removeAttribute("disabled"),e.target.textContent="送出"):e.target.textContent==="送出"&&x(a)&&a.value!==o[a.name]&&w.fire({icon:"warning",title:"確定修改資料？",text:`您的${a.name==="name"?"名字":"手機"}將改為：${a.value}`,showCancelButton:!0,cancelButtonColor:"#D1741F",cancelButtonText:"取消",confirmButtonColor:"#A37A64",confirmButtonText:"確定",showLoaderOnConfirm:!0,preConfirm:async()=>{try{const n={[a.name]:a.value};e.target.setAttribute("disabled",!0);const m=await r.patch(`${c}/660/users/${o.id}`,n,d);e.target.removeAttribute("disabled"),l("success","修改完成！"),localStorage.setItem("userData",JSON.stringify(m.data)),b()}catch(n){i(n)}}}).then(n=>{a.setAttribute("disabled",!0),a.value=o[a.name],e.target.textContent="修改"})}else s!=="BUTTON"&&s!=="INPUT"&&(document.querySelectorAll("#profile-form input").forEach(t=>t.setAttribute("disabled",!0)),document.querySelectorAll("#profile-form button").forEach(t=>t.textContent="修改"))}function N(e){e.preventDefault();const s=e.target.querySelectorAll("input"),t=e.target["current-password"].value,a=e.target["new-password"].value,n=e.target["new-password-confirm"].value;function m(p){const f=/\w{6,}/;if(p.replace(/\s/g,""))if(f.test(p)){if(t===a){l("warning","新密碼不可與舊密碼相同");return}else if(a!==n){l("warning","兩次密碼不一致");return}}else{l("warning","長度需在六個字以上");return}else{l("warning","欄位不可空白");return}return!0}[...s].every(p=>m(p.value))&&function(){const p={email:o.email,password:t};r.post(`${c}/login/${o.id}`,p).then(f=>r.patch(`${c}/660/users/${o.id}`,{password:a},d)).then(f=>{e.target.reset(),localStorage.removeItem("token"),localStorage.removeItem("userData"),l("success","修改成功！請重新登入！","login.html")}).catch(f=>{i(f)})}()}function O(e){const s=document.querySelector("#address-list");let t="";e.length===0?t="<li>尚未儲存任何地址</li>":e.forEach(a=>t+=`
+    <li data-num="${a.id}" class="card px-6 py-3">
         <div class="row">
             <div class="col-1">
                 <button class="delete btn d-flex align-items-center p-0 ms-md-3">
                 <span class="material-icons text-orange">delete</span>
                 </button>
             </div>
-            <div class="col-10">${t.address}</div>
+            <div class="col-10">${a.address}</div>
         </div>
     </li>
-    `),a.innerHTML=s,a.addEventListener("click",t=>{if(!t.target.closest("button"))return;const n=t.target.closest("li").dataset.num;_(n)})}function L(e){e.preventDefault();const a=e.target.address;h(a)&&(s=>{M(s),e.target.reset()})({address:a.value,userId:o.id})}function M(e){r.post(`${d}/600/deliveryInfos`,e,c).then(a=>{l("success","成功儲存資料！"),f()}).catch(a=>{i(a)})}function _(e){g.fire({icon:"warning",title:"確定刪除地址？",showCancelButton:!0,cancelButtonColor:"#D1741F",cancelButtonText:"取消",confirmButtonColor:"#A37A64",confirmButtonText:"確定",showLoaderOnConfirm:!0,preConfirm:async()=>{try{const a=await r.delete(`${d}/deliveryInfos/${e}`);l("success","刪除成功！"),f()}catch(a){i(a)}}})}function h(e){const{name:a,value:s}=e;if(s.replace(/\s/g,"")){if(a==="phone"&&!/^09\d{8}$/.test(s)){l("warning","手機格式不正確"),e.closest("form").id==="profile-form"&&(e.value=o[a]);return}}else{l("warning","欄位不可空白"),e.closest("form").id==="profile-form"&&(e.value=o[a]);return}return!0}const N=document.querySelectorAll(".back-to-top");N.forEach(e=>{const a=new T(e);e.addEventListener("click",s=>{a.backToTop()})});
+    `),s.innerHTML=t,s.addEventListener("click",a=>{if(!a.target.closest("button"))return;const n=a.target.closest("li").dataset.num;j(n)})}function F(e){e.preventDefault();const s=e.target.address;x(s)&&(t=>{Y(t),e.target.reset()})({address:s.value,userId:o.id})}function Y(e){r.post(`${c}/600/deliveryInfos`,e,d).then(s=>{l("success","成功儲存資料！"),g()}).catch(s=>{i(s)})}function j(e){w.fire({icon:"warning",title:"確定刪除地址？",showCancelButton:!0,cancelButtonColor:"#D1741F",cancelButtonText:"取消",confirmButtonColor:"#A37A64",confirmButtonText:"確定",showLoaderOnConfirm:!0,preConfirm:async()=>{try{const s=await r.delete(`${c}/deliveryInfos/${e}`);l("success","刪除成功！"),g()}catch(s){i(s)}}})}function x(e){const{name:s,value:t}=e;if(t.replace(/\s/g,"")){if(s==="phone"&&!/^09\d{8}$/.test(t)){l("warning","手機格式不正確"),e.closest("form").id==="profile-form"&&(e.value=o[s]);return}}else{l("warning","欄位不可空白"),e.closest("form").id==="profile-form"&&(e.value=o[s]);return}return!0}const H=document.querySelectorAll(".back-to-top");H.forEach(e=>{const s=new k(e);e.addEventListener("click",t=>{s.backToTop()})});

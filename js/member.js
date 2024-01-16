@@ -1,4 +1,4 @@
-// 本頁面待解決問題：開發儲存寄送資訊的功能
+// 本頁面待解決問題：尚無
 
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -77,6 +77,10 @@ function getData() {
     } else if (hash === 'profile') { 
 
         getProfile();
+
+    } else if (hash === 'messages') {
+
+        getMessages();
 
     }
 
@@ -707,6 +711,20 @@ function deleteDeliveryInfo(id) {
             } catch (error) { errorHandle(error) }
         }
     })
+
+}
+
+// 會員訊息
+
+function getMessages() {
+
+    
+
+}
+
+function renderMessages() {
+
+    
 
 }
 

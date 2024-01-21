@@ -6,7 +6,9 @@ export function renderCharts(data) {
 
     data = data.filter(order => order.isFinished);
 
-    const thisMonth = Number(moment().format('MM'));
+    // const thisMonth = Number(moment().format('MM'));
+    
+    const thisMonth = 12;
 
     const thisMonthCalc = orderCalcultor(data.filter(order => moment(order.createdTime).format('MM') == thisMonth));
     const lastMonthCalc = orderCalcultor(data.filter(order => moment(order.createdTime).format('MM') == thisMonth - 1));

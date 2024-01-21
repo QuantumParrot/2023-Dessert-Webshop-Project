@@ -45,8 +45,7 @@ function renderAnnouncements(data){
         <div class="col-lg-4 col-md-6 col-12 gy-6"
              data-aos="flip-right" data-aos-duration="1000">
             <div class="card hover-scale h-100 shadow px-6 py-7">
-                <img class="d-block position-relative rounded-3 mb-6"
-                     style="height: 314px;"
+                <img class="object-fit-cover d-block position-relative rounded-3 mb-6"
                      src="${data[i].image || imageConfig[data[i].type]}"
                      alt="${data[i].type}">
                 <h3 class="custom-tooltip w-75 position-absolute top-30 start-11 shadow-lg py-4 text-center">

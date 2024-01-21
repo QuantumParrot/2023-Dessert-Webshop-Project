@@ -105,7 +105,7 @@ function renderData() {
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-6">
-                    <input type="checkbox" name="delivery-confirm" id="delivery-confirm">我已詳閱並同意
+                    <input type="checkbox" class="form-check-input" name="delivery-confirm" id="delivery-confirm">我已詳閱並同意
                     <a href="#"
                        class="text-decoration-none fw-bold text-orange"
                        data-bs-toggle="modal"
@@ -317,15 +317,15 @@ function nextStep(e) {
                 <div id="method-listener" class="d-flex gap-2">
                     <!-- method -->
                     <p class="fw-bold">取貨方式：</p>
-                    <input type="radio" name="method" id="宅配到府" value="宅配到府">
+                    <input type="radio" class="form-check-input" name="method" id="宅配到府" value="宅配到府">
                     <label for="宅配到府">宅配到府</label>
-                    <input type="radio" name="method" id="來店取貨" value="來店取貨">
+                    <input type="radio" class="form-check-input" name="method" id="來店取貨" value="來店取貨">
                     <label for="來店取貨">來店取貨</label>
                 </div>
                 <div class="d-flex gap-2">
                     <!-- payment -->
                     <p class="fw-bold">付款方式：</p>
-                    <input type="radio" name="payment" id="貨到付款" value="貨到付款">
+                    <input type="radio" class="form-check-input" name="payment" id="貨到付款" value="貨到付款">
                     <label for="貨到付款">貨到付款</label>
                 </div>
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-2">
@@ -336,7 +336,7 @@ function nextStep(e) {
                            id="name"
                            class="form-control w-25 px-2 py-1 me-md-1 mb-md-0 mb-3">
                     <div>
-                        <input type="checkbox" id="useMemberName" data-receiver="name"
+                        <input type="checkbox" class="form-check-input" id="useMemberName" data-receiver="name"
                                class="me-1">
                         <label for="useMemberName">同會員資料</label>
                     </div>
@@ -350,7 +350,7 @@ function nextStep(e) {
                            class="form-control w-25 px-2 py-1 me-md-1 mb-md-0 mb-3"
                            placeholder="請填寫國內的手機號碼">
                     <div>
-                        <input type="checkbox" id="useMemberPhone" data-receiver="phone"
+                        <input type="checkbox" class="form-check-input" id="useMemberPhone" data-receiver="phone"
                                class="me-1">
                         <label for="useMemberPhone">同會員資料</label>
                     </div>
@@ -373,11 +373,11 @@ function nextStep(e) {
                     <!-- shippingTime -->
                     <p class="fw-bold mb-md-0 mb-3">指定收貨時段：</p>
                     <div>
-                        <input type="radio" name="shippingTime" id="不指定" value="不指定">
+                        <input type="radio" class="form-check-input" name="shippingTime" id="不指定" value="不指定">
                         <label name="shippingTime" for="不指定">不指定</label>
-                        <input type="radio" name="shippingTime" id="ante-meridiem" value="中午前">
+                        <input type="radio" class="form-check-input" name="shippingTime" id="ante-meridiem" value="中午前">
                         <label name="shippingTime" for="ante-meridiem">中午前</label>
-                        <input type="radio" name="shippingTime" id="post-meridiem" value="下午兩點～六點">
+                        <input type="radio" class="form-check-input" name="shippingTime" id="post-meridiem" value="下午兩點～六點">
                         <label name="shippingTime" for="post-meridiem">下午兩點～六點</label>
                     </div>
                 </div>

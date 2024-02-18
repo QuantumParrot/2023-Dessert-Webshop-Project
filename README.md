@@ -52,6 +52,8 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + [Bootstrap 5](https://getbootstrap.com/)
 
++ [jQuery](https://jquery.com/)
+
 + [Axios](https://github.com/axios/axios)
 
 + [SweetAlert2](https://sweetalert2.github.io/)

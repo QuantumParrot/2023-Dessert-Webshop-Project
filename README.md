@@ -54,7 +54,7 @@ Personal Side Project for Practice, Not For Any Commercial Use.
 |  套件管理  |  **[PNPM](https://github.com/pnpm/pnpm)**  |
 |  使用語言  |  Vanilla JavaScript  |  ECMAScript 6
 |  前端環境  |  **[Vite](https://github.com/vitejs)**  |  ![Static Badge](https://img.shields.io/badge/vite-^4.2.0-blue)
-|  後端環境  |  **JSON-Server** + **JSON-Server-Auth** 模擬伺服器和資料庫  |  ![Static Badge](https://img.shields.io/badge/JSON_Server-^0.17.0-blue) ![Static Badge](https://img.shields.io/badge/JSON_Server_Auth-^2.1.0-blue)
+|  後端環境  |  **JSON-Server** + **JSON-Server-Auth** 模擬  |  ![Static Badge](https://img.shields.io/badge/JSON_Server-^0.17.0-blue) ![Static Badge](https://img.shields.io/badge/JSON_Server_Auth-^2.1.0-blue)
 
 vite 的環境設定 ( vite.config.js ) 引用自**六角學院洧杰老師**提供的教學[範本](https://github.com/gonsakon/vite0729)。
 

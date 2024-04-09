@@ -1,54 +1,68 @@
 ## [Akheng's Desserts 甜點工作室 - 印尼傳統糕點電商網站](https://quantumparrot.github.io/2023-Dessert-Webshop-Project/)
 
-此為 2023 年六角學院 JavaScript 直播班的專題。純屬練習，不做商用。
+此為參與 2023 年六角學院 JavaScript 直播班的專題。
+
+純屬開發練習，不做任何商用。
+
+Personal Side Project for Practice, Not For Any Commercial Use.
+
+---
 
 當前進度：**已完成核心開發，剩下細節優化中**
 
 ***
 
-管理員帳號：akhengstudio@mail.com
+### 網站介紹
 
-管理員密碼：654321
+---
 
-管理員金鑰：528491
+#### 前台使用者
 
-伺服器每隔一段時間就會重置，資料不會保存，可以自由遊玩。
+**訪客**
+
+- [X] 瀏覽消息
+- [X] 瀏覽商品
+- [X] 篩選商品
+- [X] 搜尋商品
+- [X] 會員註冊
+- [X] 會員登入
+
+**會員**
+
+- [X] 修改會員資料
+- [X] 儲存寄送資訊
+- [X] 商品收藏功能：瀏覽、新增、刪除
+- [X] 購物結帳功能：瀏覽、新增、刪除、編輯、清空購物車
+- [X] 填寫寄送資訊，模擬付款流程
+- [X] 瀏覽訂單記錄
+
+#### 後台管理員
+
+- [X] 管理訂單：篩選、修改狀態
+- [X] 管理消息：新增、刪除
+- [X] 管理商品：新增、編輯、上下架、刪除
+- [X] 瀏覽銷售統計圖表
 
 ***
 
 ### 開發環境
 
-前端：**vite - Vanilla JS**
+---
 
-vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://github.com/gonsakon/vite0729)。
+|  主要功能  |  工具  |  適用版本  |
+|:-|:-|:-|
+|  套件管理  |  **[PNPM](https://github.com/pnpm/pnpm)**  |
+|  使用語言  |  Vanilla JavaScript  |  ECMAScript 6
+|  前端環境  |  **[Vite](https://github.com/vitejs)**  |  ![Static Badge](https://img.shields.io/badge/vite-^4.2.0-blue)
+|  後端環境  |  **JSON-Server** + **JSON-Server-Auth** 模擬伺服器和資料庫  |  ![Static Badge](https://img.shields.io/badge/JSON_Server-^0.17.0-blue) ![Static Badge](https://img.shields.io/badge/JSON_Server_Auth-^2.1.0-blue)
 
-後端：**JSON-Server & JSON-Server-Auth**
-
-以 JSON-Server 及延伸的 JSON-Server-Auth 模擬伺服器和資料庫介接 API
-
-***
-
-### 核心功能
-
-前台：
-
-+ 會員註冊
-+ 會員登入
-+ 收藏商品
-+ 將商品加入購物車，並完成結帳的流程
-+ 修改會員資料
-+ 儲存寄送資訊
-
-後台：
-
-+ 管理訂單：篩選、修改狀態
-+ 管理消息：新增、刪除
-+ 管理商品：新增、編輯、上下架、刪除
-+ 瀏覽銷售統計圖表
+vite 的環境設定 ( vite.config.js ) 引用自**六角學院洧杰老師**提供的教學[範本](https://github.com/gonsakon/vite0729)。
 
 ***
 
-### 使用套件
+### 第三方套件整合
+
+---
 
 + [Bootstrap 5](https://getbootstrap.com/)
 
@@ -69,6 +83,8 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 ***
 
 ### 使用素材及工具
+
+---
 
 1\. 素材
 
@@ -154,6 +170,8 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 ### 開發筆記
 
+---
+
 + [網站地圖](https://whimsical.com/2023-js-21-EL4HJbPJKTza7W5vwXHYSE)
 
 + [流程圖](https://whimsical.com/2023-js-21-RtqAFAxNYYLaLnv7CmjkBf)
@@ -165,6 +183,8 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 ***
 
 ### 特別感謝
+
+---
 
 + 六角學院的講師群（按筆畫順序排列）：
 
@@ -180,4 +200,4 @@ vite.config.js 引用自**六角學院洧杰老師**提供的[範本](https://gi
 
 + 專題指導教練：Amberhh
 
-＆共同營造出良好共學環境的直播班同學們！以及選擇挑戰專題並堅持到最後一刻的自己：Ｄ
++ 共同營造出良好共學環境的直播班同學們！以及選擇挑戰專題並堅持到最後一刻的自己：Ｄ

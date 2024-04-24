@@ -1,5 +1,7 @@
 ## [Akheng's Desserts 甜點工作室 - 印尼傳統糕點電商網站](https://quantumparrot.github.io/2023-Dessert-Webshop-Project/)
 
+![](https://i.imgur.com/e7wCViM.png)
+
 此為參與 2023 年六角學院 JavaScript 直播班的專題。
 
 純屬開發練習，不做任何商用。
@@ -8,7 +10,7 @@ Personal Side Project for Practice, Not For Any Commercial Use.
 
 ---
 
-當前進度：**已完成核心開發，剩下細節優化中**
+當前進度：**已完成核心開發，持續優化效能中**
 
 ***
 

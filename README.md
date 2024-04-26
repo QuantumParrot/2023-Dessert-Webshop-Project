@@ -12,6 +12,16 @@ Personal Side Project for Practice, Not For Any Commercial Use.
 
 當前進度：**已完成核心開發，持續優化效能中**
 
+由於主要操作皆需要會員身份，如有需要請使用這組測試帳密：
+
+帳號：
+```
+ming123@mail.com
+```
+密碼：
+```
+123456
+```
 ***
 
 ### 網站介紹
@@ -39,6 +49,8 @@ Personal Side Project for Practice, Not For Any Commercial Use.
 - [X] 瀏覽訂單記錄
 
 #### 後台管理員
+
+![](https://i.imgur.com/iSOg3W7.png)
 
 - [X] 管理訂單：篩選、修改狀態
 - [X] 管理消息：新增、刪除

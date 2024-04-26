@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { defineConfig } from 'vite';
 import { glob } from 'glob';
+import autoprefixer from 'autoprefixer';
 
 import liveReload from 'vite-plugin-live-reload';
 
@@ -26,6 +27,11 @@ export default defineConfig({
     // base 的寫法：base: '/Repository 的名稱/'
     // base: process.env.NODE_ENV === 'production' ? '/2023-Dessert-Webshop-Project/' : '/',
     base: '/2023-Dessert-Webshop-Project/',
+    css: {
+        postcss: {
+            plugins: [autoprefixer()]
+        }
+    },
     plugins: [
         liveReload(['./layout/**/*.ejs', './pages/**/*.ejs', './pages/**/*.html']),
         ViteEjsPlugin(),

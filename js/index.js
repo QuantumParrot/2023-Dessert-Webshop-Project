@@ -42,12 +42,14 @@ function renderAnnouncements(data){
     let str = ``;
     for (let i=0; i<data.length; i++) {
         str += /*html*/`
-        <div class="col-lg-4 col-md-6 col-12 gy-6"
-             data-aos="flip-right" data-aos-duration="1000">
+        <div
+            class="col-lg-4 col-md-6 col-12 gy-6"
+            data-aos="flip-right" data-aos-duration="1000" data-aos-once="true">
             <div class="card hover-scale h-100 shadow px-6 py-7">
-                <img class="object-fit-cover d-block position-relative rounded-3 mb-6"
-                     src="${data[i].image || imageConfig[data[i].type]}"
-                     alt="${data[i].type}">
+                <img
+                    class="object-fit-cover d-block position-relative rounded-3 mb-6"
+                    src="${data[i].image || imageConfig[data[i].type]}"
+                    alt="${data[i].type}">
                 <h3 class="custom-tooltip w-75 position-absolute top-30 start-11 shadow-lg py-4 text-center">
                 ${data[i].type}
                 </h3>
@@ -88,14 +90,16 @@ async function renderProducts(data) {
     let str = '';
     for (let i=0; i<data.length; i++) {
         str += /*html*/`
-        <div class="col-lg-4 col-12 gy-6"
-             data-aos="flip-left" data-aos-duration="1000">
+        <div
+            class="col-lg-4 col-12 gy-6"
+            data-aos="flip-left" data-aos-duration="1000" data-aos-once="true">
             <a class="text-decoration-none" href="products-detail.html?id=${data[i].id}">
                 <div class="card h-100 overflow-hidden border-0">
                     <div class="product h-100 mb-6 overflow-hidden">
-                    <img src="${data[i].image[0] || `https://fakeimg.pl/291x291/?text=🍰&font=noto`}"
-                         alt="${data[i].name}"
-                         class="d-block rounded w-100 h-100">
+                    <img
+                        src="${data[i].image[0] || `https://fakeimg.pl/291x291/?text=🍰&font=noto`}"
+                        alt="${data[i].name}"
+                        class="d-block rounded w-100 h-100">
                     </div>
                     <div class="ps-1">
                         <div class="d-flex justify-content-between align-items-center">

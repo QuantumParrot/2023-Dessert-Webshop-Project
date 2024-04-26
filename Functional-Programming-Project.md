@@ -22,6 +22,8 @@
 
 + 調整 git commit message 的撰寫方式
 
++ 新增 postCSS 插件 autoprefixer 處理跨瀏覽器 CSS 樣式兼容問題。
+
 + 調整 HTML 文件的 script 置入方法：
 
   根據 [2024 JavaScript 設計模式讀書會](https://hackmd.io/@5PM91gxyT5e7zJTwXEfaxw/javasrcipt-pattern/%2FdupTIiQSRiOo8AZ8lhIcow) 提供的建議，
@@ -30,4 +32,4 @@
 
 + 調整首頁的 aos 動畫呈現方式：若用戶沒有重整頁面，動畫效果只會呈現一次。
 
-+ 新增 postCSS 插件 autoprefixer 處理跨瀏覽器 CSS 樣式兼容問題。
++ 移除 member.html 與 member.js 中未使用的程式碼。

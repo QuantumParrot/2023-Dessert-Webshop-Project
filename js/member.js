@@ -420,26 +420,6 @@ function renderProfile(userData) {
         </ul>
         <form id="delivery-form" class="bg-secondary rounded-1 px-6 py-7 mb-8">
             <div class="d-flex flex-column gap-7">
-                <!-- 會員姓名 -->
-                <!-- <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
-                    <label for="receiver-name" class="fw-bold">收件人姓名</label>
-                    <input id="receiver-name"
-                           type="text"
-                           class="form-control w-25 p-2 border-secondary"
-                           name="name">
-                    <div><input type="checkbox" class="me-4"
-                                data-target="name">同會員資料</div>
-                </div> -->
-                <!-- 會員電話 -->
-                <!-- <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
-                    <label for="receiver-phone" class="fw-bold">收件人電話</label>
-                    <input id="receiver-phone"
-                           type="tel"
-                           class="form-control w-25 p-2 border-secondary"
-                           name="phone">
-                    <div><input type="checkbox" class="me-4"
-                                data-target="phone">同會員資料</div>
-                </div> -->
                 <!-- 會員住址 -->
                 <div class="d-flex flex-md-row flex-column align-items-md-center gap-4">
                     <label for="receiver-address" class="fw-bold">收件人地址</label>
@@ -470,19 +450,6 @@ function renderProfile(userData) {
 
     const deliveryForm = document.querySelector('#delivery-form');
     deliveryForm.addEventListener('submit', checkDeliveryInfo);
-
-    // const useMemberData = deliveryForm.querySelectorAll('input[type="checkbox"]');
-    // useMemberData.forEach(checkbox => checkbox.addEventListener('change', (e) => {
-
-    //     const input = deliveryForm[`${e.target.dataset.target}`];
-
-    //     if (e.target.checked) {
-    //         input.value = data[`${e.target.dataset.target}`];
-    //     } else {
-    //         input.value = '';
-    //     }
-
-    // }));
 
 }
 
@@ -711,20 +678,6 @@ function deleteDeliveryInfo(id) {
             } catch (error) { errorHandle(error) }
         }
     })
-
-}
-
-// 會員訊息
-
-function getMessages() {
-
-    
-
-}
-
-function renderMessages() {
-
-    
 
 }
 

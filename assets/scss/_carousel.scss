@@ -1,0 +1,100 @@
+/* 使用到 swiper 套件的頁面：首頁 */
+
+@import 'swiper/css/bundle';
+
+:root {
+
+  --swiper-theme-color: #A37A64;
+  --swiper-navigation-size: 40px;
+
+  @include md() {
+
+    --swiper-navigation-size: 32px;
+  
+  }
+
+  @include custom(320px) {
+
+    --swiper-navigation-size: 20px;
+
+  }
+
+}
+
+.swiper-slide {
+
+  &:nth-child(odd) .swiper-slide-slogan {
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-left: 3.5rem;
+
+    @include custom(695px) {
+      place-content: center;
+      padding-left: 0;
+      text-align: center;
+    }
+
+  }
+
+  &:nth-child(even) .swiper-slide-slogan {
+
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 3.5rem;
+
+    @include custom(695px) {
+      place-content: center;
+      padding-right: 0;
+      text-align: center;
+    }
+
+  }
+
+}
+
+.swiper-slide-slogan {
+    
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 100%; height: 100%;
+
+  @include custom(695px) {
+    color: white;
+    background: rgba(0, 0, 0, 0.36);
+    text-shadow: 0 0 .75rem rgba(0, 0, 0, 0.36);
+    a { text-shadow: none; }
+  }
+
+}
+
+.swiper-slide-slogan-text {
+
+    h2 {
+      
+      @include lg() { font-size: $h4-font-size; }
+
+      @include md() { font-size: $h5-font-size; }
+
+      @include custom(695px) { font-size: $h2-font-size; }
+
+      @include custom(445px) { font-size: $h4-font-size; }
+
+      @include custom(320px) { font-size: $h5-font-size; }
+
+    }
+
+    h5 {
+
+      @include lg() { font-size: $font-size-base; }
+
+      @include custom(695px) { font-size: $h5-font-size; }
+
+      @include custom(445px) { font-size: $font-size-base; }
+
+    }
+
+}

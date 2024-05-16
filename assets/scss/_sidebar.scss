@@ -1,5 +1,8 @@
 .sidebar .nav-link {
 
+  background-color: $secondary;
+  border-radius: 0.5rem;
+
   &:hover {
     background: $primary;
     color: white;

@@ -4,14 +4,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './js/nav.js';
 import { toastMessage } from './js/utilities/message.js';
 
-// 半放棄的手刻 isActive :P
-
 function navigation(){
 
     const currentRoute = location.href.split('/').pop().split('.').shift();
-
     const currentPage = document.querySelectorAll(`[data-route="${currentRoute}"]`);
-    
     currentPage.forEach(element => element.classList.add('active'));
 
 }

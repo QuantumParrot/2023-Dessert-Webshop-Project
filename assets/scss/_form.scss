@@ -1,0 +1,5 @@
+// 需要優化的地方：必須以 BS5 方法解決格式問題，而不是另外開一個新的 class
+
+.select { width: 25%; }
+
+@media (max-width: 425px) { .select { width: 50%; } }

@@ -5,9 +5,13 @@
 @import "bootstrap/scss/bootstrap";
 
 @import "./reset";
-
+@import "./helpers/mixins";
 @import "./utilites";
+
+@import "./icons";
 @import "./components";
+@import "./form";
+@import "./carousel";
 @import "./animations";
 
 @import "./navbar";

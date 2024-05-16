@@ -1,13 +1,15 @@
 #profile-form {
-    & input:not([type="checkbox"]) {
-        width: 250px !important;
-    }
+
+  & input:not([type="checkbox"]) { width: 250px !important; }
+
 }
 
 @media (max-width: 425px) {
-    #profile-form, #delivery-form {
-        & input:not([type="checkbox"]) {
-            width: 100% !important;
-        }
-    }
+
+  #profile-form, #delivery-form {
+
+    & input:not([type="checkbox"]) { width: 100% !important; }
+
+  }
+
 }

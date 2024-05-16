@@ -1,7 +1,11 @@
+// 需要優化的地方：不要使用 important 處理樣式權重問題 
+
 @media (max-width: 425px) {
-    #main-content {
-        & input[type="text"], input[type="tel"] {
-            width: 100% !important;
-        }
-    }
+
+  #main-content {
+
+    & input[type="text"], input[type="tel"] { width: 100% !important; }
+  
+  }
+
 }

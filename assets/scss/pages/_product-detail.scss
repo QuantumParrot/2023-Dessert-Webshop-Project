@@ -1,8 +1,8 @@
 .image-slide {
-    @extend .hover-scale;
-    opacity: 0.75;
-    cursor: pointer;
-    &:hover {
-        opacity: 1;
-    }
+
+  @extend .hover-scale;
+  opacity: 0.75;
+  cursor: pointer;
+  &:hover { opacity: 1; }
+  
 }

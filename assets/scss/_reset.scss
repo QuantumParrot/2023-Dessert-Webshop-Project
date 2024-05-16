@@ -12,6 +12,12 @@
 
 @import url(https://fonts.googleapis.com/css?family=Lato);
 
-img { max-width: 100%; height: auto; }
+img {
+
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+
+}
 
 textarea { resize: none; }

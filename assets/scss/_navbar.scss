@@ -10,12 +10,16 @@
 header {
 
   & .dropdown-menu .nav-link.active {
+
     @include nav-link-active;
     color: white;
+
   }
 
   & .nav-link.active {
+
     @include nav-link-active;
+
   }
 
 }
@@ -23,7 +27,9 @@ header {
 footer {
 
   & .nav-link.active {
+
     @include nav-link-active;
+    
   }
   
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,11 +8,12 @@
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAB2jLQAAAAAAP///wBkeqMAtsjoAMnX7QBpfqYA4un2AKvA5QCdq8UAkafNAKm1ywC5xNgAdIqyAMvY7wCQpswAZnykAGqApwBrgKcA0NfjAHuOsABle6MAv8/rALK90gDq7/gAs8bnAPj8/QDB0ewAm6nEAGV7pADT3vEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBGAUOBwEBAQEBAQEBAQEMAwMDAwMAFgEBAQEBAQEDAwMDAwMDAwMIAQEBAQEVAwMDAwMDAwMDAxkBAQEBAwMDAwMUAwMDAwMNAQEBBgMDAxABAQEDAwMDAx4BAQMDAwMBAQEBAQMDAwMEAQEDAwMDAQEBAQEDAwMDGQEBAwMDAwEBAQEBAwMDAxsBARIDAwMDAQEBAwMDAwMBAQEBAwMDAwMDAwMXCxwTAQEBARIDAwMDAwMPAgICAgMBAQEBHQMDAwMDAgICAhoCAQEBAQEBAwMDCgICAgIDAgEBAQEBAQEBAQECEQECAgIBAQEBAQEBAQEBAgkBAQEBAfw/AADwDwAA4AcAAMADAADAAwAAg4EAAIfBAACHwQAAh8EAAIODAADAAwAAwAEAAOABAAD4AQAA/5EAAP+fAAA=">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/index-c6db0402.js"></script>
-    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-1409e29d.js">
+    <script type="module" crossorigin src="/2023-Dessert-Webshop-Project/assets/index-2fbe4089.js"></script>
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/main-5bc21e7f.js">
+    <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/header-state-d9f1b448.js">
     <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/moment-fbc5633a.js">
     <link rel="modulepreload" crossorigin href="/2023-Dessert-Webshop-Project/assets/swiper-bundle-4fd7d588.js">
-    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-c17f2b8e.css">
+    <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/main-012190b1.css">
     <link rel="stylesheet" href="/2023-Dessert-Webshop-Project/assets/index-73168167.css">
 </head>
 <body>
@@ -31,7 +32,7 @@
                 <a class="btn btn-sm btn-primary" href="login.html">登入</a>
             </div>
         </div>
-        <!-- 手Ｇ版 -->
+        <!-- 手機版 -->
         <div class="dropdown d-md-none d-block">
             <span class="display-1 material-icons dropdown-toggle"
                   type="button"
@@ -48,7 +49,9 @@
         </div>
     </div>
 </header>
-    <!-- section: Carousel by Swiper -->
+
+
+    <!-- section: Banner Carousel -->
     <section class="swiper banner-swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -107,7 +110,7 @@
     <section class="news bg-white py-lg-12 py-10">
         <div class="container">
             <h2 class="h1 text-center mb-11">最新消息</h2>
-            <div id="announcements" class="row">
+            <div id="news" class="row">
             <div class="loading col-12">
     <div class="alert bg-tertiary text-center m-0">
         <div class="mb-5">
@@ -132,38 +135,47 @@
     <!-- section: Monthly Special -->
     <section class="bg-secondary container-fluid overflow-hidden">
     <div class="row">
-        <div class="col-lg-5 col-12 text-center">
-            <img class="w-100 object-fit-cover rounded-2" src="/2023-Dessert-Webshop-Project/assets/karamel-cake-party-510005fe.png" alt="蜂巢蛋糕">
+        <div
+            class="col-lg-5 col-md-4 col-12 text-center">
+            <img
+                class="w-100 h-100 object-fit-cover"
+                src="/2023-Dessert-Webshop-Project/assets/karamel-cake-party-510005fe.png"
+                alt="蜂巢蛋糕">
         </div>
-        <div class="col-lg-7 col-12 d-flex justify-content-center align-items-center position-relative">
+        <div class="col-lg-7 col-md-8 col-12 d-flex justify-content-center align-items-center position-relative">
             <div class="border border-4 border-white rounded-3 p-lg-9 px-6 py-9 my-5 flex-fill">
-                <div class="d-flex flex-md-row flex-column align-items-center mb-9">
-                    <h2 class="bg-primary rounded-2 p-3 me-md-7 me-0 mb-md-0 mb-9 text-white fs-3">
+                <div
+                    class="d-flex flex-xl-row flex-column align-items-center mb-9">
+                    <h2 class="bg-primary rounded-2 p-3 me-xl-7 me-0 mb-xl-0 mb-9 text-white fs-3">
                     <span class="material-icons">auto_awesome</span>
                     <span>本月推薦</span>
                     </h2>
-                    <h3 class="mb-0 fs-2">Karamel Cake 蜂巢蛋糕</h3>
+                    <div class="text-xl-start text-center">
+                    <h3 class="fs-2 mb-3">蜂巢蛋糕</h3>
+                    <h4 class="fs-5 mb-0"><i>Karamel Cake</i></h4>
+                    </div>
                 </div>
-                <p class="text-black text-md-start text-center mb-9 fs-5">您知道蜂巢蛋糕的名稱由來嗎？</p>
-                <div class="text-lg-start text-center">
-                    <button class="btn btn-primary"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#columnModal">繼續閱讀
+                <p class="text-black text-xl-start text-center mb-9 fs-5">您知道蜂巢蛋糕的名稱由來嗎？</p>
+                <div class="text-xl-start text-center">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#columnModal">繼續閱讀
                     </button>
                 </div>
             </div>
-            <img class="d-lg-block d-none position-absolute top-0 start-0"
-                 style="transform: rotate(30deg);"
-                 src="/2023-Dessert-Webshop-Project/assets/flower2-42335728.png" alt="deco-batik-style-flower">
-            <img class="d-md-block d-none position-absolute bottom-0 end-0"
-                 style="width: 150px; transform: rotate(30deg);"
-                 src="/2023-Dessert-Webshop-Project/assets/flower3-3d14dfd6.png" alt="deco-batik-style-flower">
+            <img
+                class="d-lg-block d-none position-absolute top-0 start-0"
+                style="transform: rotate(30deg);"
+                src="/2023-Dessert-Webshop-Project/assets/flower2-42335728.png" alt="deco-batik-style-flower">
+            <img
+                class="d-md-block d-none position-absolute bottom-0 end-0"
+                style="width: 150px; transform: rotate(30deg);"
+                src="/2023-Dessert-Webshop-Project/assets/flower3-3d14dfd6.png" alt="deco-batik-style-flower">
         </div>
     </div>
 </section>
-
-<!-- Modal: Column Article -->
 
 <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -203,7 +215,24 @@
             </div>
         </div>
     </div>
-</div>    <!-- section: Rank --->
+</div>
+
+<script>
+
+$(document).ready(function(){
+    
+    $('.click').click(function(){
+        $(this).parent().parent().siblings('#blur-filter').removeClass('backdrop-blur-sm');
+        $(this).parent('.d-inline-block').addClass('d-none');
+    });
+    $('#blur-filter').click(function(){
+        $(this).addClass('backdrop-blur-sm');
+        $(this).siblings().find('.d-inline-block').removeClass('d-none');
+    });
+
+})
+
+</script>    <!-- section: Rank --->
     <section class="bg-white py-lg-12 py-10">
         <div class="container">
             <h2 class="h1 text-center mb-11">熱銷排行</h2>
@@ -301,5 +330,6 @@
     
     
     
+
 </body>
 </html>

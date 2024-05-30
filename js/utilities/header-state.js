@@ -1,24 +1,27 @@
-// 這是用來修改登入之後 navbar 長相的檔案 ( 一定有更好的寫法，欠修改 )
-
 import axios from "axios";
 
-import { token, headers, errorHandle } from "./utilities/authorization.js";
+import { toastMessage } from './message.js';
+import { token, headers, errorHandle } from "./authorization.js";
+import { changeCartIcon, removeCartIcon } from './cart-state.js';
 
-const { VITE_APP_SITE } = import.meta.env;
+(() => {
 
-(function() {
+    if (!token()) return;
 
-    if (token()) { changeNavbar() };
+    changeHeader();
+    checkCartStatus();
 
 })();
 
-function changeNavbar() {
+// 登入狀態下切換不同的 header 版型
+
+function changeHeader() {
 
     const membership = document.querySelector('#common-header #membership');
     
     if (membership) {
 
-        let navbar = /*html*/`
+        let header = /*html*/`
         <a class="me-5" href="cart.html">
             <span id="cart-icon" class="material-icons position-relative fs-2">shopping_bag</span>
         </a>
@@ -34,7 +37,7 @@ function changeNavbar() {
             </ul>
         </div>
         `;
-        membership.innerHTML = navbar;
+        membership.innerHTML = header;
         
     }
 
@@ -42,46 +45,45 @@ function changeNavbar() {
 
     if (membershipMobile) {
 
-        let navbarMobile = /*html*/`
+        let headerMobile = /*html*/`
         <li><a class="dropdown-item px-1 py-2" href="cart.html" style="letter-spacing:0.4px">購 物 車</a></li>
         <li><a class="dropdown-item px-1 py-2" href="member.html#orders">我的訂單</a></li>
         <li><a class="dropdown-item px-1 py-2" href="member.html#collection">我的收藏</a></li>
         <li><a class="dropdown-item px-1 py-2" href="member.html#profile">個人資料</a></li>
         <li><a class="logout dropdown-item py-2" href="#">登　　出</a></li>
         `;
-        membershipMobile.innerHTML = navbarMobile;
+        membershipMobile.innerHTML = headerMobile;
 
     }
 
-    // 確認購物車狀態
+    // 綁定登出功能
 
-    if (window.innerWidth > 767) { checkCartStatus() }
+    const logoutButtons = document.querySelectorAll('.logout');
+
+    if (logoutButtons) {
+
+        logoutButtons.forEach(button => button.addEventListener('click', function(e){
+            e.preventDefault();
+            localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            toastMessage('success', '登出成功！期待您的下次造訪！', 'index.html');
+        }))
+
+    }
 
 }
 
-async function checkCartStatus() {
+// 登入之後，向遠端伺服器取得對應的購物車資料，並反映至畫面上
 
+function checkCartStatus() {
+
+    const { VITE_APP_SITE } = import.meta.env;
     const userId = JSON.parse(localStorage.getItem('userData')).id;
     
-    const res = axios.get(`${VITE_APP_SITE}/600/users/${userId}/carts`, headers)
+    axios.get(`${VITE_APP_SITE}/600/users/${userId}/carts`, headers)
     .then((res)=>{
         res.data.length !== 0 ? changeCartIcon() : removeCartIcon();
     })
     .catch((error)=>{ errorHandle(error) })
 
-}
-
-export function changeCartIcon() {
-    if (window.innerWidth < 768) return;
-    const icon = document.querySelector('#cart-icon');
-    icon.innerHTML += /*html*/`
-    <span class="marker position-absolute top-0 end-0 p-1 bg-danger border border-light rounded-circle">
-        <span class="visually-hidden">New alerts</span>
-    </span>`;
-}
-
-export function removeCartIcon() {
-    if (window.innerWidth < 768) return;
-    const marker = document.querySelector('#cart-icon .marker');
-    if (marker) { marker.remove() };
 }

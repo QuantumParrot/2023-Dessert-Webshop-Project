@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +15,9 @@
         <div class="bg-transparent-mask rounded-2 px-md-8 py-md-9 p-5 mb-6"
              style="background-image: url('../assets/images/5918478.jpg'); background-size: cover;">
             <div class="px-md-8 py-8 position-relative">
-                <div id="detail" class="d-flex justify-content-center align-items-center"></div>
-                <!-- <img class="position-absolute bottom-0 end-0"
-                     style="transform: rotate(345deg);"
-                     src="../assets/images/flower2.png" alt="deco-batik-style-flower" width="100"> -->
+                <div id="detail" class="d-flex justify-content-center align-items-center">
+                <%- include('./layout/loading'); -%>
+                </div>
             </div>
         </div>
         <div class="text-center border-bottom">
@@ -29,42 +28,6 @@
     <%- include('./layout/footer'); -%>
 
     <script type="module" src="../main.js"></script>
-    <script type="module">
-
-        import axios from "axios";
-        import moment from "moment";
-
-        const { VITE_APP_SITE } = import.meta.env;
-
-        const id = window.location.href.split('id=').pop();
-        
-        function getData(id){
-            axios.get(`${VITE_APP_SITE}/announcements/${id}`)
-            .then((res)=>{
-                // console.log(res.data);
-                renderData(res.data);
-            })
-            .catch((error)=>{
-                console.log(error);
-            })
-        }
-
-        getData(id);
-
-        const detail = document.querySelector('#detail');
-
-        function renderData(data) {
-            detail.innerHTML += `
-            <div class="bg-secondary rounded-2 shadow p-3">
-                <div class="rounded-2 border border-2 border-primary px-md-10 px-6 py-10">
-                <h3 class="mb-6" style="line-height: 1.5">${data.title}</h3>
-                <p class="text-black mb-6">${moment(+data.date).format('YYYY-MM-DD A hh:mm')}</p>
-                <hr>
-                <p class="mt-6">${data.content.replaceAll('\n','<br><br>')}</p>
-                </div>
-            </div>`;
-        }
-
-    </script>
+    <script type="module" src="../js/pages/news-datail.js"></script>
 </body>
 </html>

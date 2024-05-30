@@ -1,8 +1,10 @@
-export class ImageDisplay {
+export class ImageGallery {
 
     constructor(element) {
         this.element = document.querySelector(element);
-        this.clickEventListener();
+        this.element.addEventListener('click', ({target}) => {
+            if (target.nodeName === 'IMG') { this.show(target.src) }
+        });
     }
     
     render(data) {
@@ -14,12 +16,6 @@ export class ImageDisplay {
             </div>`
         });
         this.element.innerHTML = content;
-    }
-
-    clickEventListener() {
-        this.element.addEventListener('click', ({target}) => {
-            if (target.nodeName === 'IMG') { this.show(target.src) }
-        });
     }
 
     show(src) {

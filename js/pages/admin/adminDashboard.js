@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 import Tab from "bootstrap/js/dist/tab.js";
 
 import { renderCharts } from "./adminChart";
-import { headers, errorHandle, checkEmpty } from "../utilities/authorization";
-import { toastMessage } from "../utilities/message";
+import { headers, errorHandle, checkEmpty } from "../../utilities/authorization";
+import { toastMessage } from "../../utilities/message";
 
 const { VITE_APP_SITE, VITE_APP_ADMIN_IDENTITY } = import.meta.env;
 

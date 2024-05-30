@@ -31,8 +31,6 @@
     </div>
 </section>
 
-<!-- Modal: Column Article -->
-
 <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -72,3 +70,20 @@
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function(){
+    
+    $('.click').click(function(){
+        $(this).parent().parent().siblings('#blur-filter').removeClass('backdrop-blur-sm');
+        $(this).parent('.d-inline-block').addClass('d-none');
+    });
+    $('#blur-filter').click(function(){
+        $(this).addClass('backdrop-blur-sm');
+        $(this).siblings().find('.d-inline-block').removeClass('d-none');
+    });
+
+})
+
+</script>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,17 +122,17 @@
     </main>
     
     <script type="module" src="../main.js"></script>
-    <script type="module" src="../js/member.js"></script>
+    <script type="module" src="../js/pages/member.js"></script>
     <script type="module">
 
-        import { ScrollTop } from '../js/components/ScrollEvent.js';
+        import { ScrollEventTrigger } from '../js/components/ScrollEventTrigger.js';
 
         // Scroll To Top
 
         const backToTop = document.querySelectorAll('.back-to-top');
 
         backToTop.forEach(button => {
-            const trigger = new ScrollTop(button);
+            const trigger = new ScrollEventTrigger(button);
             button.addEventListener('click', (event) => {
                 trigger.backToTop();
             })
@@ -141,15 +141,3 @@
     </script>
 </body>
 </html>
-
-<!-- 
-<div class="d-flex justify-content-start">
-    <div class="w-50 bg-white p-6 border border-primary rounded-2">
-        <p> ... </p>
-    </div>
-</div>
-<div class="d-flex justify-content-end">
-    <div class="w-50 bg-white p-6 border border-primary rounded-2">
-        <p> ... </p>
-    </div>
-</div> -->

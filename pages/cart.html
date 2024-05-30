@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
                 <h2 id="process-title" class="mb-6">購物車</h2>
             </div>
             <div id="cart" class="row mb-9">
-                <%- include('./layout/loading'); -%>
+            <%- include('./layout/loading'); -%>
             </div>
         </div>
     </section>
@@ -37,7 +37,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body px-md-8 py-8">
-                    <%- include('./layout/delivery-Info'); -%>
+                    <%- include('./layout/template/delivery-Info'); -%>
                 </div>
             </div>
          </div>
@@ -46,6 +46,6 @@
     <%- include('./layout/footer'); -%>
     
     <script type="module" src="../main.js"></script>
-    <script type="module" src="../js/cart.js"></script>
+    <script type="module" src="../js/pages/cart.js"></script>
 </body>
 </html>

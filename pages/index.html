@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,7 +13,7 @@
 
     <%- include('./layout/header'); -%>
 
-    <!-- section: Carousel by Swiper -->
+    <!-- section: Banner Carousel -->
     <section class="swiper banner-swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -78,7 +78,7 @@
         </div>
     </section>
     <!-- section: Monthly Special -->
-    <%- include('./layout/monthly-special'); -%>
+    <%- include('./layout/template/monthly-special'); -%>
     <!-- section: Rank --->
     <section class="bg-white py-lg-12 py-10">
         <div class="container">
@@ -135,7 +135,7 @@
     <%- include('./layout/footer'); -%>
 
     <script type="module" src="../main.js"></script>
-    <script type="module" src="../js/index.js"></script>
+    <script type="module" src="../js/pages/index.js"></script>
     <script type="module">
     
       import Swiper from 'swiper/bundle';
@@ -150,25 +150,13 @@
               nextEl: '.swiper-button-next',
           },
           autoplay: {
-              delay: 2000,
+              delay: 3000,
               disableOnInteraction: false,
           },
           // loop: true,
       });
-
-      // toggle backdrop-filter
-
-      $(document).ready(function(){
-        $('.click').click(function(){
-            $(this).parent().parent().siblings('#blur-filter').removeClass('backdrop-blur-sm');
-            $(this).parent('.d-inline-block').addClass('d-none');
-        });
-        $('#blur-filter').click(function(){
-            $(this).addClass('backdrop-blur-sm');
-            $(this).siblings().find('.d-inline-block').removeClass('d-none');
-        });
-      })
       
     </script>
+
 </body>
 </html>

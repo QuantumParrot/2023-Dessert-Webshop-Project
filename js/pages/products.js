@@ -2,15 +2,16 @@
 
 import axios from "axios";
 
-import { toastMessage, warningMessage } from "./utilities/message.js";
-import { token, headers, errorHandle } from "./utilities/authorization.js";
-import { changeCartIcon } from "./nav.js";
+import { toastMessage, warningMessage } from "../utilities/message";
+import { token, headers, errorHandle } from "../utilities/authorization";
+import { changeCartIcon } from "../utilities/cart-state";
 
 const { VITE_APP_SITE } = import.meta.env;
 
 let userData = [];
 
-(async function(){
+(async () => {
+
     try {
 
         // 初步取得所有商品的資訊
@@ -32,6 +33,7 @@ let userData = [];
         renderProducts(userData);
 
     } catch(error) { errorHandle(error) }
+    
 })();
 
 const products = document.querySelector('#products');
@@ -271,4 +273,4 @@ sumbit.addEventListener('click', function(e){
         renderProducts(userData.filter(item => item.name.includes(value) || item.type.find(str => str.includes(value))));
 
     };
-}, false);
+});

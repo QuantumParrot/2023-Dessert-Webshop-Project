@@ -1,11 +1,14 @@
 // 本頁面待解決問題：尚無
 
-import axios from "axios";
 import moment from "moment";
+import axios from "axios";
 
 const { VITE_APP_SITE } = import.meta.env;
 
-function init() {
+(() => {
+
+    'use strict';
+
     axios.get(`${VITE_APP_SITE}/664/announcements?_sort=id&_order=desc`)
     .then((res)=>{
         renderData(res.data);
@@ -13,9 +16,8 @@ function init() {
     .catch((error)=>{
         console.log(error);
     })
-}
 
-init();
+})();
 
 const list = document.querySelector('#list');
 

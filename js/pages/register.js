@@ -2,14 +2,18 @@
 
 import axios from "axios";
 
-import { token, validation } from "./utilities/authorization.js";
-import { toastMessage } from "./utilities/message.js";
+import { token, validation } from "../utilities/authorization";
+import { toastMessage } from "../utilities/message";
 
-// 轉址 ( 如果用戶處於登入狀態，不要讓他們訪問這個頁面 )
+(() => {
 
-function init() { if (token()) { location.href="index.html" } }
+    // 轉址 ( 如果用戶處於登入狀態，不要讓他們訪問這個頁面 )
 
-init();
+    'use strict';
+
+    if (token()) { location.href="index.html" }
+
+})();
 
 const { VITE_APP_SITE } = import.meta.env;
 
@@ -76,7 +80,7 @@ function checkPasswordConfirm(input) {
 }
 
 function handleRegister(info) {
-    submit.setAttribute('disabled',true); // 在 AJAX 完成之前，防止用戶重複點擊提交網路請求
+    submit.setAttribute('disabled', true); // 在 AJAX 完成之前，防止用戶重複點擊提交網路請求
     axios.post(`${VITE_APP_SITE}/signup`, info)
     .then((res)=>{
         // console.log(res);

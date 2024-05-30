@@ -6,9 +6,9 @@ import moment from "moment";
 
 import Tab from "bootstrap/js/dist/tab.js";
 
-import { toastMessage, warningMessage } from "./utilities/message.js";
-import { token, headers, errorHandle } from "./utilities/authorization.js";
-import { changeCartIcon } from "./nav.js";
+import { toastMessage, warningMessage } from "../utilities/message";
+import { token, headers, errorHandle } from "../utilities/authorization";
+import { changeCartIcon } from "../utilities/cart-state";
 
 const { VITE_APP_SITE } = import.meta.env;
 
@@ -17,10 +17,10 @@ const userId = JSON.parse(localStorage.getItem("userData")).id;
 let element = '';
 let data = [];
 
-// init
+(() => {
 
-function init() {
-    
+    'use strict';
+
     if (!token()) {
 
         toastMessage('warning','請先登入','login.html');
@@ -35,13 +35,11 @@ function init() {
     
     }
 
-}
-
-init();
+})();
 
 // hashchange
 
-window.addEventListener('hashchange', function(){ getData() });
+window.addEventListener('hashchange', () => { getData() });
 
 function getData() {
 

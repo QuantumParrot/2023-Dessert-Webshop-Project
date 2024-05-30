@@ -1,12 +1,12 @@
 // 本頁面待解決問題：尚無
 
+import moment from "moment";
+import axios from "axios";
+
 import AOS from "aos";
 import 'aos/dist/aos.css';
 
-import axios from "axios";
-import moment from "moment";
-
-import { imageConfig } from "./utilities/config";
+import { imageConfig } from "../utilities/config";
 
 const userId = JSON.parse(localStorage.getItem("userData"))?.id;
 
@@ -14,7 +14,9 @@ const { VITE_APP_SITE } = import.meta.env;
 
 // init
 
-function init() { 'use strict';
+(() => { 
+    
+    'use strict';
 
     axios.get(`${VITE_APP_SITE}/664/announcements?_sort=id&_order=desc&_limit=3`)
     .then((res)=>{
@@ -29,15 +31,15 @@ function init() { 'use strict';
 
     AOS.init();
 
-};
-
-init();
+})();
 
 // 最新消息
 
 const announcements = document.querySelector('#announcements');
 
 function renderAnnouncements(data){
+
+    'use strict';
 
     let str = ``;
     for (let i=0; i<data.length; i++) {
@@ -75,6 +77,8 @@ const rank = document.querySelector('#rank');
 // 1. 固定取得前三筆商品資料
 
 async function renderProducts(data) {
+
+    'use strict';
 
     // 如果處在登入狀態 ( 取得到 userId ) 時，渲染至頁面上的每一筆商品資料都需要新增屬性，判斷是否被使用者收藏
 
@@ -129,6 +133,8 @@ async function renderProducts(data) {
 // 2. 隨機取得商品資料
 
 function randomRender(data) {
+
+    'use strict';
         
     const products = data.filter(item => item.forSale);
     

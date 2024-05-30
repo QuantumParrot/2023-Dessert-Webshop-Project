@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,12 +12,14 @@
     <%- include('./layout/header'); -%>
 
     <section class="container">
-        <div id="product" class="py-md-9 border-bottom"></div>
+        <div id="product" class="py-md-9 border-bottom">
+        <%- include('./layout/loading'); -%>
+        </div>
     </section>
 
     <%- include('./layout/footer'); -%>
 
     <script type="module" src="../main.js"></script>
-    <script type="module" src="../js/products-detail.js"></script>
+    <script type="module" src="../js/pages/products-detail.js"></script>
 </body>
 </html>

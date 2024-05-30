@@ -2,8 +2,8 @@
 
 import axios from "axios";
 
-import { token, validation } from "../utilities/authorization";
-import { toastMessage, errorMessage } from "../utilities/message";
+import { token, validation } from "../../utilities/authorization";
+import { toastMessage, errorMessage } from "../../utilities/message";
 
 function init() {
 

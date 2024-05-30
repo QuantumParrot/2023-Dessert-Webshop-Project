@@ -1,4 +1,4 @@
-export class ScrollTop {
+export class ScrollEventTrigger {
 
     constructor(element) {
         this.element = element;

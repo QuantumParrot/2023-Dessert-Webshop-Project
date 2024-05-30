@@ -3,10 +3,10 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import { toastMessage, warningMessage } from "./utilities/message.js";
-import { token, headers, errorHandle, checkEmpty } from "./utilities/authorization.js";
-import { modifyProductData } from "./utilities/modification.js";
-import { removeCartIcon } from "./nav.js";
+import { toastMessage, warningMessage } from "../utilities/message.js";
+import { token, headers, errorHandle, checkEmpty } from "../utilities/authorization.js";
+import { modifyProductData } from "../utilities/modification.js";
+import { removeCartIcon } from "../utilities/cart-state.js";
 
 const { VITE_APP_SITE } = import.meta.env;
 

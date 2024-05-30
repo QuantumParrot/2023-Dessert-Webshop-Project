@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -160,7 +160,7 @@
     <script type="module" src="../main.js"></script>
     <script type="module">
 
-        import { ScrollTop } from '../js/components/ScrollEvent.js';
+        import { ScrollEventTrigger } from '../js/components/ScrollEventTrigger.js';
 
         $(document).ready(function(){
             
@@ -188,7 +188,7 @@
         const backToTop = document.querySelectorAll('.back-to-top');
 
         backToTop.forEach(button => {
-            const trigger = new ScrollTop(button);
+            const trigger = new ScrollEventTrigger(button);
             button.addEventListener('click', (event) => {
                 trigger.backToTop();
             })

@@ -2,22 +2,21 @@
 
 import axios from "axios";
 
-import { toastMessage, warningMessage } from "./utilities/message.js";
-import { token, headers, errorHandle } from "./utilities/authorization.js";
-import { changeCartIcon } from "./nav.js";
-import { ImageDisplay } from "./components/ImageDisplay.js";
-
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 
-// import { rollupVersion } from "vite"; // 不知道為何載入這個會跳錯，先保留起來日後研究
+import { toastMessage, warningMessage } from "../utilities/message";
+import { token, headers, errorHandle } from "../utilities/authorization";
+import { ImageGallery } from "../components/ImageGallery";
+import { changeCartIcon } from "../utilities/cart-state";
 
 const { VITE_APP_SITE } = import.meta.env;
 
 const id = location.href.split('?id=').pop();
 let data = {};
 
-(async function(){
+(async () => {
+
     try {
         const res = await axios.get(`${VITE_APP_SITE}/products/${id}`);
         data = res.data;
@@ -29,6 +28,7 @@ let data = {};
         };
         renderProduct(isCollected);
     } catch(error) { errorHandle(error) }
+    
 })();
 
 const product = document.querySelector('#product');
@@ -158,17 +158,11 @@ function renderProduct(isCollected) {
         },
     });
 
-    // 渲染圖片
-
-    const images = new ImageDisplay('.swiper-wrapper');
+    const images = new ImageGallery('.swiper-wrapper');
     images.render(data);
-
-    // 收藏功能
 
     const favoriteButton = document.querySelector('#favorite');
     favoriteButton.addEventListener('click', (e) => { toggleStatus(isCollected) });
-
-    // 購物車車 ( 只是想湊四個字 )
 
     const quantity = document.querySelector('#quantity');
     quantity.addEventListener('click', changeQty);

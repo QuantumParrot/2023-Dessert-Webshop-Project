@@ -55,3 +55,19 @@
 + 重新設計 Sidebar 樣式
 
   由於整體風格還是以圓角為主，於是 Sidebar 也統一改成圓角
+
+---
+
+> 2024/05/30
+
+主要更新：
+
++ 重構 `js` & `layout` 資料夾結構
+
++ 元件化：
+
+  把 `main.js` 裡控制 `header.ejs` 變化的程式碼放入 `header.ejs` 裡
+
+  把 `index.html` 裡控制 `monthly-special.ejs` 動畫的程式碼放入 `monthly-special.ejs` 裡
+
++ 完成 index.html 其餘區塊的 RWD 設計
